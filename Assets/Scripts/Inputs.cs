@@ -11,7 +11,7 @@ public class Inputs : MonoBehaviour
     public bool zoom;
     public bool shoot;
     public bool reload;
-
+    public bool jump;
     public void OnMove(InputAction.CallbackContext value)
     {
         movement = value.ReadValue<Vector2>();
@@ -41,6 +41,10 @@ public class Inputs : MonoBehaviour
     {
         reload = value.ReadValueAsButton();
 
+    }
+    public void OnJump(InputAction.CallbackContext value)
+    {
+        jump = value.ReadValueAsButton();
     }
 
 }

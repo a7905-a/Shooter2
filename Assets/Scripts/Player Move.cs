@@ -16,9 +16,10 @@ public class PlayerMove : MonoBehaviour
     Inputs input;
     Animator anim;
     float playerSpeed;
-    float gravity = -9.81f;
+    float gravity = -15f;
+    float gravityForce;
+    float jumpHeight = 0.5f;
     public bool isAimingMove = false;
-    float moveDirectionY;
 
     
 
@@ -33,12 +34,28 @@ public class PlayerMove : MonoBehaviour
     {
 
         Move();
+        GravityAndJump();
 
+    }
+
+    void GravityAndJump()
+    {
         if (characterController.isGrounded == false)
         {
-            moveDirectionY += gravity * Time.deltaTime;
+            gravityForce += gravity * Time.deltaTime;
+            playerSpeed = 0f;
         }
+        else
+        {
+            gravityForce = -1f;
 
+            if (input.jump)
+            {
+                gravityForce = Mathf.Sqrt(jumpHeight * -2f * gravity);
+
+                input.jump = false;
+            }
+        }
     }
 
     void Move()
@@ -60,13 +77,13 @@ public class PlayerMove : MonoBehaviour
         }
 
 
-
+        Vector3 targetDir = Vector3.zero;
         if (direction != Vector3.zero)
         {
             Vector3 cameraForward = new Vector3(cameraFocus.forward.x, 0f, cameraFocus.forward.z).normalized;
             Vector3 cameraRight = new Vector3(cameraFocus.right.x, 0f, cameraFocus.right.z).normalized;
 
-            Vector3 targetDir = cameraForward * direction.z + cameraRight * direction.x;
+            targetDir = cameraForward * direction.z + cameraRight * direction.x;
 
             Quaternion targetRot = Quaternion.LookRotation(targetDir, Vector3.up);
 
@@ -75,12 +92,12 @@ public class PlayerMove : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotateSpeed * Time.deltaTime);
             }
 
-            Vector3 velocity = targetDir * playerSpeed + Vector3.up * moveDirectionY;
-
-            characterController.Move(velocity * Time.deltaTime);
             
 
         }
+            Vector3 velocity = targetDir * playerSpeed + Vector3.up * gravityForce;
+
+            characterController.Move(velocity * Time.deltaTime);
         
         anim.SetFloat("MoveSpeed", playerSpeed);
 
