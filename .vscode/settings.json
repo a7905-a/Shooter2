@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "My project2.sln"
+    "dotnet.defaultSolution": "Shooter2.sln"
 }
