@@ -1594,6 +1594,7 @@ MonoBehaviour:
   runSpeed: 10
   rotateSpeed: 20
   cameraFocus: {fileID: 1580128328}
+  jumpHeight: 0.5
   isAimingMove: 0
 --- !u!4 &1180500655
 Transform:
