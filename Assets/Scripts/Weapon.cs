@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    
     [SerializeField] AimZoom aimZoom;
+    [SerializeField] int damageAmount = 1;
     Inputs input;
     Animator animator;
+    
 
     public bool weaponReloading = false;
 
@@ -28,7 +31,6 @@ public class Weapon : MonoBehaviour
             }
 
             aimZoom.RigWeight(0);
-
             aimZoom.AimCondition(false);
             animator.SetLayerWeight(1, 1);
             animator.SetTrigger("Reload");
@@ -40,6 +42,7 @@ public class Weapon : MonoBehaviour
         {
             if (input.shoot)
             {
+                HandleShoot();
                 animator.SetBool("Shoot", true);
             }
             else
@@ -49,7 +52,22 @@ public class Weapon : MonoBehaviour
 
         }
 
+        
+    }
 
+    void HandleShoot()
+    {
+        input.shoot = false;
+        RaycastHit rayhit;
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out rayhit, Mathf.Infinity))
+        {
+            EnemyHealth enemyHealth = rayhit.collider.GetComponent<EnemyHealth>();
+            if (enemyHealth)
+            {
+                enemyHealth.TakeDamage(damageAmount);
+            }
+
+        }
     }
 
     public void Reload()
@@ -59,4 +77,7 @@ public class Weapon : MonoBehaviour
         weaponReloading = false;
         animator.SetLayerWeight(1, 0);
     }
+
+
+    
 }

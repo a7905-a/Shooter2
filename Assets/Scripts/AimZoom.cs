@@ -34,7 +34,6 @@ public class AimZoom : MonoBehaviour
 
     void Awake()
     {
-       
         camTrans = Camera.main.transform;
     }
 
@@ -62,6 +61,7 @@ public class AimZoom : MonoBehaviour
             {
                 targetPoint = rayhit.point;
                 aimObj.transform.position = rayhit.point;
+                
             }
             else
             {
