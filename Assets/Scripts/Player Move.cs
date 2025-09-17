@@ -11,6 +11,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] float runSpeed = 20f;
     [SerializeField] float rotateSpeed = 20f;
     [SerializeField] Transform cameraFocus;
+    [SerializeField]float jumpHeight = 0.5f;
 
     CharacterController characterController;
     Inputs input;
@@ -18,7 +19,6 @@ public class PlayerMove : MonoBehaviour
     float playerSpeed;
     float gravity = -15f;
     float gravityForce;
-    float jumpHeight = 0.5f;
     public bool isAimingMove = false;
 
     
@@ -43,7 +43,7 @@ public class PlayerMove : MonoBehaviour
         if (characterController.isGrounded == false)
         {
             gravityForce += gravity * Time.deltaTime;
-            playerSpeed = 0f;
+            
         }
         else
         {
@@ -51,6 +51,7 @@ public class PlayerMove : MonoBehaviour
 
             if (input.jump)
             {
+                anim.SetTrigger("Jump");
                 gravityForce = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
                 input.jump = false;

@@ -1735,6 +1735,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 9e84ba8a-ef85-43e5-84c2-a85eb8444c47
     m_ActionName: 'Player/Reload[/Keyboard/r]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1180500658}
+        m_TargetAssemblyTypeName: Inputs, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 54336251-894a-42f2-af9b-0ed968ae564a
+    m_ActionName: 'Player/Jump[/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1757,6 +1773,7 @@ MonoBehaviour:
   zoom: 0
   shoot: 0
   reload: 0
+  jump: 0
 --- !u!143 &1180500659
 CharacterController:
   m_ObjectHideFlags: 0
