@@ -2,7 +2,8 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
+
+
 
 
 public class PlayerMove : MonoBehaviour
@@ -28,6 +29,11 @@ public class PlayerMove : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         input = GetComponent<Inputs>();
         anim = GetComponent<Animator>(); 
+    }
+
+    void Start()
+    {
+        Cursor.visible = false;
     }
 
     void Update()
