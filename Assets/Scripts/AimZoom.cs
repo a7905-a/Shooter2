@@ -15,12 +15,13 @@ public class AimZoom : MonoBehaviour
 
     [Header("Object")]
     [SerializeField] CinemachineCamera aimCam;
-    [SerializeField] LayerMask targetLayer;
+    
     [SerializeField] GameObject aimCorsshair;
     [SerializeField] GameObject aimObj;
 
     [Header("Rig")]
     [SerializeField] Rig handRig;
+    [SerializeField] Rig aimRig;
     
 
     [Header("Value")]
@@ -57,7 +58,7 @@ public class AimZoom : MonoBehaviour
 
             animator.SetLayerWeight(1, 1);
 
-            if (Physics.Raycast(camTrans.position, camTrans.forward, out rayhit, Mathf.Infinity, targetLayer))
+            if (Physics.Raycast(camTrans.position, camTrans.forward, out rayhit, Mathf.Infinity))
             {
                 targetPoint = rayhit.point;
                 aimObj.transform.position = rayhit.point;
@@ -96,6 +97,7 @@ public class AimZoom : MonoBehaviour
     public void RigWeight(float weight)
     {
         handRig.weight = weight;
+        aimRig.weight = weight;
         
     }
     
