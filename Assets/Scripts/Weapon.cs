@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
     
     [SerializeField] AimZoom aimZoom;
     [SerializeField] int damageAmount = 1;
+    [SerializeField] ParticleSystem gunFlash;
     Inputs input;
     Animator animator;
     
@@ -57,6 +58,8 @@ public class Weapon : MonoBehaviour
 
     void HandleShoot()
     {
+        if (!input.shoot) return;
+        gunFlash.Play();
         input.shoot = false;
         RaycastHit rayhit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out rayhit, Mathf.Infinity))
