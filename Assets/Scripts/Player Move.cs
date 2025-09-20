@@ -33,7 +33,7 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
-        Cursor.visible = false;
+        
     }
 
     void Update()
