@@ -11,7 +11,7 @@ public class AimZoom : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] PlayerMove playerMove;
     [SerializeField] Transform playerBody;
-    [SerializeField] Weapon weapon;
+    ActiveWeapon activeWeapon;
 
     [Header("Object")]
     [SerializeField] CinemachineCamera aimCam;
@@ -29,13 +29,14 @@ public class AimZoom : MonoBehaviour
 
     Transform camTrans;
     RaycastHit rayhit;
-    
-    
+
+
 
 
     void Awake()
     {
         camTrans = Camera.main.transform;
+        activeWeapon = GetComponentInParent<ActiveWeapon>();
     }
 
     void Update()
@@ -47,7 +48,7 @@ public class AimZoom : MonoBehaviour
     {
         Vector3 targetPoint = Vector3.zero;
 
-        if (weapon.weaponReloading)
+        if (activeWeapon.weaponReloading)
         {
             return;
         }
