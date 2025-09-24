@@ -2,21 +2,21 @@ using UnityEngine;
 
 public class LookUI : MonoBehaviour
 {
-    Camera camera;
+    Camera uiCamera;
 
     void Start()
     {
-        if (camera == null)
+        if (uiCamera == null)
         {
-            camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+            uiCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         }
     }
 
     void Update()
     {
-        if (camera!= null)
+        if (uiCamera!= null)
         {
-            transform.LookAt(transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation * Vector3.up);
+            transform.LookAt(transform.position + uiCamera.transform.rotation * Vector3.forward, uiCamera.transform.rotation * Vector3.up);
         } 
     }
 }

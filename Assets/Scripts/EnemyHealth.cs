@@ -18,7 +18,7 @@ public class EnemyHealth : MonoBehaviour
         HPbar.value = currentHealth / startingHealth;
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(float amount)
     {
         currentHealth -= amount;
 
