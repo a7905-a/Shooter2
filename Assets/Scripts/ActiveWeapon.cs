@@ -11,6 +11,7 @@ public class ActiveWeapon : MonoBehaviour
     Animator animator;
     Weapon currentWeapon;
     int currentAmmo;
+    float timeSinceLastShot = 0f;
 
 
     public bool weaponReloading = false;
@@ -35,24 +36,25 @@ public class ActiveWeapon : MonoBehaviour
             Debug.Log("Shoot");
         }
         if (input.reload)
+        {
+            input.reload = false;
+
+            if (weaponReloading)
             {
-                input.reload = false;
-
-                if (weaponReloading)
-                {
-                    return;
-                }
-
-                aimZoom.RigWeight(0);
-                aimZoom.AimCondition(false);
-                animator.SetLayerWeight(1, 1);
-                animator.SetTrigger("Reload");
-                weaponReloading = true;
-
+                return;
             }
+
+            aimZoom.RigWeight(0);
+            aimZoom.AimCondition(false);
+            animator.SetLayerWeight(1, 1);
+            animator.SetTrigger("Reload");
+            weaponReloading = true;
+
+        }
 
         HandleShoot();
         ammoText.text = currentAmmo.ToString("D2") + "/" + weaponSO.MaxAmmo.ToString("D2");
+        timeSinceLastShot += Time.deltaTime;
     }
 
     void HandleShoot()
@@ -63,9 +65,15 @@ public class ActiveWeapon : MonoBehaviour
             {
                 if (!input.shoot) return;
 
-                currentWeapon.Shoot(weaponSO);
-                currentAmmo--;
-                animator.SetBool("Shoot", true);
+
+                if (timeSinceLastShot >= weaponSO.FireRate)
+                {
+                    currentWeapon.Shoot(weaponSO);
+                    animator.SetBool("Shoot", true);
+                    timeSinceLastShot = 0f;
+                    currentAmmo--;
+
+                }
                 
                 if (weaponSO.IsAutomatic) return;
                 input.shoot = false;

@@ -30,6 +30,7 @@ public class AimZoom : MonoBehaviour
 
     Transform camTrans;
     RaycastHit rayhit;
+    [SerializeField]LayerMask layerMask;
 
 
 
@@ -61,7 +62,7 @@ public class AimZoom : MonoBehaviour
 
             animator.SetLayerWeight(1, 1);
 
-            if (Physics.Raycast(camTrans.position, camTrans.forward, out rayhit, Mathf.Infinity))
+            if (Physics.Raycast(camTrans.position, camTrans.forward, out rayhit, Mathf.Infinity, layerMask))
             {
                 targetPoint = rayhit.point;
                 aimObj.transform.position = rayhit.point;
