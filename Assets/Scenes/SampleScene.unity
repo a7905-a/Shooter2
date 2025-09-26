@@ -147,7 +147,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 8.61}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 330585546}
@@ -658,7 +658,7 @@ MonoBehaviour:
     DefaultMode: 2
   DefaultBlend:
     Style: 6
-    Time: 1
+    Time: 0.2
     CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -1678,7 +1678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4378bcb0a13cdcf4f948837d10a97456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSO: {fileID: 11400000, guid: 4b2496019b42f2f45838d6c0ac31a0a3, type: 2}
+  weaponSO: {fileID: 11400000, guid: 61f5f22599788e040837fdca5edac3c6, type: 2}
   ammoText: {fileID: 545864990}
   weaponReloading: 0
 --- !u!1 &1215435945
@@ -1917,6 +1917,9 @@ MonoBehaviour:
   aimRig: {fileID: 2112587520}
   aimObjDis: 10
   minDistance: 2
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 136
 --- !u!1 &1692962466
 GameObject:
   m_ObjectHideFlags: 0
@@ -2579,7 +2582,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 164666559954866567}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2931,7 +2934,7 @@ GameObject:
   - component: {fileID: 1086097043054690249}
   - component: {fileID: 7898538069288987917}
   - component: {fileID: 1912961569}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4791,7 +4794,7 @@ GameObject:
   - component: {fileID: 718408126820737050}
   - component: {fileID: 2748489081509527635}
   - component: {fileID: 6688294242821675295}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5100,7 +5103,7 @@ GameObject:
   - component: {fileID: 1565847807656417088}
   - component: {fileID: 9169179543535701707}
   - component: {fileID: 770070123563639102}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Obstacles
   m_TagString: Untagged
   m_Icon: {fileID: 0}

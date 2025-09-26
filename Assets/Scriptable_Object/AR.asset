@@ -15,5 +15,5 @@ MonoBehaviour:
   HitEffect: {fileID: 5658396583333812476, guid: 61c934816affeeb4bb52e43be89be468, type: 3}
   IsAutomatic: 1
   Damege: 1
-  FireRate: 0.5
+  FireRate: 0.15
   MaxAmmo: 30
