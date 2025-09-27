@@ -26,7 +26,7 @@ public class AimZoom : MonoBehaviour
 
     [Header("Value")]
     [SerializeField] float aimObjDis = 25f;
-    [SerializeField] float minDistance = 2f;
+    
 
     Transform camTrans;
     RaycastHit rayhit;
@@ -44,7 +44,7 @@ public class AimZoom : MonoBehaviour
     void Update()
     {
         AimCheck();
-        //DistanceLimitation();
+        
     }
 
     void AimCheck()
@@ -91,19 +91,7 @@ public class AimZoom : MonoBehaviour
         }
     }
 
-    void DistanceLimitation()
-    {
-        Vector3 playerPos = playerBody.transform.position;
-        Vector3 dir = (aimObj.transform.position - playerPos).normalized;
-        float dirt = Vector3.Distance(playerPos, aimObj.transform.position);
-
-        if (dirt < minDistance)
-        {
-            aimObj.transform.position = playerPos + dir * minDistance;
-        }
-        
-
-    }
+    
     public void AimCondition(bool check)
     {
         aimCam.gameObject.SetActive(check);
