@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class Robot : MonoBehaviour
 {
-    [SerializeField] Transform target;
+    [SerializeField] GameObject target;
     NavMeshAgent agent;
 
     void Awake()
@@ -19,6 +19,6 @@ public class Robot : MonoBehaviour
     
     void Update()
     {
-        agent.SetDestination(target.position);
+        agent.SetDestination(target.transform.position);
     }
 }
