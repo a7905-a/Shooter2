@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class Robot : MonoBehaviour
 {
-    [SerializeField] GameObject target;
+    GameObject target;
     NavMeshAgent agent;
 
     void Awake()
@@ -13,7 +13,7 @@ public class Robot : MonoBehaviour
     }
     void Start()
     {
-        
+        target = GameObject.FindGameObjectWithTag("Player");
     }
 
     
