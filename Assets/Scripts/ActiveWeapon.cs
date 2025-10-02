@@ -5,7 +5,7 @@ public class ActiveWeapon : MonoBehaviour
 {
     [SerializeField] WeaponSO weaponSO;
     [SerializeField] TMP_Text ammoText;
-    
+
     AimZoom aimZoom;
     Inputs input;
     Animator animator;
@@ -31,10 +31,7 @@ public class ActiveWeapon : MonoBehaviour
 
     void Update()
     {
-        if (input.shoot)
-        {
-            Debug.Log("Shoot");
-        }
+
         if (input.reload)
         {
             input.reload = false;
@@ -63,10 +60,7 @@ public class ActiveWeapon : MonoBehaviour
         {
             if (input.shoot)
             {
-                if (!input.shoot) return;
-
-
-                if (timeSinceLastShot >= weaponSO.FireRate)
+                if (timeSinceLastShot >= weaponSO.FireRate && currentAmmo > 0)
                 {
                     currentWeapon.Shoot(weaponSO);
                     animator.SetBool("Shoot", true);
@@ -74,10 +68,12 @@ public class ActiveWeapon : MonoBehaviour
                     currentAmmo--;
 
                 }
-                
-                if (weaponSO.IsAutomatic) return;
-                input.shoot = false;
-                
+
+                if (!weaponSO.IsAutomatic)
+                {
+                    input.shoot = false;
+                }
+
             }
             else
             {
@@ -95,5 +91,17 @@ public class ActiveWeapon : MonoBehaviour
         weaponReloading = false;
         animator.SetLayerWeight(1, 0);
         currentAmmo = weaponSO.MaxAmmo;
+    }
+
+    public void SwitchWeapon(WeaponSO weaponSO)
+    {
+        if (currentWeapon)
+        {
+            Destroy(currentWeapon.gameObject);
+        }
+
+        Weapon newWeapon = Instantiate(weaponSO.WeaponPrefab, transform).GetComponent<Weapon>();
+        currentWeapon = newWeapon;
+        this.weaponSO = weaponSO;
     }
 }
