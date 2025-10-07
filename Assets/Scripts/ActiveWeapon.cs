@@ -4,7 +4,10 @@ using TMPro;
 public class ActiveWeapon : MonoBehaviour
 {
     [SerializeField] WeaponSO weaponSO;
+    [SerializeField] WeaponSO pistolSO;
+    [SerializeField] WeaponSO rifleSO;
     [SerializeField] TMP_Text ammoText;
+    [SerializeField] Transform weaponHoldPoint;
 
     AimZoom aimZoom;
     Inputs input;
@@ -31,6 +34,7 @@ public class ActiveWeapon : MonoBehaviour
 
     void Update()
     {
+        
 
         if (input.reload)
         {
@@ -96,5 +100,26 @@ public class ActiveWeapon : MonoBehaviour
     public void SwitchWeapon(WeaponSO weaponSO)
     {
         Debug.Log(weaponSO.name);
+        // So를 바꿔주는 코드는 무엇일까
+        // 1 현재 무기 파괴
+        if (currentWeapon)
+        {
+            Destroy(currentWeapon.gameObject);
+        }
+        // 2 새로운 무기 생성
+        Weapon newWeapon = Instantiate(weaponSO.WeaponPrefab, weaponHoldPoint).GetComponent<Weapon>();
+        currentWeapon = newWeapon;
+        this.weaponSO = weaponSO;
+        //So 이름에 맞는 무기를 프리펩에서 찾아서 생성
+        if (weaponSO == pistolSO)
+        {
+            animator.SetLayerWeight(2, 1);
+        }
+        else if (weaponSO == rifleSO)
+        {
+            animator.SetLayerWeight(2, 0);
+            animator.SetLayerWeight(1, 1);
+        }
+
     }
 }

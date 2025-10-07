@@ -11,6 +11,7 @@ public class AimZoom : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] PlayerMove playerMove;
     [SerializeField] Transform playerBody;
+    [SerializeField] WeaponSO weaponSO;
     ActiveWeapon activeWeapon;
 
     [Header("Object")]
@@ -18,6 +19,7 @@ public class AimZoom : MonoBehaviour
 
     [SerializeField] GameObject aimCorsshair;
     [SerializeField] GameObject aimObj;
+    [SerializeField]LayerMask layerMask;
 
     [Header("Rig")]
     [SerializeField] Rig handRig;
@@ -30,7 +32,9 @@ public class AimZoom : MonoBehaviour
 
     Transform camTrans;
     RaycastHit rayhit;
-    [SerializeField]LayerMask layerMask;
+    int idleWeight = 0;
+    int rifleLayerWeight = 1;
+    int pistolLayerWeight = 2;
 
 
 
@@ -43,6 +47,7 @@ public class AimZoom : MonoBehaviour
 
     void Update()
     {
+        
         AimCheck();
         
     }
@@ -60,7 +65,7 @@ public class AimZoom : MonoBehaviour
         {
             AimCondition(true);
 
-            animator.SetLayerWeight(1, 1);
+            animator.SetLayerWeight(1, rifleLayerWeight);
 
             if (Physics.Raycast(camTrans.position, camTrans.forward, out rayhit, Mathf.Infinity, layerMask))
             {
@@ -85,11 +90,12 @@ public class AimZoom : MonoBehaviour
         else
         {
             AimCondition(false);
-            animator.SetLayerWeight(1, 0);
+            animator.SetLayerWeight(1, idleWeight);
             RigWeight(0);
             animator.SetBool("Shoot", false);
         }
     }
+    
 
     
     public void AimCondition(bool check)
