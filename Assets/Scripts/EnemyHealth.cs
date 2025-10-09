@@ -6,6 +6,7 @@ public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] float startingHealth = 3;
     [SerializeField] Slider HPbar;
+    [SerializeField] GameObject destroyVFX;
     float currentHealth;
 
     void Awake()
@@ -24,6 +25,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            Instantiate(destroyVFX, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
     }

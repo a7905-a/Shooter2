@@ -34,7 +34,7 @@ public class AimZoom : MonoBehaviour
     RaycastHit rayhit;
     int idleWeight = 0;
     int rifleLayerWeight = 1;
-    int pistolLayerWeight = 2;
+    //int pistolLayerWeight = 2;
 
 
 
