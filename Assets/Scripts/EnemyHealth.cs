@@ -25,7 +25,10 @@ public class EnemyHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Instantiate(destroyVFX, transform.position, Quaternion.identity);
+            //Instantiate(destroyVFX, transform.position, Quaternion.identity);
+            GameObject destroyVFX = PoolManager.instance.ActivateObject(1);
+            PoolManager.instance.SetPosition(destroyVFX, transform.position);
+            PoolManager.instance.DeactivateObject(destroyVFX);// 바로 없어지는게 맞나??
             Destroy(this.gameObject);
         }
     }

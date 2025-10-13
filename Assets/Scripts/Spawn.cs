@@ -21,7 +21,7 @@ public class Spawn : MonoBehaviour
         while (true)
         { 
 
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(1f);
         Instantiate(robotPrefab, spawnPoints.position, Quaternion.identity);
         }
 
