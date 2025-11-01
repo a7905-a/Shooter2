@@ -2085,6 +2085,7 @@ MonoBehaviour:
   weaponSO: {fileID: 11400000, guid: 61f5f22599788e040837fdca5edac3c6, type: 2}
   pistolSO: {fileID: 11400000, guid: 4b2496019b42f2f45838d6c0ac31a0a3, type: 2}
   rifleSO: {fileID: 11400000, guid: 61f5f22599788e040837fdca5edac3c6, type: 2}
+  startingWeaponSO: {fileID: 11400000, guid: 4b2496019b42f2f45838d6c0ac31a0a3, type: 2}
   ammoText: {fileID: 545864990}
   weaponHoldPoint: {fileID: 1455790146}
   weaponReloading: 0

@@ -6,6 +6,7 @@ public class ActiveWeapon : MonoBehaviour
     [SerializeField] WeaponSO weaponSO;
     [SerializeField] WeaponSO pistolSO;
     [SerializeField] WeaponSO rifleSO;
+    [SerializeField] WeaponSO startingWeaponSO;
     [SerializeField] TMP_Text ammoText;
     [SerializeField] Transform weaponHoldPoint;
 
@@ -30,6 +31,7 @@ public class ActiveWeapon : MonoBehaviour
         currentWeapon = GetComponentInChildren<Weapon>();
         aimZoom = GetComponentInChildren<AimZoom>();
         currentAmmo = weaponSO.MaxAmmo;
+        SwitchWeapon(startingWeaponSO);
     }
 
     void Update()

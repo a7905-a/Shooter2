@@ -21,6 +21,7 @@ public class PlayerMove : MonoBehaviour
     float gravity = -15f;
     float gravityForce;
     public bool isAimingMove = false;
+    
 
     
 
