@@ -11,8 +11,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float runSpeed = 20f;
     [SerializeField] float rotateSpeed = 20f;
+    [SerializeField] float jumpHeight = 0.5f;
     [SerializeField] Transform cameraFocus;
-    [SerializeField]float jumpHeight = 0.5f;
 
     CharacterController characterController;
     Inputs input;
@@ -39,18 +39,15 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-
         Move();
         GravityAndJump();
-
     }
 
     void GravityAndJump()
     {
         if (characterController.isGrounded == false)
         {
-            gravityForce += gravity * Time.deltaTime;
-            
+            gravityForce += gravity * Time.deltaTime;           
         }
         else
         {
@@ -69,8 +66,6 @@ public class PlayerMove : MonoBehaviour
     void Move()
     {
         Vector3 direction = new Vector3(input.movement.x, 0, input.movement.y);
-
-
 
         playerSpeed = input.run ? runSpeed : moveSpeed;
 
@@ -100,12 +95,11 @@ public class PlayerMove : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotateSpeed * Time.deltaTime);
             }
 
-            
-
         }
-            Vector3 velocity = targetDir * playerSpeed + Vector3.up * gravityForce;
 
-            characterController.Move(velocity * Time.deltaTime);
+        Vector3 velocity = targetDir * playerSpeed + Vector3.up * gravityForce;
+
+        characterController.Move(velocity * Time.deltaTime);
         
         anim.SetFloat("MoveSpeed", playerSpeed);
 
