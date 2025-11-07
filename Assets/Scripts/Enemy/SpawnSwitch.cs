@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class SpawnSwitch : MonoBehaviour
 {
-    [SerializeField] GameObject stage_1_Door;
+    [SerializeField] GameObject stageDoor;
     [SerializeField] GameObject spawngatePrefab;
     [SerializeField] Transform[] spawngateSpawnPoints;
     List<GameObject> enemiesBasket = new List<GameObject>();
     bool isTriggered = false;
+    
 
     //int remainingRobot = 0;
 
@@ -21,7 +22,7 @@ public class SpawnSwitch : MonoBehaviour
         if (isTriggered && enemiesBasket.Count == 0)
         {
             
-            stage_1_Door.SetActive(false);
+            stageDoor.SetActive(false);
             
         }
     }
@@ -30,7 +31,7 @@ public class SpawnSwitch : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !isTriggered)
+        if (other.CompareTag("Player"))
         {
             isTriggered = true;
             Debug.Log("스폰 게이트 생성");

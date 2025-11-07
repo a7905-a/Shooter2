@@ -32,9 +32,8 @@ public class AimZoom : MonoBehaviour
 
     Transform camTrans;
     RaycastHit rayhit;
-    int idleWeight = 0;
-    int rifleLayerWeight = 1;
-    //int pistolLayerWeight = 2;
+    
+    int rifleActionLayer = 1;
 
 
 
@@ -42,6 +41,7 @@ public class AimZoom : MonoBehaviour
     void Awake()
     {
         camTrans = Camera.main.transform;
+        animator = GetComponentInParent<Animator>();
         activeWeapon = GetComponentInParent<ActiveWeapon>();
     }
 
@@ -64,8 +64,7 @@ public class AimZoom : MonoBehaviour
         if (input.zoom)
         {
             AimCondition(true);
-
-            animator.SetLayerWeight(1, rifleLayerWeight);
+            animator.SetLayerWeight(rifleActionLayer, 1f);
 
             if (Physics.Raycast(camTrans.position, camTrans.forward, out rayhit, Mathf.Infinity, layerMask))
             {
@@ -90,7 +89,7 @@ public class AimZoom : MonoBehaviour
         else
         {
             AimCondition(false);
-            animator.SetLayerWeight(1, idleWeight);
+            animator.SetLayerWeight(rifleActionLayer, 0f);
             RigWeight(0);
             animator.SetBool("Shoot", false);
         }

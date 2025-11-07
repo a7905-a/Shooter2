@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8502960412684221905, guid: a35b8c32acba1334b9b31dfe8cdbc9be, type: 3}
+      propertyPath: m_Name
+      value: Weapon_01_1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -96,15 +100,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5746281741927166990, guid: 7386ce19f218f2742a41a011a7368618, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -2.472
       objectReference: {fileID: 0}
     - target: {fileID: 5746281741927166990, guid: 7386ce19f218f2742a41a011a7368618, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.315
       objectReference: {fileID: 0}
     - target: {fileID: 5746281741927166990, guid: 7386ce19f218f2742a41a011a7368618, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1.33
       objectReference: {fileID: 0}
     - target: {fileID: 5746281741927166990, guid: 7386ce19f218f2742a41a011a7368618, type: 3}
       propertyPath: m_LocalRotation.w
