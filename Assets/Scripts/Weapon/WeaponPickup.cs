@@ -9,6 +9,7 @@ public class WeaponPickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             ActiveWeapon activeWeapon = other.GetComponent<ActiveWeapon>();
+            
             activeWeapon.SwitchWeapon(weaponSO);
             Destroy(this.gameObject);
         }

@@ -4,9 +4,8 @@ using TMPro;
 public class ActiveWeapon : MonoBehaviour
 {
     [SerializeField] WeaponSO weaponSO;
-    [SerializeField] WeaponSO pistolSO;
     [SerializeField] WeaponSO rifleSO;
-    [SerializeField] WeaponSO startingWeaponSO;
+    
     [SerializeField] TMP_Text ammoText;
     [SerializeField] Transform weaponHoldPoint;
 
@@ -14,6 +13,7 @@ public class ActiveWeapon : MonoBehaviour
     Inputs input;
     Animator animator;
     Weapon currentWeapon;
+    Rigging rigging;
     int currentAmmo;
     float timeSinceLastShot = 0f;
 
@@ -24,6 +24,7 @@ public class ActiveWeapon : MonoBehaviour
     {
         input = GetComponent<Inputs>();
         animator = GetComponent<Animator>();
+        rigging = GetComponent<Rigging>();
     }
 
     void Start()
@@ -31,7 +32,7 @@ public class ActiveWeapon : MonoBehaviour
         currentWeapon = GetComponentInChildren<Weapon>();
         aimZoom = GetComponentInChildren<AimZoom>();
         currentAmmo = weaponSO.MaxAmmo;
-        SwitchWeapon(startingWeaponSO);
+        
     }
 
     void Update()
@@ -110,17 +111,17 @@ public class ActiveWeapon : MonoBehaviour
         }
         // 2 새로운 무기 생성
         Weapon newWeapon = Instantiate(weaponSO.WeaponPrefab, weaponHoldPoint).GetComponent<Weapon>();
+        
         currentWeapon = newWeapon;
         this.weaponSO = weaponSO;
+        
         //So 이름에 맞는 무기를 프리펩에서 찾아서 생성
-        if (weaponSO == pistolSO)
+        
+        if (weaponSO == rifleSO)
         {
-            animator.SetLayerWeight(2, 1);
-        }
-        else if (weaponSO == rifleSO)
-        {
+            rigging.SetWeaponIKTargets(currentWeapon.gameObject);
             animator.SetLayerWeight(2, 0);
-            animator.SetLayerWeight(1, 1);
+            animator.SetLayerWeight(0, 1);
         }
 
     }

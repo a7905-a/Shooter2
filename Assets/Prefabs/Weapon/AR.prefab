@@ -368,6 +368,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5464886373310437945}
   - component: {fileID: 6855845220096993846}
+  - component: {fileID: 8781520414346191365}
   m_Layer: 0
   m_Name: AR
   m_TagString: Untagged
@@ -413,6 +414,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunFlashEffect: {fileID: 5379736782566981228}
+--- !u!114 &8781520414346191365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5613026588999910632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7431564991477eb49b1522530381589d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightHandTarget: {fileID: 8827887213394535687}
+  leftHandTarget: {fileID: 5935248543808145699}
 --- !u!1 &7197910527277894709
 GameObject:
   m_ObjectHideFlags: 0
