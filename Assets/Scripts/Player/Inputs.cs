@@ -4,14 +4,17 @@ using UnityEngine.InputSystem;
 
 public class Inputs : MonoBehaviour
 {
+    //State
     public Vector2 movement { get; private set; }
+    public Vector2 look { get; private set; }
+    //Event
+    public bool run { get; private set; }
+    public bool zoom { get; private set; }
+    //Action
+    public bool shoot { get; private set; }
+    public bool reload { get; private set; }
+    public bool jump { get; private set; }
 
-    public Vector2 look;
-    public bool run = false;
-    public bool zoom;
-    public bool shoot;
-    public bool reload;
-    public bool jump;
     public void OnMove(InputAction.CallbackContext value)
     {
         movement = value.ReadValue<Vector2>();
@@ -22,29 +25,58 @@ public class Inputs : MonoBehaviour
         look = value.ReadValue<Vector2>();
     }
 
-    public void OnZoom(InputAction.CallbackContext value)
-    {
-        zoom = value.ReadValueAsButton();
-    }
-
     public void OnRun(InputAction.CallbackContext value)
     {
         run = value.ReadValueAsButton();
 
     }
+    public void OnZoom(InputAction.CallbackContext value)
+    {
+        zoom = value.ReadValueAsButton();
+    }
+
     public void OnShoot(InputAction.CallbackContext value)
     {
-        shoot = value.ReadValueAsButton();
+        //shoot = value.ReadValueAsButton();
+        if (value.ReadValueAsButton())
+        {
+            shoot = true;
+        }
+        else
+        {
+            shoot = false;
+        }
 
     }
     public void OnReload(InputAction.CallbackContext value)
     {
-        reload = value.ReadValueAsButton();
+        //reload = value.ReadValueAsButton();
+        if (value.started)
+        {
+            reload = true;
+        }
 
     }
     public void OnJump(InputAction.CallbackContext value)
     {
-        jump = value.ReadValueAsButton();
+        //jump = value.ReadValueAsButton();
+        if (value.started)
+        {
+            jump = true;
+        }
+    }
+
+    public void Resetjump()
+    {
+        jump = false;
+    }
+    public void Resetshoot()
+    {
+        shoot = false;
+    }
+    public void Resetreload()
+    {
+        reload = false;
     }
 
 }

@@ -41,7 +41,8 @@ public class ActiveWeapon : MonoBehaviour
 
         if (input.reload)
         {
-            input.reload = false;
+            //input.reload = false;
+            input.Resetreload();
 
             if (weaponReloading)
             {
@@ -78,7 +79,8 @@ public class ActiveWeapon : MonoBehaviour
 
                 if (!weaponSO.IsAutomatic)
                 {
-                    input.shoot = false;
+                    //input.shoot = false;
+                    input.Resetshoot();
                 }
 
             }
