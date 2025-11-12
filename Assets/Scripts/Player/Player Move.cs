@@ -2,16 +2,13 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
-
-
-
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float runSpeed = 20f;
     [SerializeField] float rotateSpeed = 20f;
     [SerializeField] float jumpHeight = 0.5f;
+    [SerializeField] float groundingForce = -1f;
     [SerializeField] Transform cameraFocus;
 
     CharacterController characterController;
@@ -20,21 +17,16 @@ public class PlayerMove : MonoBehaviour
     float playerSpeed;
     float gravity = -15f;
     float gravityForce;
+    const string PLAYER_JUMP = "Jump";
+    const string PLAYER_MOVESPEED = "MoveSpeed";
     public bool isAimingMove = false;
-    
 
     
-
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
         input = GetComponent<Inputs>();
         anim = GetComponent<Animator>(); 
-    }
-
-    void Start()
-    {
-        
     }
 
     void Update()
@@ -51,14 +43,13 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            gravityForce = -1f;
+            gravityForce = groundingForce;
 
             if (input.jump)
             {
-                anim.SetTrigger("Jump");
+                anim.SetTrigger(PLAYER_JUMP);
                 gravityForce = Mathf.Sqrt(jumpHeight * -2f * gravity);
-
-                input.jump = false;
+                input.Resetjump();
             }
         }
     }
@@ -78,7 +69,6 @@ public class PlayerMove : MonoBehaviour
         {
             playerSpeed = 0f;
         }
-
 
         Vector3 targetDir = Vector3.zero;
         if (direction != Vector3.zero)
@@ -101,9 +91,7 @@ public class PlayerMove : MonoBehaviour
 
         characterController.Move(velocity * Time.deltaTime);
         
-        anim.SetFloat("MoveSpeed", playerSpeed);
+        anim.SetFloat(PLAYER_MOVESPEED, playerSpeed);
 
-        
-        
     }
 }
