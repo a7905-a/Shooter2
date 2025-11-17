@@ -3,6 +3,7 @@ using UnityEngine.AI;
 
 public class Robot : MonoBehaviour
 {
+    const string PLAYER_STRING = "Player";
     GameObject target;
     NavMeshAgent agent;
 
@@ -13,7 +14,7 @@ public class Robot : MonoBehaviour
     }
     void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Player");
+        target = GameObject.FindGameObjectWithTag(PLAYER_STRING);
     }
 
     

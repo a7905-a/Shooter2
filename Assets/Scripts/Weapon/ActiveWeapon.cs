@@ -8,6 +8,8 @@ public class ActiveWeapon : MonoBehaviour
     
     [SerializeField] TMP_Text ammoText;
     [SerializeField] Transform weaponHoldPoint;
+    const string RELOAD_STRING = "Reload";
+    const string SHOOT_STRING = "Shooting";
 
     AimZoom aimZoom;
     Inputs input;
@@ -16,6 +18,10 @@ public class ActiveWeapon : MonoBehaviour
     Rigging rigging;
     int currentAmmo;
     float timeSinceLastShot = 0f;
+    int rifleBaseLayer = 0;
+    int rifleActionLayer = 1;
+    int baseLayer = 2;
+
 
 
     public bool weaponReloading = false;
@@ -31,8 +37,7 @@ public class ActiveWeapon : MonoBehaviour
     {
         currentWeapon = GetComponentInChildren<Weapon>();
         aimZoom = GetComponentInChildren<AimZoom>();
-        currentAmmo = weaponSO.MaxAmmo;
-        
+        currentAmmo = weaponSO.MaxAmmo;       
     }
 
     void Update()
@@ -41,7 +46,6 @@ public class ActiveWeapon : MonoBehaviour
 
         if (input.reload)
         {
-            //input.reload = false;
             input.Resetreload();
 
             if (weaponReloading)
@@ -49,10 +53,10 @@ public class ActiveWeapon : MonoBehaviour
                 return;
             }
 
-            aimZoom.RigWeight(0);
+            aimZoom.RigWeight(0f);
             aimZoom.AimCondition(false);
-            animator.SetLayerWeight(1, 1);
-            animator.SetTrigger("Reload");
+            animator.SetLayerWeight(rifleActionLayer, 1f);
+            animator.SetTrigger(RELOAD_STRING);
             weaponReloading = true;
 
         }
@@ -71,7 +75,7 @@ public class ActiveWeapon : MonoBehaviour
                 if (timeSinceLastShot >= weaponSO.FireRate && currentAmmo > 0)
                 {
                     currentWeapon.Shoot(weaponSO);
-                    animator.SetBool("Shoot", true);
+                    animator.SetTrigger(SHOOT_STRING); 
                     timeSinceLastShot = 0f;
                     currentAmmo--;
 
@@ -79,26 +83,19 @@ public class ActiveWeapon : MonoBehaviour
 
                 if (!weaponSO.IsAutomatic)
                 {
-                    //input.shoot = false;
                     input.Resetshoot();
                 }
 
             }
-            else
-            {
-                animator.SetBool("Shoot", false);
-            }
-
         }
     }
 
 
     public void Reload()
     {
-        Debug.Log("Reload");
-        aimZoom.RigWeight(1);
+        aimZoom.RigWeight(1f);
         weaponReloading = false;
-        animator.SetLayerWeight(1, 0);
+        animator.SetLayerWeight(rifleActionLayer, 0f);
         currentAmmo = weaponSO.MaxAmmo;
     }
 
@@ -122,8 +119,8 @@ public class ActiveWeapon : MonoBehaviour
         if (weaponSO == rifleSO)
         {
             rigging.SetWeaponIKTargets(currentWeapon.gameObject);
-            animator.SetLayerWeight(2, 0);
-            animator.SetLayerWeight(0, 1);
+            animator.SetLayerWeight(baseLayer, 0f);
+            animator.SetLayerWeight(rifleBaseLayer, 1f);
         }
 
     }

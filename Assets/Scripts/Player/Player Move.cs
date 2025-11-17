@@ -71,6 +71,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         Vector3 targetDir = Vector3.zero;
+        
         if (direction != Vector3.zero)
         {
             Vector3 cameraForward = new Vector3(cameraFocus.forward.x, 0f, cameraFocus.forward.z).normalized;

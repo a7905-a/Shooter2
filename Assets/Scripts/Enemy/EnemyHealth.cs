@@ -14,17 +14,14 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth = startingHealth;
     }
-    
-    void Start()
-    {
-        spawnSwitch = FindFirstObjectByType<SpawnSwitch>(); // 이 코드는 나중에 스폰 스위치 처럼 설정하는 방식으로 바꿀 예정
-        
-        
-    }
-
     void Update()
     {
         HPbar.value = currentHealth / startingHealth;
+    }
+
+    public void SetUpSwitch(SpawnSwitch spawnSwitch)
+    {
+        this.spawnSwitch = spawnSwitch;
     }
 
     public void TakeDamage(float amount)
@@ -40,10 +37,7 @@ public class EnemyHealth : MonoBehaviour
             // 처음엔 비활성이 안되서 왜 그런가 싶었는데 이펙트 설정에 라이프타임을 1초로 하니까 비활성화 되더라, 라이프 타임 설정 문제였음
 
             spawnSwitch.robotRemove(this.gameObject);
-            Debug.Log("파괴");
             Destroy(this.gameObject);
         }
     }
-    
-
 }
