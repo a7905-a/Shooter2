@@ -83,15 +83,14 @@ public class AimZoom : MonoBehaviour
             Vector3 aimDirection = (targetAim - playerBody.position).normalized;
 
             playerBody.forward = Vector3.Lerp(playerBody.forward, aimDirection, Time.deltaTime * 30f);
-            RigWeight(1);
+            RigWeight(1f);
 
         }
         else
         {
             AimCondition(false);
             animator.SetLayerWeight(rifleActionLayer, 0f);
-            RigWeight(0);
-            animator.SetBool("Shoot", false);
+            RigWeight(0f);
         }
     }
     

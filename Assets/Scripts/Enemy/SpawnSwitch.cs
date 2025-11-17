@@ -9,14 +9,8 @@ public class SpawnSwitch : MonoBehaviour
     [SerializeField] Transform[] spawngateSpawnPoints;
     List<GameObject> enemiesBasket = new List<GameObject>();
     bool isTriggered = false;
-    
+    const string PLAYER_TAG = "Player";
 
-    //int remainingRobot = 0;
-
-    void Start()
-    {
-
-    }
     void Update()
     {
         if (isTriggered && enemiesBasket.Count == 0)
@@ -31,20 +25,25 @@ public class SpawnSwitch : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag(PLAYER_TAG))
         {
             isTriggered = true;
-            Debug.Log("스폰 게이트 생성");
+
             foreach (Transform spawnPoint in spawngateSpawnPoints)
             {
                 GameObject gateSpawn = Instantiate(spawngatePrefab, spawnPoint.position, Quaternion.identity);
                 enemiesBasket.Add(gateSpawn);
                 Spawn spawnScript = gateSpawn.GetComponent<Spawn>();
-
                 if (spawnScript != null)
                 {
                     spawnScript.SetUpSwitch(this);
                 }
+                EnemyHealth enemyHealthScript = gateSpawn.GetComponent<EnemyHealth>();
+                if (enemyHealthScript != null)
+                {
+                    enemyHealthScript.SetUpSwitch(this);
+                }
+
             }
             
         }
@@ -63,16 +62,4 @@ public class SpawnSwitch : MonoBehaviour
 
         }
     }
-    
-    // public void AdjustWin(int amount)
-    // {
-    //     remainingRobot += amount;
-        
-    //     if (remainingRobot <= 0)
-    //     {
-    //         Debug.Log("문 열림");
-    //         stage_1_Door.SetActive(false);
-    //     }
-    // }
 }
-// 적 스폰 시 숫자를 알아야 하는데 그럴때는 List라는 동적할당을 사용해야 한다.

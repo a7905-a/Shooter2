@@ -37,7 +37,6 @@ public class Inputs : MonoBehaviour
 
     public void OnShoot(InputAction.CallbackContext value)
     {
-        //shoot = value.ReadValueAsButton();
         if (value.ReadValueAsButton())
         {
             shoot = true;
@@ -50,7 +49,6 @@ public class Inputs : MonoBehaviour
     }
     public void OnReload(InputAction.CallbackContext value)
     {
-        //reload = value.ReadValueAsButton();
         if (value.started)
         {
             reload = true;
@@ -59,7 +57,6 @@ public class Inputs : MonoBehaviour
     }
     public void OnJump(InputAction.CallbackContext value)
     {
-        //jump = value.ReadValueAsButton();
         if (value.started)
         {
             jump = true;

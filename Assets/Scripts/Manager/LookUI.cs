@@ -3,12 +3,13 @@ using UnityEngine;
 public class LookUI : MonoBehaviour
 {
     Camera uiCamera;
+    const string MAINCAMERA_STRING = "MainCamera";
 
     void Start()
     {
         if (uiCamera == null)
         {
-            uiCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+            uiCamera = GameObject.FindGameObjectWithTag(MAINCAMERA_STRING).GetComponent<Camera>();
         }
     }
 
