@@ -20,6 +20,17 @@ public class Robot : MonoBehaviour
     
     void Update()
     {
+        if (!target) return;
+        
         agent.SetDestination(target.transform.position);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(PLAYER_STRING))
+        {
+            EnemyHealth enemyHealth = GetComponent<EnemyHealth>();
+            enemyHealth.Destruct();
+        }
     }
 }

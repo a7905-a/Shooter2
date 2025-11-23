@@ -10,8 +10,4 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
     }
 
-    void Update()
-    {
-        
-    } 
 }

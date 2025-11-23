@@ -41,11 +41,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4166716153182116671}
-  - component: {fileID: 2646745023681608600}
   - component: {fileID: 6040147986262181745}
-  - component: {fileID: 1923262047514356625}
-  - component: {fileID: 3807706996211134962}
   - component: {fileID: 6423839540786798929}
+  - component: {fileID: 8936639955344908497}
   m_Layer: 7
   m_Name: Big Robot
   m_TagString: Untagged
@@ -61,7 +59,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1957979561546776828}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.9984358, z: -0, w: -0.055910874}
+  m_LocalRotation: {x: 0, y: 0.9984359, z: -0, w: -0.055908516}
   m_LocalPosition: {x: 1.796, y: 5.24, z: 92.084}
   m_LocalScale: {x: 7.6998, y: 7.6998, z: 7.6998}
   m_ConstrainProportionsScale: 0
@@ -70,28 +68,6 @@ Transform:
   - {fileID: 1008526504530465741}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 186.41, z: 0}
---- !u!195 &2646745023681608600
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1957979561546776828}
-  m_Enabled: 1
-  m_AgentTypeID: -1372625422
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 1
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 1.5
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!136 &6040147986262181745
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -115,33 +91,6 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: -0.1, z: 0}
---- !u!114 &1923262047514356625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1957979561546776828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a9819c893b1f2e40ad30acfeca8278c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3807706996211134962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1957979561546776828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 786f2da44b9556949b3bd631c292f451, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 3
-  HPbar: {fileID: 8643386526505532201}
-  destroyVFX: {fileID: 7541472773642616804, guid: 17a93815f8f8ecb48a01c3039ca7c97c, type: 3}
 --- !u!95 &6423839540786798929
 Animator:
   serializedVersion: 7
@@ -152,7 +101,7 @@ Animator:
   m_GameObject: {fileID: 1957979561546776828}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d9ad7f2a03101fd498804e866ee87988, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7a333b41e2c6d8f49b32e60ea4062ceb, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -164,6 +113,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8936639955344908497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957979561546776828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bd8ee1e4d49f9e4684f9f615164b82b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossPrefab: {fileID: 0}
+  bossSpawnEffect: {fileID: 0}
+  riseHeight: 10
+  riseDuration: 4
 --- !u!1 &6376017884055869312
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,14 +444,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4357449523000246194, guid: 0a5b2af4447a9d442b715973132950fa, type: 3}
   m_PrefabInstance: {fileID: 8365489077558285036}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8643386526505532201 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 282413677121366469, guid: 0a5b2af4447a9d442b715973132950fa, type: 3}
-  m_PrefabInstance: {fileID: 8365489077558285036}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
