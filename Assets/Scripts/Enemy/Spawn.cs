@@ -21,7 +21,7 @@ public class Spawn : MonoBehaviour
         while (true)
         { 
             yield return new WaitForSeconds(spawnInterval);
-            GameObject enemyRobot = Instantiate(robotPrefab, spawnPoints.position, Quaternion.identity);
+            GameObject enemyRobot = Instantiate(robotPrefab, spawnPoints.position, transform.rotation);
             if (spawnSwitch != null)
             {
                 spawnSwitch.robotRegister(enemyRobot);
