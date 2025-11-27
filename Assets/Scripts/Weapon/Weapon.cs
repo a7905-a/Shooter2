@@ -17,15 +17,17 @@ public class Weapon : MonoBehaviour
             
 
             EnemyHealth enemyHealth = rayhit.collider.GetComponent<EnemyHealth>();
+            Boss boss = rayhit.collider.GetComponent<Boss>();
             if (enemyHealth)
             {
                 enemyHealth.TakeDamage(weaponSO.Damege);
             }
-
-        }
+            
+            if (boss)
+            {
+                boss.TakeDamage(weaponSO.Damege);   
+            }
     }
-
-
-
     
+}
 }
