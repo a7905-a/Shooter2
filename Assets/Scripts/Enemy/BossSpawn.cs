@@ -6,7 +6,7 @@ public class BossSpawn : MonoBehaviour
     [SerializeField] GameObject bossSpawnEffect;
     [SerializeField] Transform playerTarget;
     [SerializeField] float riseHeight = 10f;
-    [SerializeField] float riseDuration = 4f;
+    [SerializeField] float riseDuration = 3f;
     Vector3 initialPosition;
     bool isSpawned = false;
 

@@ -1031,6 +1031,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossSpawn: {fileID: 682993907}
+  bossAttack: {fileID: 1364073067}
 --- !u!4 &396751854
 Transform:
   m_ObjectHideFlags: 0
@@ -1425,7 +1426,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8936639955344908497, guid: 4c989767430b569479174a728b5e28f5, type: 3}
   m_PrefabInstance: {fileID: 9145295054710188869}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1364073063}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bd8ee1e4d49f9e4684f9f615164b82b, type: 3}
@@ -1643,6 +1644,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &850613396 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8643386526505532201, guid: 4c989767430b569479174a728b5e28f5, type: 3}
+  m_PrefabInstance: {fileID: 9145295054710188869}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &861918353
 GameObject:
   m_ObjectHideFlags: 0
@@ -2878,6 +2890,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1341474101}
   m_CullTransparentMesh: 1
+--- !u!1 &1364073063 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1957979561546776828, guid: 4c989767430b569479174a728b5e28f5, type: 3}
+  m_PrefabInstance: {fileID: 9145295054710188869}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1364073067 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3057863466857602497, guid: 4c989767430b569479174a728b5e28f5, type: 3}
+  m_PrefabInstance: {fileID: 9145295054710188869}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364073063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51782376b2a29034b9fb456532c580c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1364073071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364073063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be5c511dc26bbc34eb03116456812770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 10
+  HPbar: {fileID: 850613396}
 --- !u!1 &1367864427
 GameObject:
   m_ObjectHideFlags: 0
@@ -6618,13 +6660,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Big Robot
       objectReference: {fileID: 0}
+    - target: {fileID: 3057863466857602497, guid: 4c989767430b569479174a728b5e28f5, type: 3}
+      propertyPath: playerTarget
+      value: 
+      objectReference: {fileID: 1580128328}
     - target: {fileID: 4166716153182116671, guid: 4c989767430b569479174a728b5e28f5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.88
       objectReference: {fileID: 0}
     - target: {fileID: 4166716153182116671, guid: 4c989767430b569479174a728b5e28f5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.89
+      value: -5.97
       objectReference: {fileID: 0}
     - target: {fileID: 4166716153182116671, guid: 4c989767430b569479174a728b5e28f5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6677,7 +6723,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1957979561546776828, guid: 4c989767430b569479174a728b5e28f5, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 1364073071}
   m_SourcePrefab: {fileID: 100100000, guid: 4c989767430b569479174a728b5e28f5, type: 3}
 --- !u!1 &9183764716309456466
 GameObject:

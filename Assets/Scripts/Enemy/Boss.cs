@@ -1,16 +1,29 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] float startingHealth = 10f;
+    [SerializeField] Slider HPbar;
+    float currentHealth;
 
-    // Update is called once per frame
+    void Awake()
+    {
+        currentHealth = startingHealth;
+    }   
+
     void Update()
     {
-        
+        HPbar.value = currentHealth / startingHealth;
+    }
+
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+
+        if (currentHealth <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
