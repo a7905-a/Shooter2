@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e1cfabcc28818046a879c92d53c9f05, type: 3}
   m_Name: AR
   m_EditorClassIdentifier: 
-  WeaponType: 1
+  WeaponType: 0
   WeaponPrefab: {fileID: 5613026588999910632, guid: ddae625af9746814bad43e9e60ab150c, type: 3}
   HitEffect: {fileID: 5658396583333812476, guid: 61c934816affeeb4bb52e43be89be468, type: 3}
   IsAutomatic: 1

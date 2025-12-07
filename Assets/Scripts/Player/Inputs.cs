@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class Inputs : MonoBehaviour
 {
+    //프로퍼티를 활용한 접근 제어
     //State
     public Vector2 movement { get; private set; }
     public Vector2 look { get; private set; }
@@ -15,6 +16,7 @@ public class Inputs : MonoBehaviour
     public bool reload { get; private set; }
     public bool jump { get; private set; }
 
+    //Invoke Unity Events 방식에서 요구하는 메서드
     public void OnMove(InputAction.CallbackContext value)
     {
         movement = value.ReadValue<Vector2>();
@@ -37,24 +39,17 @@ public class Inputs : MonoBehaviour
 
     public void OnShoot(InputAction.CallbackContext value)
     {
-        if (value.ReadValueAsButton())
-        {
-            shoot = true;
-        }
-        else
-        {
-            shoot = false;
-        }
-
+        shoot = value.ReadValueAsButton();
     }
+
     public void OnReload(InputAction.CallbackContext value)
     {
         if (value.started)
         {
             reload = true;
         }
-
     }
+
     public void OnJump(InputAction.CallbackContext value)
     {
         if (value.started)
@@ -63,15 +58,16 @@ public class Inputs : MonoBehaviour
         }
     }
 
-    public void Resetjump()
+//단발성 이벤트의 처리를 위한 리셋 메서드
+    public void ResetJump()
     {
         jump = false;
     }
-    public void Resetshoot()
+    public void ResetShoot()
     {
         shoot = false;
     }
-    public void Resetreload()
+    public void ResetReload()
     {
         reload = false;
     }
