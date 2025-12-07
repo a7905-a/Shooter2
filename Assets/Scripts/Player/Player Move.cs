@@ -1,7 +1,5 @@
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.EventSystems;
+
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 10f;
@@ -17,11 +15,14 @@ public class PlayerMove : MonoBehaviour
     float playerSpeed;
     float gravity = -15f;
     float gravityForce;
-    const string PLAYER_JUMP = "Jump";
-    const string PLAYER_MOVESPEED = "MoveSpeed";
+    //조준 상태에서의 이동 상태
     public bool isAimingMove = false;
 
+    //문자열을 상수로 중앙 관리
+    const string PLAYER_JUMP = "Jump";
+    const string PLAYER_MOVESPEED = "MoveSpeed";
     
+    //내부 초기화를 Awke에서 수행해서 참조 오류 방지
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -49,7 +50,7 @@ public class PlayerMove : MonoBehaviour
             {
                 anim.SetTrigger(PLAYER_JUMP);
                 gravityForce = Mathf.Sqrt(jumpHeight * -2f * gravity);
-                input.Resetjump();
+                input.ResetJump();
             }
         }
     }
@@ -74,15 +75,19 @@ public class PlayerMove : MonoBehaviour
         
         if (direction != Vector3.zero)
         {
+            //카메라의 방향을 기준으로 이동 방향 설정
             Vector3 cameraForward = new Vector3(cameraFocus.forward.x, 0f, cameraFocus.forward.z).normalized;
             Vector3 cameraRight = new Vector3(cameraFocus.right.x, 0f, cameraFocus.right.z).normalized;
 
+            //그걸 위해서는 카메라의 로컬 좌표로 변환하여 적용
             targetDir = cameraForward * direction.z + cameraRight * direction.x;
 
+            //이동하려는 방향을 정면으로 바라보게 하는 코드
             Quaternion targetRot = Quaternion.LookRotation(targetDir, Vector3.up);
 
             if (!isAimingMove)
             {
+                //현재 회전에서 목표 회전까지 부드럽게 회전하게 해서 자연스럽게 회전하는 움직임 구현
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotateSpeed * Time.deltaTime);
             }
 

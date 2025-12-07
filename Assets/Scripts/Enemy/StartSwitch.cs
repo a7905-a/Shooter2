@@ -9,6 +9,7 @@ public class StartSwitch : MonoBehaviour
         if (other.CompareTag(PLAYER_STRING))
         {
             stageDoor.SetActive(false);
+            Destroy(this.gameObject);
         }
     }
 }
