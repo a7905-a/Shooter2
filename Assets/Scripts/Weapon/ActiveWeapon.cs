@@ -36,15 +36,18 @@ public class ActiveWeapon : MonoBehaviour
         input = GetComponent<Inputs>();
         animator = GetComponent<Animator>();
         rigging = GetComponent<Rigging>();
+        if (input == null || animator == null || rigging == null)
+        {
+            Debug.LogError("필수 컴포넌트가 누락!");
+            enabled = false;
+            return;
+        }
+        
         currentWeapon = GetComponentInChildren<Weapon>();
         aimZoom = GetComponentInChildren<AimZoom>();
         currentAmmo = weaponSO.MaxAmmo;       
     }
 
-    void Start()
-    {
-        
-    }
 
     void Update()
     {

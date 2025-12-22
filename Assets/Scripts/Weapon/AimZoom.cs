@@ -38,9 +38,13 @@ public class AimZoom : MonoBehaviour
 
     void Awake()
     {
-        camTrans = Camera.main.transform;
         animator = GetComponentInParent<Animator>();
         activeWeapon = GetComponentInParent<ActiveWeapon>();
+    }
+
+    void Start()
+    {
+        camTrans = Camera.main.transform;
     }
 
     void Update()

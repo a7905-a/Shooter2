@@ -9,6 +9,13 @@ public class PlayerHealth : MonoBehaviour
 
     void Awake()
     {
+        if (healthBar == null)
+        {
+            Debug.LogError("HP바 이미지가 할당되지 않음");
+            enabled = false;
+            return;
+        }
+
         currentHealth = maxHealth;
         HealthBarUI();
     }
@@ -26,6 +33,8 @@ public class PlayerHealth : MonoBehaviour
 
     void HealthBarUI()
     {
+        if (healthBar == null) return;
+
         for (int i = 0; i < healthBar.Length; i++)
         {
             if (i < currentHealth)
