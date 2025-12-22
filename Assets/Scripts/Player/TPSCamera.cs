@@ -10,6 +10,15 @@ public class TPSCamera : MonoBehaviour
     float pitch = 0;
     float maxPitch = 35f;
     
+    void Awake()
+    {
+        if (input == null || cameraFocus == null)
+        {
+            Debug.LogError("입력 또는 카메라 포커스가 할당되지 않음");
+            enabled = false;
+            return;
+        }
+    }
     void Update()
     {
         LookAround();

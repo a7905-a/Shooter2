@@ -28,6 +28,14 @@ public class PlayerMove : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         input = GetComponent<Inputs>();
         anim = GetComponent<Animator>(); 
+        //필수 컴포넌트 누락 체크
+        //콘솔창에 Null에러 뜨지말고 미리 체크해서 알려주는 용도
+        if (characterController == null || input == null || anim == null)
+        {
+            Debug.LogError("필수 컴포넌트 누락");
+            enabled = false;
+            return;
+        }
     }
 
     void Update()
@@ -49,6 +57,7 @@ public class PlayerMove : MonoBehaviour
             if (input.jump)
             {
                 anim.SetTrigger(PLAYER_JUMP);
+                //gravity는 음수, 루트 안에 음수가 있으면 안되서 -2f 곱해줌
                 gravityForce = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 input.ResetJump();
             }
