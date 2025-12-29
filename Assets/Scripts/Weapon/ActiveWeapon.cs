@@ -24,7 +24,7 @@ public class ActiveWeapon : MonoBehaviour
     int currentAmmo;
     float timeSinceLastShot = 0f;
 
-    //매직 넘버 사용을 피하기 위한 변수 이름 선언
+    //매직 넘버 사용을 피하기 위해서 변수 이름을 선언
     int rifleBaseLayer = 0;
     int rifleActionLayer = 1;
     int baseLayer = 2;
