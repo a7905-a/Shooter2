@@ -161,6 +161,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunFlashEffect: {fileID: 5291966957224169801, guid: ef6b488dc10bfc340b3b786e59c1d6c2, type: 3}
+  interactionLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &-151952053363273163
 MonoBehaviour:
   m_ObjectHideFlags: 0

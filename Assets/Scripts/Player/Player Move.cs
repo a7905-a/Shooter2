@@ -79,9 +79,11 @@ public class PlayerMove : MonoBehaviour
         {
             playerSpeed = 0f;
         }
-
+        
+        //targetDir을 0,0,0으로 초기화
         Vector3 targetDir = Vector3.zero;
         
+        //입력값이 있을 때만 처리하기 위한 조건문
         if (direction != Vector3.zero)
         {
             //카메라의 방향을 기준으로 이동 방향 설정
