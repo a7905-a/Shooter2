@@ -30,7 +30,7 @@ public class SpawnSwitch : MonoBehaviour
 
             foreach (Transform spawnPoint in spawngateSpawnPoints)
             {
-                GameObject gateSpawn = Instantiate(spawngatePrefab, spawnPoint.position, Quaternion.identity);
+                GameObject gateSpawn = Instantiate(spawngatePrefab, spawnPoint.position, spawnPoint.rotation);
                 enemiesBasket.Add(gateSpawn);
                 Spawn spawnScript = gateSpawn.GetComponent<Spawn>();
                 if (spawnScript != null)
@@ -46,6 +46,7 @@ public class SpawnSwitch : MonoBehaviour
             }
         
         }
+
     }
 
     public void robotRegister(GameObject enemyRobot)

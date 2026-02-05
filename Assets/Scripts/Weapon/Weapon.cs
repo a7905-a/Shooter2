@@ -3,6 +3,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [SerializeField] ParticleSystem gunFlashEffect;
+    [SerializeField] LayerMask interactionLayer;
     
     
     public void Shoot(WeaponSO weaponSO)
@@ -10,7 +11,7 @@ public class Weapon : MonoBehaviour
 
         RaycastHit rayhit;
         gunFlashEffect.Play();
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out rayhit, Mathf.Infinity))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out rayhit, Mathf.Infinity, interactionLayer, QueryTriggerInteraction.Ignore))
         {
             GameObject hitToSpawn = PoolManager.instance.ActivateObject(0);
             PoolManager.instance.SetPosition(hitToSpawn, rayhit.point);
