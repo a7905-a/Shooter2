@@ -13,6 +13,7 @@ public class WeaponSO : ScriptableObject
     public WeaponType WeaponType;
     public GameObject WeaponPrefab;
     public ParticleSystem HitEffect;
+    
     public bool IsAutomatic;
     public float Damege = 1.0f;
     public float FireRate = 0.5f;

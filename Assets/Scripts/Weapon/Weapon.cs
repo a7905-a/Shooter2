@@ -18,7 +18,7 @@ public class Weapon : MonoBehaviour
             
 
             EnemyHealth enemyHealth = rayhit.collider.GetComponent<EnemyHealth>();
-            Boss boss = rayhit.collider.GetComponent<Boss>();
+            SecurityLeader boss = rayhit.collider.GetComponent<SecurityLeader>();
             if (enemyHealth)
             {
                 enemyHealth.TakeDamage(weaponSO.Damege);

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1f689995f16e6479645a9b98988fda, type: 3}
+  m_Name: Wood
+  m_EditorClassIdentifier: 
+  itemName: Wood
+  itemIcon: {fileID: 21300000, guid: 033db79ef42f52647b451a4ccf0b730f, type: 3}
+  maxStackSize: 10
+  itemPrefab: {fileID: 4893209075404544907, guid: b188ef5698893cb43a3ca8d09705f61d, type: 3}
+  handItemPrefab: {fileID: 7188774398249191431, guid: a18b380c080173f41bf4a1d11a3ef0a2, type: 3}
+  description: It can burn
