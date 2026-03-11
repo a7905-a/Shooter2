@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class TPSCamera : MonoBehaviour
 {
+    public static TPSCamera Instance;
+    public bool updatingRotation;
+
     [SerializeField] Transform cameraFocus;
     [SerializeField, Range(0, 100f)] float yawSpeed = 50f;
     [SerializeField, Range(0, 100f)] float pitchSpeed = 50f;
@@ -12,20 +15,18 @@ public class TPSCamera : MonoBehaviour
     
     void Awake()
     {
-        if (input == null || cameraFocus == null)
-        {
-            Debug.LogError("입력 또는 카메라 포커스가 할당되지 않음");
-            enabled = false;
-            return;
-        }
+        Instance = this;
     }
-    void Update()
+
+    void LateUpdate()
     {
         LookAround();
     }
 
     void LookAround()
     {
+        if (updatingRotation) return;
+
         yaw += input.look.x * yawSpeed * Time.deltaTime;
         pitch += input.look.y * pitchSpeed *  Time.deltaTime;
         

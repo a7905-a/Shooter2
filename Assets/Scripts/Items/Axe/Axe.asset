@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1f689995f16e6479645a9b98988fda, type: 3}
+  m_Name: Axe
+  m_EditorClassIdentifier: 
+  itemName: Axe
+  itemIcon: {fileID: 2043856047, guid: 602385b6eef3e0949a0afdb06ca5c14a, type: 3}
+  maxStackSize: 1
+  itemPrefab: {fileID: 5113419520001140092, guid: 8b08a893c2d5c604bb24cfb8a6c569cb, type: 3}
+  handItemPrefab: {fileID: 0}
+  description: It can Chop wood

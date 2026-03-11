@@ -84,7 +84,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 10
-  HPbar: {fileID: 8643386526505532201}
 --- !u!114 &3057863466857602497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,6 +207,7 @@ GameObject:
   - component: {fileID: 1829294773266143677}
   - component: {fileID: 1596008379826422277}
   - component: {fileID: 6078392115550105195}
+  - component: {fileID: 4405217492547025075}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -310,6 +310,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751e03b778056ca4fb88d6616c5473a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4405217492547025075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376017884055869312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ece7929695e7da43b233e0e702c6bc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpBar: {fileID: 8643386526505532201}
+  stageFactoryBoss: {fileID: 6227007925025940455}
 --- !u!1 &8497396399769210246
 GameObject:
   m_ObjectHideFlags: 0
