@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   itemName: Axe
-  itemIcon: {fileID: 2043856047, guid: 602385b6eef3e0949a0afdb06ca5c14a, type: 3}
+  itemIcon: {fileID: 21300000, guid: 602385b6eef3e0949a0afdb06ca5c14a, type: 3}
   maxStackSize: 1
   itemPrefab: {fileID: 5113419520001140092, guid: 8b08a893c2d5c604bb24cfb8a6c569cb, type: 3}
   handItemPrefab: {fileID: 0}
