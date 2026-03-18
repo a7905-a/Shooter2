@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 7708063422156567849}
   - component: {fileID: 2277711586499403468}
   - component: {fileID: 2663874243958941143}
+  - component: {fileID: -6043647699649780589}
   m_Layer: 7
   m_Name: Robot
   m_TagString: Untagged
@@ -274,6 +275,19 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-6043647699649780589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4249594017241099333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dad68934954cb684497a1bb4eac9c989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropItem: {fileID: 4893209075404544907, guid: b188ef5698893cb43a3ca8d09705f61d, type: 3}
 --- !u!1 &4910907295597474669
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,6 +411,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8829320310806462819}
     m_Modifications:
+    - target: {fileID: 282413677121366469, guid: 0a5b2af4447a9d442b715973132950fa, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1504585318196823849, guid: 0a5b2af4447a9d442b715973132950fa, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

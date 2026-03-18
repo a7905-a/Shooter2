@@ -1,65 +1,57 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class SpawnSwitch : MonoBehaviour
 {
-    [SerializeField] GameObject stageDoor;
-    [SerializeField] GameObject spawngatePrefab;
-    [SerializeField] Transform[] spawngateSpawnPoints;
-    List<GameObject> enemiesBasket = new List<GameObject>();
+    public static event Action OnRobotBattleStart;
+
+    // [SerializeField] GameObject stageDoor;
+    // [SerializeField] GameObject spawngatePrefab;
+    // [SerializeField] Transform[] spawngateSpawnPoints;
+    
     bool isTriggered = false;
     const string PLAYER_TAG = "Player";
 
-    void Update()
-    {
-        if (isTriggered && enemiesBasket.Count == 0)
-        {
-            
-            stageDoor.SetActive(false);
-            
-        }
-    }
-
-
-
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(PLAYER_TAG))
+        if ( !isTriggered && other.CompareTag(PLAYER_TAG))
         {
             isTriggered = true;
+            OnRobotBattleStart?.Invoke();
 
-            foreach (Transform spawnPoint in spawngateSpawnPoints)
-            {
-                GameObject gateSpawn = Instantiate(spawngatePrefab, spawnPoint.position, spawnPoint.rotation);
-                enemiesBasket.Add(gateSpawn);
-                Spawn spawnScript = gateSpawn.GetComponent<Spawn>();
-                if (spawnScript != null)
-                {
-                    spawnScript.SetUpSwitch(this);
-                }
-                EnemyHealth enemyHealthScript = gateSpawn.GetComponent<EnemyHealth>();
-                if (enemyHealthScript != null)
-                {
-                    enemyHealthScript.SetUpSwitch(this);
-                }
+            //스폰하는 건 스폰 스크립트로 이동
+            // foreach (Transform spawnPoint in spawngateSpawnPoints)
+            // {
+            //     GameObject gateSpawn = Instantiate(spawngatePrefab, spawnPoint.position, spawnPoint.rotation);
+            //     enemiesBasket.Add(gateSpawn);
+            //     Spawn spawnScript = gateSpawn.GetComponent<Spawn>();
+            //     if (spawnScript != null)
+            //     {
+            //         spawnScript.SetUpSwitch(this);
+            //     }
+            //     EnemyHealth enemyHealthScript = gateSpawn.GetComponent<EnemyHealth>();
+            //     if (enemyHealthScript != null)
+            //     {
+            //         enemyHealthScript.SetUpSwitch(this);
+            //     }
 
-            }
+            // }
         
         }
 
     }
 
-    public void robotRegister(GameObject enemyRobot)
-    {
-        enemiesBasket.Add(enemyRobot);
-    }
+    // public void robotRegister(GameObject enemyRobot)
+    // {
+    //     enemiesBasket.Add(enemyRobot);
+    // }
 
-    public void robotRemove(GameObject enemyRobot)
-    {
-        if (enemiesBasket.Contains(enemyRobot))
-        {
-            enemiesBasket.Remove(enemyRobot);
+    // public void robotRemove(GameObject enemyRobot)
+    // {
+    //     if (enemiesBasket.Contains(enemyRobot))
+    //     {
+    //         enemiesBasket.Remove(enemyRobot);
 
-        }
-    }
+    //     }
+    // }
 }

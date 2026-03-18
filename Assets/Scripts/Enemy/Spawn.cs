@@ -1,39 +1,52 @@
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Spawn : MonoBehaviour
 {
+    public static event Action<GameObject> OnEnemySpawn;
+
     [SerializeField] GameObject robotPrefab;
-    [SerializeField] Transform spawnPoints;
-    float spawnInterval = 2f;
-    SpawnSwitch spawnSwitch;
-
-    public void SetUpSwitch(SpawnSwitch spawnSwitch)
+    [SerializeField] int spawnCount = 5;
+    [SerializeField] float spawnRadius = 3f;
+    
+ 
+    
+    void OnEnable()
     {
-        this.spawnSwitch = spawnSwitch;
-        StartCoroutine(RobotSpawn());
+        SpawnSwitch.OnRobotBattleStart += StartSpawnRobot;
+    }
+
+    void OnDisable()
+    {
+        SpawnSwitch.OnRobotBattleStart -= StartSpawnRobot;
     }
 
 
 
-    IEnumerator RobotSpawn()
+    void StartSpawnRobot()
     {
-        while (true)
-        { 
-            yield return new WaitForSeconds(spawnInterval);
-            GameObject enemyRobot = Instantiate(robotPrefab, spawnPoints.position, transform.rotation);
-            if (spawnSwitch != null)
-            {
-                spawnSwitch.robotRegister(enemyRobot);
-                EnemyHealth enemyHealthScript = enemyRobot.GetComponent<EnemyHealth>();
-                if (enemyHealthScript != null)
-                {
-                    enemyHealthScript.SetUpSwitch(spawnSwitch);
-                }
-                
-            }
+        for (int i = 0; i < spawnCount; i++)
+        {
+            Vector3 randomOffset = Random.insideUnitSphere * spawnRadius;
+            randomOffset.y = 0; 
+            Vector3 spawnPoints = transform.position + randomOffset;
+
+            GameObject enemyRobot = Instantiate(robotPrefab, spawnPoints, transform.rotation);
+            OnEnemySpawn?.Invoke(enemyRobot);
+
         }
-
     }
 
+    
+    void OnDrawGizmosSelected()
+    {
+        
+        Gizmos.color = Color.red;
+
+        
+        Gizmos.DrawWireSphere(transform.position, spawnRadius);
+    }
 }
