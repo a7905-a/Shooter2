@@ -531,7 +531,7 @@ public class Inventory : MonoBehaviour
         PopulateCraftingGrid();
     }
 
-    void ConsumeIngredients(Recipe recipe)
+    public void ConsumeIngredients(Recipe recipe)
     {
         foreach(Ingredient ingredient in recipe.ingredients)
         {

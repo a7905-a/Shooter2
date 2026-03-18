@@ -427,6 +427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionIcon: {fileID: 1076074332}
   repairWokrbenchPrefab: {fileID: 4994544205882978595, guid: e00aec0e768f3c740a297ba9c8eac08a, type: 3}
+  workBenchRecipe: {fileID: 11400000, guid: c8fe071574d23a64594cdbfc44578f14, type: 2}
 --- !u!1 &686734021
 GameObject:
   m_ObjectHideFlags: 0
@@ -1211,6 +1212,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2796103847349534098, guid: 915101cc1bcc251429f13d8d3956a633, type: 3}
+      propertyPath: allRecipes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2796103847349534098, guid: 915101cc1bcc251429f13d8d3956a633, type: 3}
+      propertyPath: 'allRecipes.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: c8fe071574d23a64594cdbfc44578f14, type: 2}
     - target: {fileID: 5501517395428175782, guid: 915101cc1bcc251429f13d8d3956a633, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
