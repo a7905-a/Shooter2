@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WorkBench
   m_EditorClassIdentifier: 
   ingredients:
-  - item: {fileID: 11400000, guid: f23ba95ead30cd344a35caa05a6c0c83, type: 2}
+  - item: {fileID: 11400000, guid: e335d205488b1594ea17556d7e3585e0, type: 2}
     amount: 10
   result: {fileID: 0}
   resultAmount: 1

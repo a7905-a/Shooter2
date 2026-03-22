@@ -1,12 +1,33 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class WorkbenchRepair : Interaction
 {   
     public GameObject repairWokrbenchPrefab;
-
     public Recipe workBenchRecipe;
 
+    public TextMeshProUGUI requirementText;
+    protected override void Update()
+    {
+        base.Update();
+
+        if (isPlayerInRange)
+        {
+            UpdateRequirementUI();
+        }
+    
+    }
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+
+        if (other.CompareTag("Player"))
+        {
+            UpdateRequirementUI();
+        }
+    }
     protected override void OnInteract()
     {
         if (Inventory.Instance.CanCraft(workBenchRecipe))
@@ -27,6 +48,24 @@ public class WorkbenchRepair : Interaction
             
         }
     }
+
+    public void UpdateRequirementUI()
+    {
+        if (workBenchRecipe == null || workBenchRecipe.ingredients.Count == 0) return;
+
+        Ingredient reqItem = workBenchRecipe.ingredients[0]; // 레시피의 첫 번째 재료
+        int currentAmount = Inventory.Instance.GetTotalItemCount(reqItem.item);
+        
+        if (requirementText != null)
+        {
+            // 글씨 갱신: "Wood 0 / 5"
+            requirementText.text = $"{reqItem.item.itemName} {currentAmount} / {reqItem.amount}";
+            
+            // 재료가 충분하면 초록색, 부족하면 빨간색으로 칠해주는 포트폴리오용 꿀팁!
+            requirementText.color = currentAmount >= reqItem.amount ? Color.green : Color.red;
+        }
+    }
+
 
     
 }

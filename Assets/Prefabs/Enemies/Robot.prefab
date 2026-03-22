@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad68934954cb684497a1bb4eac9c989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropItem: {fileID: 4893209075404544907, guid: b188ef5698893cb43a3ca8d09705f61d, type: 3}
+  dropItem: {fileID: 2765644924515764789, guid: a22197c47e86e7445a814ee8225524ed, type: 3}
 --- !u!1 &4910907295597474669
 GameObject:
   m_ObjectHideFlags: 0
