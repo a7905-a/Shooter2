@@ -93,7 +93,7 @@ public class Inventory : MonoBehaviour
         }
         
 
-        //HandleItemInteraction();
+        HandleItemInteraction();
 
         DetectLookedAtItem();
         Pickup();
@@ -108,68 +108,68 @@ public class Inventory : MonoBehaviour
 
         UpdateItemDescription();
     }
-    // 주변 아이템 회수
-    // void HandleItemInteraction()
-    // {
-    //     // 플레이어 연결이 안 되어있으면 에러 방지
-    //     if (playerTransform == null) return; 
+    //주변 아이템 회수
+    void HandleItemInteraction()
+    {
+        // 플레이어 연결이 안 되어있으면 에러 방지
+        if (playerTransform == null) return; 
 
-    //     // 1. UI 위치가 아닌 '플레이어 위치'를 중심으로 아이템 레이더(구체)를 돌립니다!
-    //     Collider[] hitColliders = Physics.OverlapSphere(playerTransform.position, pickupRange, itemLayerMask);
+        // 1. UI 위치가 아닌 '플레이어 위치'를 중심으로 아이템 레이더(구체)를 돌립니다!
+        Collider[] hitColliders = Physics.OverlapSphere(playerTransform.position, pickupRange, itemLayerMask);
 
-    //     Item closestItem = null;
-    //     float minDistance = float.MaxValue;
+        Item closestItem = null;
+        float minDistance = float.MaxValue;
 
-    //     // 2. 반경 안에 들어온 아이템 중 가장 가까운 녀석을 찾습니다.
-    //     foreach (Collider col in hitColliders)
-    //     {
-    //         Item item = col.GetComponentInParent<Item>(); 
-    //         if (item != null)
-    //         {
-    //             float distance = Vector3.Distance(playerTransform.position, col.transform.position);
-    //             if (distance < minDistance)
-    //             {
-    //                 minDistance = distance;
-    //                 closestItem = item;
-    //             }
-    //         }
-    //     }
+        // 2. 반경 안에 들어온 아이템 중 가장 가까운 녀석을 찾습니다.
+        foreach (Collider col in hitColliders)
+        {
+            Item item = col.GetComponentInParent<Item>(); 
+            if (item != null)
+            {
+                float distance = Vector3.Distance(playerTransform.position, col.transform.position);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    closestItem = item;
+                }
+            }
+        }
 
-    //     // 3. 주울 수 있는 아이템이 근처에 있다면?
-    //     if (closestItem != null)
-    //     {
-    //         // 하이라이트 효과 적용 (자식 오브젝트의 렌더러까지 찾음)
-    //         Renderer rend = closestItem.GetComponentInChildren<Renderer>();
-    //         if (rend != null && rend != lookedAtRenderer)
-    //         {
-    //             if (lookedAtRenderer != null) lookedAtRenderer.material = originalMaterial;
-    //             originalMaterial = rend.material;
-    //             rend.material = highlightMaterial;
-    //             lookedAtRenderer = rend;
-    //         }
+        // 3. 주울 수 있는 아이템이 근처에 있다면?
+        if (closestItem != null)
+        {
+            // 하이라이트 효과 적용 (자식 오브젝트의 렌더러까지 찾음)
+            Renderer rend = closestItem.GetComponentInChildren<Renderer>();
+            if (rend != null && rend != lookedAtRenderer)
+            {
+                if (lookedAtRenderer != null) lookedAtRenderer.material = originalMaterial;
+                originalMaterial = rend.material;
+                rend.material = highlightMaterial;
+                lookedAtRenderer = rend;
+            }
 
-    //         // 💡 E키를 누르면 가장 가까운 아이템 줍기!
-    //         if (Input.GetKeyDown(KeyCode.E))
-    //         {
-    //             AddItem(closestItem.item, closestItem.amount);
-    //             Destroy(closestItem.gameObject);
+            // 💡 E키를 누르면 가장 가까운 아이템 줍기!
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                AddItem(closestItem.item, closestItem.amount);
+                Destroy(closestItem.gameObject);
                 
-    //             // 파괴 후 초기화
-    //             lookedAtRenderer = null;
-    //             originalMaterial = null;
-    //         }
-    //     }
-    //     else // 4. 주변에 아이템이 아무것도 없다면?
-    //     {
-    //         // 멀어졌으니 원래 색으로 복구
-    //         if (lookedAtRenderer != null)
-    //         {
-    //             lookedAtRenderer.material = originalMaterial;
-    //             lookedAtRenderer = null;
-    //             originalMaterial = null;
-    //         }
-    //     }
-    // }
+                // 파괴 후 초기화
+                lookedAtRenderer = null;
+                originalMaterial = null;
+            }
+        }
+        else // 4. 주변에 아이템이 아무것도 없다면?
+        {
+            // 멀어졌으니 원래 색으로 복구
+            if (lookedAtRenderer != null)
+            {
+                lookedAtRenderer.material = originalMaterial;
+                lookedAtRenderer = null;
+                originalMaterial = null;
+            }
+        }
+    }
 
     //인벤토리 데이터를 저장하는 로직
     public void SaveInventory()
@@ -579,5 +579,24 @@ public class Inventory : MonoBehaviour
             }
         }
         return true;
+    }
+
+    public int GetTotalItemCount(ItemSO targetItem)
+    {
+        int totalCount = 0; // 처음엔 0개부터 세기 시작합니다.
+
+        // 내 가방(인벤토리 + 핫바)의 모든 슬롯을 하나씩 열어봅니다.
+        foreach (Slot slot in allSlots)
+        {
+            // 만약 슬롯에 아이템이 들어있고 && 그 아이템 원본이 내가 찾는 목표물(targetItem)과 똑같다면?
+            if (slot.HasItem() && slot.GetItem() == targetItem)
+            {
+                // 그 슬롯에 들어있는 개수를 총합(totalCount)에 더해줍니다!
+                totalCount += slot.GetAmount();
+            }
+        }
+
+        // 가방을 다 뒤졌으면 최종 개수를 사장님(작업대)에게 보고합니다!
+        return totalCount;
     }
 }
