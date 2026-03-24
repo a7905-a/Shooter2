@@ -11,18 +11,16 @@ public class Weapon : MonoBehaviour
     
     public void Shoot(WeaponSO weaponSO)
     {
-
         RaycastHit rayhit;
+        Debug.Log("총구 화염 재생됨!");
         gunFlashEffect.Play();
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out rayhit, Mathf.Infinity, interactionLayer, QueryTriggerInteraction.Ignore))
-        {
-            
 
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out rayhit, Mathf.Infinity, interactionLayer, QueryTriggerInteraction.Ignore))
+        {         
             TrailRenderer trail = Instantiate(bulletTrail, bulletSpawnPoint.position, Quaternion.identity);
 
             StartCoroutine(SpawnTrail(trail, rayhit));
             
-
             EnemyHealth enemyHealth = rayhit.collider.GetComponent<EnemyHealth>();
             SecurityLeader boss = rayhit.collider.GetComponent<SecurityLeader>();
 
