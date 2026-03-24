@@ -12,9 +12,9 @@ public class ActiveWeapon : MonoBehaviour
 
     [SerializeField] Transform weaponHoldPoint;
 
-    //문자열을 상수로 중앙 관리
-    const string RELOAD_STRING = "Reload";
-    const string SHOOT_STRING = "Shooting";
+    //문자열을 해싱
+    readonly int hashReload = Animator.StringToHash("Reload");
+    readonly int hashShooting = Animator.StringToHash("Shooting");
 
     AimZoom aimZoom;
     Inputs input;
@@ -100,7 +100,7 @@ public class ActiveWeapon : MonoBehaviour
     void ProcessShoot()
     {
         currentWeapon.Shoot(weaponSO);
-        animator.SetTrigger(SHOOT_STRING);
+        animator.SetTrigger(hashShooting);
         timeSinceLastShot = 0f;
         currentAmmo--;
         OnAmmoChanged?.Invoke(currentAmmo, weaponSO.MaxAmmo);
@@ -121,7 +121,7 @@ public class ActiveWeapon : MonoBehaviour
         aimZoom.RigWeight(0f);
         aimZoom.AimCondition(false);
         animator.SetLayerWeight(rifleActionLayer, 1f);
-        animator.SetTrigger(RELOAD_STRING);
+        animator.SetTrigger(hashReload);
         weaponReloading = true;
     }
 

@@ -18,9 +18,9 @@ public class PlayerMove : MonoBehaviour
     //조준 상태에서의 이동 상태
     public bool isAimingMove = false;
 
-    //문자열을 상수로 중앙 관리
-    const string PLAYER_JUMP = "Jump";
-    const string PLAYER_MOVESPEED = "MoveSpeed";
+    //문자열을 해싱
+    readonly int hashJump = Animator.StringToHash("Jump");
+    readonly int hashMoveSpeed = Animator.StringToHash("MoveSpeed");
     
     //내부 초기화를 Awke에서 수행해서 참조 오류 방지
     void Awake()
@@ -48,7 +48,7 @@ public class PlayerMove : MonoBehaviour
 
             if (input.jump)
             {
-                anim.SetTrigger(PLAYER_JUMP);
+                anim.SetTrigger(hashJump);
                 //gravity는 음수, 루트 안에 음수가 있으면 안되서 -2f 곱해줌
                 gravityForce = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 input.ResetJump();
@@ -100,7 +100,7 @@ public class PlayerMove : MonoBehaviour
 
         characterController.Move(velocity * Time.deltaTime);
         
-        anim.SetFloat(PLAYER_MOVESPEED, playerSpeed);
+        anim.SetFloat(hashMoveSpeed, playerSpeed);
 
     }
 }
