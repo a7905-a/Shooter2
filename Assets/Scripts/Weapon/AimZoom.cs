@@ -5,9 +5,9 @@ using UnityEngine.Animations.Rigging;
 public class AimZoom : MonoBehaviour
 {
     [Header("Inspector-Driven DI")]
-    [SerializeField] Inputs input;
-    [SerializeField] Animator animator;
-    [SerializeField] PlayerMove playerMove;
+    Inputs input;
+    Animator animator;
+    PlayerMove playerMove;
     [SerializeField] Transform playerBody;
     [SerializeField] WeaponSO weaponSO;
     ActiveWeapon activeWeapon;
@@ -38,7 +38,9 @@ public class AimZoom : MonoBehaviour
 
     void Awake()
     {
+        input = GetComponentInParent<Inputs>();
         animator = GetComponentInParent<Animator>();
+        playerMove = GetComponentInParent<PlayerMove>();
         activeWeapon = GetComponentInParent<ActiveWeapon>();
     }
 

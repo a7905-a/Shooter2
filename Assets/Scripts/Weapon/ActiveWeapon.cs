@@ -4,8 +4,14 @@ using System;
 public class ActiveWeapon : MonoBehaviour
 {
     public static event Action<int, int> OnAmmoChanged;
+    public static event Action<WeaponSO, WeaponIKTarget> OnWeaponSwitched;
+    public static event Action OnWeaponShoot;
+    public static event Action OnWeaponReload;
+    public static event Action OnWeaponRoloadFinished;
+    public bool weaponReloading = false;
+
     [SerializeField] WeaponSO weaponSO;
-    [SerializeField] WeaponSO rifleSO;
+    //[SerializeField] WeaponSO rifleSO;
 
     //다른 총기 종류 추가 가능
     // 예시) [SerializeField] WeaponSO pistolSO;
@@ -13,31 +19,28 @@ public class ActiveWeapon : MonoBehaviour
     [SerializeField] Transform weaponHoldPoint;
 
     //문자열을 해싱
-    readonly int hashReload = Animator.StringToHash("Reload");
-    readonly int hashShooting = Animator.StringToHash("Shooting");
+    
 
     AimZoom aimZoom;
     Inputs input;
     Animator animator;
     Weapon currentWeapon;
-    Rigging rigging;
+    
     int currentAmmo;
     float timeSinceLastShot = 0f;
 
     //매직 넘버 사용을 피하기 위해서 변수 이름을 선언
-    int rifleBaseLayer = 0;
-    int rifleActionLayer = 1;
-    int baseLayer = 2;
+    
 
-    public bool weaponReloading = false;
+    
 
     void Awake()
     {
         input = GetComponent<Inputs>();
-        animator = GetComponent<Animator>();
-        rigging = GetComponent<Rigging>();
+        //animator = GetComponent<Animator>();
+        //
         currentWeapon = GetComponentInChildren<Weapon>();
-        aimZoom = GetComponentInChildren<AimZoom>();
+        
         currentAmmo = weaponSO.MaxAmmo;       
     }
 
@@ -63,15 +66,10 @@ public class ActiveWeapon : MonoBehaviour
 
     void ReloadInput()
     {
-        if (input.reload)
+        if (input.reload && !weaponReloading)
         {
             input.ResetReload();
-
-            //재장전중일 때 재장전이 한번 더 되지 않도록 하기
-            if (!weaponReloading)
-            {
-                ReloadingAction();
-            }
+            ReloadingAction();            
         }
     }
 
@@ -83,6 +81,7 @@ public class ActiveWeapon : MonoBehaviour
             if (timeSinceLastShot >= weaponSO.FireRate && currentAmmo > 0)
             {
                 ProcessShoot();
+                
             }
             //반자동 총기의 경우 발사 버튼을 누를 때마다 발사하도록 하기
             HandleSemiAuto();
@@ -100,28 +99,23 @@ public class ActiveWeapon : MonoBehaviour
     void ProcessShoot()
     {
         currentWeapon.Shoot(weaponSO);
-        animator.SetTrigger(hashShooting);
         timeSinceLastShot = 0f;
         currentAmmo--;
         OnAmmoChanged?.Invoke(currentAmmo, weaponSO.MaxAmmo);
+        OnWeaponShoot?.Invoke(); 
     }
-
     public void Reload()
     {
-        aimZoom.RigWeight(1f);
         weaponReloading = false;
-        animator.SetLayerWeight(rifleActionLayer, 0f);
         currentAmmo = weaponSO.MaxAmmo;
-
         OnAmmoChanged?.Invoke(currentAmmo, weaponSO.MaxAmmo);
+        OnWeaponRoloadFinished?.Invoke();
     }
+    
     
     void ReloadingAction()
     {
-        aimZoom.RigWeight(0f);
-        aimZoom.AimCondition(false);
-        animator.SetLayerWeight(rifleActionLayer, 1f);
-        animator.SetTrigger(hashReload);
+        OnWeaponReload?.Invoke();
         weaponReloading = true;
     }
 
@@ -134,7 +128,7 @@ public class ActiveWeapon : MonoBehaviour
         // 2 새로운 무기 생성
         EquipNewWeapon(newWeaponSO);
         SetupWeaponIKAndAnimation();
-
+        
         currentAmmo = weaponSO.MaxAmmo;
         OnAmmoChanged?.Invoke(currentAmmo, weaponSO.MaxAmmo);
     }
@@ -156,11 +150,32 @@ public class ActiveWeapon : MonoBehaviour
     }
     void SetupWeaponIKAndAnimation()
     {
-        if (weaponSO.WeaponType == WeaponType.Rifle)
-        {
-            rigging.SetWeaponIKTargets(currentWeapon.gameObject);
-            animator.SetLayerWeight(baseLayer, 0f);
-            animator.SetLayerWeight(rifleBaseLayer, 1f);
-        }
+        WeaponIKTarget targetData = currentWeapon.GetComponent<WeaponIKTarget>();
+        OnWeaponSwitched?.Invoke(weaponSO, targetData);
+
+        // if (weaponSO.WeaponType == WeaponType.Rifle)
+        // {
+            
+
+        //     if (targetData != null)
+        //     {
+        //         rigging.SetWeaponIKTargets(targetData);
+        //     }
+            
+        //     animator.SetLayerWeight(baseLayer, 0f);
+        //     animator.SetLayerWeight(rifleBaseLayer, 1f);
+        // }
+        // else if (weaponSO.WeaponType == WeaponType.Pistol)
+        // {
+        //     WeaponIKTarget targetData = currentWeapon.GetComponent<WeaponIKTarget>();
+
+        //     if (targetData != null)
+        //     {
+        //         rigging.SetWeaponIKTargets(targetData);
+        //     }
+            
+        //     animator.SetLayerWeight(baseLayer, 0f);
+        //     animator.SetLayerWeight(pistolBaseLayer, 1f);
+        // }
     }
 }

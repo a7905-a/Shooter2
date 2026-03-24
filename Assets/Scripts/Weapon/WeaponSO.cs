@@ -3,7 +3,7 @@ using UnityEngine;
 public enum WeaponType
 {
     //다른 종류의 총기 추가 가능
-    //Pistol,
+    Pistol,
     Rifle
 }
 
