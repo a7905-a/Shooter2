@@ -1829,6 +1829,10 @@ PrefabInstance:
       propertyPath: aimCorsshair
       value: 
       objectReference: {fileID: 875018830}
+    - target: {fileID: 4387715884796629221, guid: 5c2c1334702ce5a4da63bea18b5a862a, type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 7240338018844782499, guid: 5c2c1334702ce5a4da63bea18b5a862a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.24
