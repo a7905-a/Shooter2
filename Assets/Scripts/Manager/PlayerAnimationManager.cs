@@ -15,7 +15,10 @@ public class PlayerAnimationManager : MonoBehaviour
     int pistolActionLayer = 4;
     readonly int hashReload = Animator.StringToHash("Reload");
     readonly int hashShooting = Animator.StringToHash("Shooting");
-   void Awake()
+
+    WeaponType currentWeaponType;
+
+    void Awake()
     {
         animator = GetComponent<Animator>();
         aimZoom = GetComponentInChildren<AimZoom>();
@@ -25,40 +28,58 @@ public class PlayerAnimationManager : MonoBehaviour
     void OnEnable()
     {
         ActiveWeapon.OnWeaponSwitched += HandleWeaponSwitched;
-        ActiveWeapon.OnWeaponReload += ReloadAction;
-        ActiveWeapon.OnWeaponRoloadFinished += ReloadFinished;
+        ActiveWeapon.OnWeaponReload += ReloadStartAction;
+        ActiveWeapon.OnWeaponRoloadFinished += ReloadFinishedAction;
         ActiveWeapon.OnWeaponShoot += ShootAction;
+        AimZoom.OnWeaponZoom += ZoomAction;
     }
 
     void OnDisable()
     {
         ActiveWeapon.OnWeaponSwitched -= HandleWeaponSwitched;
-        ActiveWeapon.OnWeaponReload -= ReloadAction;
-        ActiveWeapon.OnWeaponRoloadFinished -= ReloadFinished;
+        ActiveWeapon.OnWeaponReload -= ReloadStartAction;
+        ActiveWeapon.OnWeaponRoloadFinished -= ReloadFinishedAction;
         ActiveWeapon.OnWeaponShoot -= ShootAction;
+        AimZoom.OnWeaponZoom -= ZoomAction;
     }
     void HandleWeaponSwitched(WeaponSO weaponSO, WeaponIKTarget targetData)
     {
-        // 1. 리깅 세팅
+        currentWeaponType = weaponSO.WeaponType;
+        //리깅 세팅
         if (targetData != null)
         {
             rigging.SetWeaponIKTargets(targetData);
         }
 
-        // 2. 애니메이터 레이어 세팅 (기존 레이어 끄고 맞는 무기 켜기)
+        //애니메이터 레이어 세팅 (기존 레이어 끄고 맞는 무기 켜기)
         ResetAllWeaponLayers();
 
-        if (weaponSO.WeaponType == WeaponType.Rifle)
+        switch (currentWeaponType)
         {
+            case WeaponType.Rifle :
             animator.SetLayerWeight(rifleBaseLayer, 1f);
-        }
-        else if (weaponSO.WeaponType == WeaponType.Pistol)
-        {
+            break;
+
+            case WeaponType.Pistol :
             animator.SetLayerWeight(pistolBaseLayer, 1f);
+            break;
+
+            default :
+            Debug.Log("처리되지 않은 무기 타입");
+            break;
         }
+
+        // if (weaponSO.WeaponType == WeaponType.Rifle)
+        // {
+        //     animator.SetLayerWeight(rifleBaseLayer, 1f);
+        // }
+        // else if (weaponSO.WeaponType == WeaponType.Pistol)
+        // {
+        //     animator.SetLayerWeight(pistolBaseLayer, 1f);
+        // }
     }
 
-    void ReloadAction()
+    void ReloadStartAction()
     {
         aimZoom.RigWeight(0f);
         aimZoom.AimCondition(false);
@@ -66,7 +87,7 @@ public class PlayerAnimationManager : MonoBehaviour
         animator.SetTrigger(hashReload);
     }
 
-    void ReloadFinished()
+    void ReloadFinishedAction()
     {
         aimZoom.RigWeight(1f);
         animator.SetLayerWeight(rifleActionLayer, 0f);
@@ -76,6 +97,27 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         animator.SetTrigger(hashShooting);
     }
+
+    void ZoomAction(bool isZooming)
+    {
+        float weight = isZooming ? 1f : 0;
+
+        switch (currentWeaponType)
+        {
+            case WeaponType.Rifle :
+            animator.SetLayerWeight(rifleActionLayer, weight);
+            break;
+
+            case WeaponType.Pistol :
+            animator.SetLayerWeight(pistolActionLayer, weight);
+            break;
+
+            default :
+            Debug.Log("처리되지 않은 무기 타입");
+            break;
+        }
+    }
+
     void ResetAllWeaponLayers()
     {
         animator.SetLayerWeight(baseLayer, 0f);
