@@ -1,15 +1,18 @@
+using System;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
 public class AimZoom : MonoBehaviour
 {
+    public static event Action<bool> OnWeaponZoom;
+
     [Header("Inspector-Driven DI")]
+    [SerializeField] Transform playerBody;
+    [SerializeField] WeaponSO weaponSO;
     Inputs input;
     Animator animator;
     PlayerMove playerMove;
-    [SerializeField] Transform playerBody;
-    [SerializeField] WeaponSO weaponSO;
     ActiveWeapon activeWeapon;
 
     [Header("Object")]
@@ -30,10 +33,6 @@ public class AimZoom : MonoBehaviour
 
     Transform camTrans;
     RaycastHit rayhit;
-    
-    int rifleActionLayer = 1;
-
-
 
 
     void Awake()
@@ -53,6 +52,8 @@ public class AimZoom : MonoBehaviour
     {
         
         AimCheck();
+
+        
         
     }
 
@@ -68,7 +69,7 @@ public class AimZoom : MonoBehaviour
         if (input.zoom)
         {
             AimCondition(true);
-            animator.SetLayerWeight(rifleActionLayer, 1f);
+            OnWeaponZoom?.Invoke(true);
 
             if (Physics.Raycast(camTrans.position, camTrans.forward, out rayhit, Mathf.Infinity, layerMask))
             {
@@ -93,7 +94,7 @@ public class AimZoom : MonoBehaviour
         else
         {
             AimCondition(false);
-            animator.SetLayerWeight(rifleActionLayer, 0f);
+            OnWeaponZoom?.Invoke(false);
             RigWeight(0f);
         }
     }
