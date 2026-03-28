@@ -9,9 +9,8 @@ public class AimZoom : MonoBehaviour
 
     [Header("Inspector-Driven DI")]
     [SerializeField] Transform playerBody;
-    [SerializeField] WeaponSO weaponSO;
+    //[SerializeField] WeaponSO weaponSO;
     Inputs input;
-    Animator animator;
     PlayerMove playerMove;
     ActiveWeapon activeWeapon;
 
@@ -38,7 +37,6 @@ public class AimZoom : MonoBehaviour
     void Awake()
     {
         input = GetComponentInParent<Inputs>();
-        animator = GetComponentInParent<Animator>();
         playerMove = GetComponentInParent<PlayerMove>();
         activeWeapon = GetComponentInParent<ActiveWeapon>();
     }
@@ -49,25 +47,24 @@ public class AimZoom : MonoBehaviour
     }
 
     void Update()
-    {
-        
-        AimCheck();
-
-        
-        
+    {        
+        AimCheck(); 
     }
 
     void AimCheck()
     {
         Vector3 targetPoint = Vector3.zero;
+        
 
-        if (activeWeapon.weaponReloading)
+        if (!activeWeapon.HasWeapon() || activeWeapon.weaponReloading)
         {
             return;
         }
 
         if (input.zoom)
         {
+            
+            
             AimCondition(true);
             OnWeaponZoom?.Invoke(true);
 

@@ -29,7 +29,7 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         ActiveWeapon.OnWeaponSwitched += HandleWeaponSwitched;
         ActiveWeapon.OnWeaponReload += ReloadStartAction;
-        ActiveWeapon.OnWeaponRoloadFinished += ReloadFinishedAction;
+        ActiveWeapon.OnWeaponReloadFinished += ReloadFinishedAction;
         ActiveWeapon.OnWeaponShoot += ShootAction;
         AimZoom.OnWeaponZoom += ZoomAction;
     }
@@ -38,7 +38,7 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         ActiveWeapon.OnWeaponSwitched -= HandleWeaponSwitched;
         ActiveWeapon.OnWeaponReload -= ReloadStartAction;
-        ActiveWeapon.OnWeaponRoloadFinished -= ReloadFinishedAction;
+        ActiveWeapon.OnWeaponReloadFinished -= ReloadFinishedAction;
         ActiveWeapon.OnWeaponShoot -= ShootAction;
         AimZoom.OnWeaponZoom -= ZoomAction;
     }
@@ -69,28 +69,47 @@ public class PlayerAnimationManager : MonoBehaviour
             break;
         }
 
-        // if (weaponSO.WeaponType == WeaponType.Rifle)
-        // {
-        //     animator.SetLayerWeight(rifleBaseLayer, 1f);
-        // }
-        // else if (weaponSO.WeaponType == WeaponType.Pistol)
-        // {
-        //     animator.SetLayerWeight(pistolBaseLayer, 1f);
-        // }
     }
 
     void ReloadStartAction()
     {
         aimZoom.RigWeight(0f);
         aimZoom.AimCondition(false);
-        animator.SetLayerWeight(rifleActionLayer, 1f);
         animator.SetTrigger(hashReload);
+
+        switch (currentWeaponType)
+        {
+            case WeaponType.Rifle :
+            animator.SetLayerWeight(rifleActionLayer, 1f);
+            break;
+
+            case WeaponType.Pistol :
+            animator.SetLayerWeight(pistolActionLayer, 1f);
+            break;
+
+            default :
+            Debug.Log("처리되지 않은 무기 타입");
+            break;
+        }
     }
 
     void ReloadFinishedAction()
     {
         aimZoom.RigWeight(1f);
-        animator.SetLayerWeight(rifleActionLayer, 0f);
+        switch (currentWeaponType)
+        {
+            case WeaponType.Rifle :
+            animator.SetLayerWeight(rifleActionLayer, 0f);
+            break;
+
+            case WeaponType.Pistol :
+            animator.SetLayerWeight(pistolActionLayer, 0f);
+            break;
+
+            default :
+            Debug.Log("처리되지 않은 무기 타입");
+            break;
+        }
     }
 
     void ShootAction()
