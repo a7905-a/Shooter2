@@ -1,16 +1,12 @@
-<a name="top"></a>
-
 [![Unity](https://img.shields.io/badge/Unity-6000.0.40f1-000000?style=flat-square&logo=Unity&logoColor=white)](#)
 [![language](https://img.shields.io/badge/language-C%23-239120?style=flat-square&logo=c-sharp&logoColor=white)](#)
 [![Platform](https://img.shields.io/badge/Platform-Windows-0078D4?style=flat-square&logo=windows&logoColor=white)](#)
 
-
 ⭐ 3인칭 3D 유니티 프로젝트입니다.
-
 
 ## ⭐ 주요 기능 및 아키텍처
 
-### 1. 플레이어 컨트롤 및 동적 카메라 시스템 (Player & Camera)
+### A. 플레이어 컨트롤 및 동적 카메라 시스템 (Player & Camera)
 
 
 - **New Input System 적용:** `Invoke Unity Events` 방식을 채택하여 인스펙터 상에서 직관적으로 이벤트를 연결했습니다. 이를 통해 입력 로직의 하드코딩을 지양하고 휴먼 에러를 최소화하여 유지보수성을 높였습니다.
@@ -21,7 +17,7 @@
 - **시네머신 & IK 기반 조준 연출:** 우클릭 조준 시 Cinemachine 카메라 줌인과 Animation Rigging (IK)을 연동했습니다. 캐릭터의 상체와 시선이 십자선(Crosshair)을 정확히 따라가도록 구현하여 조작의 몰입감을 올렸습니다.
 <img src="https://github.com/user-attachments/assets/71fef215-09ac-432b-991a-4a87a28f6a3e" width="500" alt="데모 GIF" />
 
-### 2. 데이터 주도 설계 기반의 무기 시스템
+### B. 데이터 주도 설계 기반의 무기 시스템
 
 
 - **Scriptable Object(SO) 활용:** 무기의 스펙(데미지, 연사속도 등)을  `Scriptable Object`로 분리하여 데이터화했습니다. 
@@ -30,7 +26,7 @@
 
 
 
-### 3. 단일 책임 원칙(SRP)을 준수한 프로젝트의 구조 : 로직의 디커플링 (옵저버 패턴)
+### C. 단일 책임 원칙(SRP)을 준수한 프로젝트의 구조 : 로직의 디커플링 (옵저버 패턴)
 - **적의 구조:** 적의 AI나 이동 로직과 체력/피격 데이터를 철저히 분리하기 위해 옵저버 패턴을 디자인 했습니다. 적 소환, 피격, 파괴를 이벤트 형식을 사용해 로직들의 의존성을 낮췄습니다.
 <img width="400" height="350" alt="image" src="https://github.com/user-attachments/assets/916fc455-dc70-4e57-842b-13acbf8db7b5" />
 <img width="400" height="350" alt="image" src="https://github.com/user-attachments/assets/7c6322b9-a3fd-452e-b846-3a990ce5ef81" />
