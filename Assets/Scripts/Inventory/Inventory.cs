@@ -9,41 +9,41 @@ public class Inventory : MonoBehaviour
     public static Inventory Instance;
     public PlayerInventoryDataSO inventoryData;
 
-    public Transform playerTransform;
-    public LayerMask itemLayerMask;
-    public ItemSO woodItem;
-    public ItemSO axeItem;
+    [SerializeField] Transform playerTransform;
+    [SerializeField] LayerMask itemLayerMask;
+    [SerializeField] ItemSO woodItem;
+    [SerializeField] ItemSO axeItem;
 
-    public GameObject hotbarObject;
-    public GameObject inventorySlotParent;
-    public GameObject container;
+    [SerializeField] GameObject hotbarObject;
+    [SerializeField] GameObject inventorySlotParent;
+    [SerializeField] GameObject container;
 
-    public Image dragIcon;
+    [SerializeField] Image dragIcon;
 
     //아이템 줍기
-    public float pickupRange = 30f;
+    [SerializeField] float pickupRange = 30f;
     Item lookedAtitem = null;
-    public Material highlightMaterial;
+    [SerializeField] Material highlightMaterial;
     Material originalMaterial;
     Renderer lookedAtRenderer = null;
 
     int equippedHotbarIndex = 0;
-    public float equippedOpacity = 0.9f;
-    public float normalOpacity = 0.58f;
+    [SerializeField] float equippedOpacity = 0.9f;
+    [SerializeField] float normalOpacity = 0.58f;
     public Transform hand;
     GameObject currentHandItem;
     
     //아이템 설명 UI
-    public GameObject itemDescriptionParent;
-    public Image itemDescriptionImage;
-    public TextMeshProUGUI descriptionItemNameText;
-    public TextMeshProUGUI itemDescriptionText;
+    [SerializeField] GameObject itemDescriptionParent;
+    [SerializeField] Image itemDescriptionImage;
+    [SerializeField] TextMeshProUGUI descriptionItemNameText;
+    [SerializeField] TextMeshProUGUI itemDescriptionText;
 
     //크래프팅
     public List<Recipe> allRecipes = new List<Recipe>();
-    public Transform craftingGrid;
-    public GameObject craftingBottonPrefab;
-    public GameObject itemNeededUIPrefab;
+    [SerializeField] Transform craftingGrid;
+    [SerializeField] GameObject craftingBottonPrefab;
+    [SerializeField] GameObject itemNeededUIPrefab;
 
     //인벤토리 슬롯 리스트
     List<Slot> inventorySlots = new List<Slot>();
