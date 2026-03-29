@@ -63,8 +63,6 @@ public class AimZoom : MonoBehaviour
 
         if (input.zoom)
         {
-            
-            
             AimCondition(true);
             OnWeaponZoom?.Invoke(true);
 
