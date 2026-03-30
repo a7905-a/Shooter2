@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour
     public PlayerInventoryDataSO inventoryData;
 
     [SerializeField] Transform playerTransform;
-    [SerializeField] LayerMask itemLayerMask;
+    //[SerializeField] LayerMask itemLayerMask;
     [SerializeField] ItemSO woodItem;
     [SerializeField] ItemSO axeItem;
 
@@ -19,13 +19,6 @@ public class Inventory : MonoBehaviour
     [SerializeField] GameObject container;
 
     [SerializeField] Image dragIcon;
-
-    //아이템 줍기
-    [SerializeField] float pickupRange = 30f;
-    Item lookedAtitem = null;
-    [SerializeField] Material highlightMaterial;
-    Material originalMaterial;
-    Renderer lookedAtRenderer = null;
 
     int equippedHotbarIndex = 0;
     [SerializeField] float equippedOpacity = 0.9f;
@@ -38,12 +31,6 @@ public class Inventory : MonoBehaviour
     [SerializeField] Image itemDescriptionImage;
     [SerializeField] TextMeshProUGUI descriptionItemNameText;
     [SerializeField] TextMeshProUGUI itemDescriptionText;
-
-    //크래프팅
-    public List<Recipe> allRecipes = new List<Recipe>();
-    [SerializeField] Transform craftingGrid;
-    [SerializeField] GameObject craftingBottonPrefab;
-    [SerializeField] GameObject itemNeededUIPrefab;
 
     //인벤토리 슬롯 리스트
     List<Slot> inventorySlots = new List<Slot>();
@@ -70,8 +57,6 @@ public class Inventory : MonoBehaviour
 
         allSlots.AddRange(inventorySlots);
         allSlots.AddRange(hotbarSlots);
-
-        PopulateCraftingGrid();
     }
 
     void Start()
@@ -91,12 +76,6 @@ public class Inventory : MonoBehaviour
             Cursor.visible = !Cursor.visible;
             TPSCamera.Instance.updatingRotation = !TPSCamera.Instance.updatingRotation;
         }
-        
-
-        HandleItemInteraction();
-
-        DetectLookedAtItem();
-        Pickup();
 
         StartDrag();
         UpdateDragItemPosition();
@@ -108,68 +87,7 @@ public class Inventory : MonoBehaviour
 
         UpdateItemDescription();
     }
-    //주변 아이템 회수
-    void HandleItemInteraction()
-    {
-        // 플레이어 연결이 안 되어있으면 에러 방지
-        if (playerTransform == null) return; 
-
-        // 1. UI 위치가 아닌 '플레이어 위치'를 중심으로 아이템 레이더(구체)를 돌립니다!
-        Collider[] hitColliders = Physics.OverlapSphere(playerTransform.position, pickupRange, itemLayerMask);
-
-        Item closestItem = null;
-        float minDistance = float.MaxValue;
-
-        // 2. 반경 안에 들어온 아이템 중 가장 가까운 녀석을 찾습니다.
-        foreach (Collider col in hitColliders)
-        {
-            Item item = col.GetComponentInParent<Item>(); 
-            if (item != null)
-            {
-                float distance = Vector3.Distance(playerTransform.position, col.transform.position);
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    closestItem = item;
-                }
-            }
-        }
-
-        // 3. 주울 수 있는 아이템이 근처에 있다면?
-        if (closestItem != null)
-        {
-            // 하이라이트 효과 적용 (자식 오브젝트의 렌더러까지 찾음)
-            Renderer rend = closestItem.GetComponentInChildren<Renderer>();
-            if (rend != null && rend != lookedAtRenderer)
-            {
-                if (lookedAtRenderer != null) lookedAtRenderer.material = originalMaterial;
-                originalMaterial = rend.material;
-                rend.material = highlightMaterial;
-                lookedAtRenderer = rend;
-            }
-
-            // 💡 E키를 누르면 가장 가까운 아이템 줍기!
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                AddItem(closestItem.item, closestItem.amount);
-                Destroy(closestItem.gameObject);
-                
-                // 파괴 후 초기화
-                lookedAtRenderer = null;
-                originalMaterial = null;
-            }
-        }
-        else // 4. 주변에 아이템이 아무것도 없다면?
-        {
-            // 멀어졌으니 원래 색으로 복구
-            if (lookedAtRenderer != null)
-            {
-                lookedAtRenderer.material = originalMaterial;
-                lookedAtRenderer = null;
-                originalMaterial = null;
-            }
-        }
-    }
+    
 
     //인벤토리 데이터를 저장하는 로직
     public void SaveInventory()
@@ -229,7 +147,10 @@ public class Inventory : MonoBehaviour
 
                     if (remaining <= 0)
                     {
-                        PopulateCraftingGrid();
+                        if (CraftingManager.Instance != null)
+                        {
+                            CraftingManager.Instance.PopulateCraftingGrid();
+                        }
                         return;
                     }
                     
@@ -247,7 +168,10 @@ public class Inventory : MonoBehaviour
 
                 if (remaining <= 0)
                     {
-                        PopulateCraftingGrid();
+                        if (CraftingManager.Instance != null)
+                        {
+                            CraftingManager.Instance.PopulateCraftingGrid();
+                        }
                         return;
                     }
             }
@@ -257,9 +181,35 @@ public class Inventory : MonoBehaviour
         {
             Debug.Log("Not enough space to add all items. " + remaining + " items were not added " + itemToAdd.itemName);
         }
-        PopulateCraftingGrid();
+        if (CraftingManager.Instance != null)
+        {
+            CraftingManager.Instance.PopulateCraftingGrid();
+        }
     }
+    public void RemoveItem(ItemSO itemToRemove, int amount)
+    {
+        int remaining = amount;
 
+        foreach(Slot slot in allSlots)
+        {
+            if(!slot.HasItem()) continue;
+            if(slot.GetItem() != itemToRemove) continue;
+
+            int take = Mathf.Min(slot.GetAmount(), remaining);
+            slot.SetItem(slot.GetItem(), slot.GetAmount() - take);
+
+            if (slot.GetAmount() <= 0)
+            {
+                slot.ClearSlot();
+            }
+
+            remaining -= take;
+            if(remaining <= 0)
+            {
+                break;
+            }
+        }
+    }
 
     void StartDrag()
     {
@@ -358,48 +308,6 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    void Pickup()
-    {
-        if(lookedAtRenderer != null && Input.GetKeyDown(KeyCode.E))
-        {
-            Item item = lookedAtRenderer.GetComponent<Item>();
-            if (item != null)
-            {
-                AddItem(item.item, item.amount);
-                Destroy(item.gameObject);
-                EquipHandItem();
-
-
-            }
-        }
-    }
-
-    void DetectLookedAtItem()
-    {
-        if (lookedAtRenderer != null)
-        {
-            lookedAtRenderer.material = originalMaterial;
-            lookedAtRenderer = null;
-            originalMaterial = null;
-        }
-
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, pickupRange, itemLayerMask))
-        {
-            Item item = hit.collider.GetComponent<Item>();
-            if (item != null)
-            {
-                Renderer rend = item.GetComponent<Renderer>();
-                if (rend != null)
-                {
-                    originalMaterial = rend.material;
-                    rend.material = highlightMaterial;
-                    lookedAtRenderer = rend;
-                }
-            }
-        }
-    }
 
     void UpdateHotbarOpacity()
     {
@@ -447,7 +355,10 @@ public class Inventory : MonoBehaviour
         equippedSlot.ClearSlot();
 
         EquipHandItem();
-        PopulateCraftingGrid();
+        if (CraftingManager.Instance != null)
+        {
+            CraftingManager.Instance.PopulateCraftingGrid();
+        }
     }
 
     void EquipHandItem()
@@ -489,114 +400,23 @@ public class Inventory : MonoBehaviour
         itemDescriptionParent.SetActive(false);
     }
 
-    void PopulateCraftingGrid()
-    {
-        for(int i = craftingGrid.childCount - 1; i >= 0; i--)
-        {
-            Destroy(craftingGrid.GetChild(i).gameObject);
-        }
-
-        foreach(Recipe recipe in allRecipes)
-        {
-            GameObject buttonObject = Instantiate(craftingBottonPrefab, craftingGrid);
-            
-            Image img = buttonObject.transform.GetChild(0).GetComponent<Image>();
-            img.sprite = recipe.result.itemIcon;
-
-            Button button = buttonObject.GetComponent<Button>();
-
-            button.interactable = CanCraft(recipe);
-            button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(() => Craft(recipe));
-
-            foreach(Ingredient ingredient in recipe.ingredients)
-            {
-                GameObject neededItem = Instantiate(itemNeededUIPrefab, buttonObject.transform.GetChild(1));
-                neededItem.GetComponent<Image>().sprite = ingredient.item.itemIcon;
-                neededItem.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "x" + ingredient.amount.ToString();
-            }
-        }
-    }
-
-    public void Craft(Recipe recipe)
-    {
-        if(!CanCraft(recipe))
-        {
-            return;
-        }
-
-        ConsumeIngredients(recipe);
-        AddItem(recipe.result, recipe.resultAmount);
-
-        PopulateCraftingGrid();
-    }
-
-    public void ConsumeIngredients(Recipe recipe)
-    {
-        foreach(Ingredient ingredient in recipe.ingredients)
-        {
-            int remaining = ingredient.amount;
-
-            foreach(Slot slot in allSlots)
-            {
-                if (!slot.HasItem()) continue;
-                if (slot.GetItem() != ingredient.item) continue;
-
-                int take = Mathf.Min(slot.GetAmount(), remaining);
-                slot.SetItem(slot.GetItem(), slot.GetAmount() - take);
-
-                if(slot.GetAmount() <= 0)
-                {
-                    slot.ClearSlot();
-                }
-
-                remaining -= take;
-                if (remaining <= 0)
-                {
-                    break;
-                }
-            }
-        }
-    }
-
-    public bool CanCraft(Recipe recipe)
-    {
-        foreach(Ingredient ingredient in recipe.ingredients)
-        {
-            int totalFound = 0;
-            
-            foreach(Slot slot in allSlots)
-            {
-                if(slot.HasItem() && slot.GetItem() == ingredient.item)
-                {
-                    totalFound += slot.GetAmount();
-                }
-            }
-
-            if (totalFound < ingredient.amount)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
+    
     public int GetTotalItemCount(ItemSO targetItem)
     {
-        int totalCount = 0; // 처음엔 0개부터 세기 시작합니다.
+        int totalCount = 0;
 
-        // 내 가방(인벤토리 + 핫바)의 모든 슬롯을 하나씩 열어봅니다.
+        // 내 가방의 모든 슬롯을 하나씩 확인
         foreach (Slot slot in allSlots)
         {
             // 만약 슬롯에 아이템이 들어있고 && 그 아이템 원본이 내가 찾는 목표물(targetItem)과 똑같다면?
             if (slot.HasItem() && slot.GetItem() == targetItem)
             {
-                // 그 슬롯에 들어있는 개수를 총합(totalCount)에 더해줍니다!
+                // 그 슬롯에 들어있는 개수를 총합에 더해줌
                 totalCount += slot.GetAmount();
             }
         }
 
-        // 가방을 다 뒤졌으면 최종 개수를 사장님(작업대)에게 보고합니다!
+        //최종 개수를 보고
         return totalCount;
     }
 }

@@ -30,9 +30,9 @@ public class WorkbenchRepair : Interaction
     }
     protected override void OnInteract()
     {
-        if (Inventory.Instance.CanCraft(workBenchRecipe))
+        if (CraftingManager.Instance.CanCraft(workBenchRecipe))
         {
-            Inventory.Instance.ConsumeIngredients(workBenchRecipe);
+            CraftingManager.Instance.ConsumeIngredients(workBenchRecipe);
 
             if (interactionIcon != null)
             {
@@ -61,7 +61,7 @@ public class WorkbenchRepair : Interaction
             // 글씨 갱신: "Wood 0 / 5"
             requirementText.text = $"{reqItem.item.itemName} {currentAmount} / {reqItem.amount}";
             
-            // 재료가 충분하면 초록색, 부족하면 빨간색으로 칠해주는 포트폴리오용 꿀팁!
+            // 재료가 충분하면 초록색, 부족하면 빨간색
             requirementText.color = currentAmount >= reqItem.amount ? Color.green : Color.red;
         }
     }

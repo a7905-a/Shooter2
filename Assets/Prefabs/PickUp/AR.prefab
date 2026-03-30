@@ -94,6 +94,10 @@ PrefabInstance:
       propertyPath: weaponSO
       value: 
       objectReference: {fileID: 11400000, guid: 61f5f22599788e040837fdca5edac3c6, type: 2}
+    - target: {fileID: 216594060840532620, guid: 7386ce19f218f2742a41a011a7368618, type: 3}
+      propertyPath: interactionIcon
+      value: 
+      objectReference: {fileID: 7771665314522635338}
     - target: {fileID: 2521297275103241863, guid: 7386ce19f218f2742a41a011a7368618, type: 3}
       propertyPath: m_Name
       value: AR
@@ -152,3 +156,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8223846217833538498, guid: 7386ce19f218f2742a41a011a7368618, type: 3}
   m_PrefabInstance: {fileID: 7963494552489818643}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7771665314522635338 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 386892264950031961, guid: 7386ce19f218f2742a41a011a7368618, type: 3}
+  m_PrefabInstance: {fileID: 7963494552489818643}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
