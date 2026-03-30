@@ -4,9 +4,9 @@ using UnityEngine;
 public abstract class Interaction : MonoBehaviour
 {
     [SerializeField] protected Image interactionIcon;
-
+    const string PLAYER_STRING = "Player";
     protected bool isPlayerInRange = false;
-
+    protected GameObject playerObject;
     protected abstract void OnInteract();
 
     protected virtual void Update()
@@ -19,9 +19,12 @@ public abstract class Interaction : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag(PLAYER_STRING))
         {
             isPlayerInRange = true;
+            //진입 시 플레이어 정보 저장
+            playerObject = other.gameObject;
+
             if (interactionIcon != null)
             {
                 interactionIcon.gameObject.SetActive(true);
@@ -32,9 +35,12 @@ public abstract class Interaction : MonoBehaviour
 
     protected virtual void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag(PLAYER_STRING))
         {
             isPlayerInRange = false;
+
+            playerObject = null;
+
             if (interactionIcon != null)
             {
                 interactionIcon.gameObject.SetActive(false);

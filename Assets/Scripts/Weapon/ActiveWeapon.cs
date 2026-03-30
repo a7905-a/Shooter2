@@ -41,7 +41,9 @@ public class ActiveWeapon : MonoBehaviour
 
 
     void Update()
-    {
+    {   
+        Debug.Log(weaponSO);
+        
         if(weaponSO == null) return;
 
         LastShootTimer();
