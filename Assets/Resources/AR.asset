@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponType: 1
   WeaponPrefab: {fileID: 5613026588999910632, guid: ddae625af9746814bad43e9e60ab150c, type: 3}
+  WeaponName: Base Rifle
   IsAutomatic: 1
   Damege: 1
   FireRate: 0.15

@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5320528270975036943
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4996705428045302913}
+  - component: {fileID: 1028859218073172560}
+  - component: {fileID: 173291097267515292}
+  - component: {fileID: 62690031471420337}
+  - component: {fileID: 6894375452086459220}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4996705428045302913
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5320528270975036943}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1028859218073172560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5320528270975036943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d472a62e3b9d4640b94de3cf57dada3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 5702826253611990724, guid: 61c934816affeeb4bb52e43be89be468, type: 3}
+  - {fileID: 7541472773642616804, guid: 17a93815f8f8ecb48a01c3039ca7c97c, type: 3}
+  poolSize: 5
+--- !u!114 &173291097267515292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5320528270975036943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ca267802f9dfd4aaa961cf67c52e08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &62690031471420337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5320528270975036943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3760091f15eab846b646ba56e644713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6894375452086459220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5320528270975036943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e0a7581fe8ce6248a53cdb90ea5e9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allRecipes: []
+  craftingGrid: {fileID: 0}
+  craftingBottonPrefab: {fileID: 2700606237032560810, guid: c7562c1316a0d77439fec0996660cb8f, type: 3}
+  itemNeededUIPrefab: {fileID: 5135356648581711070, guid: 0c1ddd07e22556540926b5333dc3f296, type: 3}
