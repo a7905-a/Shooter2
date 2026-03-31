@@ -60,10 +60,15 @@ public class ActiveWeapon : MonoBehaviour
 
     void ReloadInput()
     {
-        if (input.reload && !weaponReloading)
+        if (input.reload)
         {
             input.ResetReload();
-            ReloadingAction();            
+            
+            if (!weaponReloading)
+            {
+                ReloadingAction();            
+                
+            }
         }
     }
 
@@ -109,8 +114,8 @@ public class ActiveWeapon : MonoBehaviour
     
     void ReloadingAction()
     {
-        OnWeaponReload?.Invoke();
         weaponReloading = true;
+        OnWeaponReload?.Invoke();
     }
 
     public bool HasWeapon()

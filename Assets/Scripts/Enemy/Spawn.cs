@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,11 +7,17 @@ public class Spawn : MonoBehaviour
     public static event Action<GameObject> OnEnemySpawn;
 
     [SerializeField] GameObject robotPrefab;
-    [SerializeField] int spawnCount = 5;
-    [SerializeField] float spawnRadius = 3f;
-    
- 
-    
+
+    //노드 하나당 스폰할 적의 수
+    [SerializeField] int spawnCount = 5;    
+
+    SpawnBase[] myAreaNodes;
+
+    void Awake()
+    {
+        myAreaNodes = GetComponentsInChildren<SpawnBase>();
+    }
+
     void OnEnable()
     {
         SpawnSwitch.OnRobotBattleStart += StartSpawnRobot;
@@ -28,25 +32,22 @@ public class Spawn : MonoBehaviour
 
     void StartSpawnRobot()
     {
-        for (int i = 0; i < spawnCount; i++)
+        if (myAreaNodes.Length == 0)
         {
-            Vector3 randomOffset = Random.insideUnitSphere * spawnRadius;
-            randomOffset.y = 0; 
-            Vector3 spawnPoints = transform.position + randomOffset;
-
-            GameObject enemyRobot = Instantiate(robotPrefab, spawnPoints, transform.rotation);
-            OnEnemySpawn?.Invoke(enemyRobot);
-
+            Debug.LogWarning("스폰 영역 노드가 없습니다");
+            return;
         }
-    }
+        foreach (SpawnBase node in myAreaNodes)
+        {
+            for(int i = 0; i < spawnCount; i++)
+            {
+                Vector3 randomOffset = Random.insideUnitSphere * node.spawnRadius;
+                randomOffset.y = 0; 
+                Vector3 spawnPoints = node.transform.position + randomOffset;
 
-    
-    void OnDrawGizmosSelected()
-    {
-        
-        Gizmos.color = Color.red;
-
-        
-        Gizmos.DrawWireSphere(transform.position, spawnRadius);
+                GameObject enemyRobot = Instantiate(robotPrefab, spawnPoints, node.transform.rotation);
+                OnEnemySpawn?.Invoke(enemyRobot);
+            }
+        }
     }
 }

@@ -95,7 +95,7 @@ public class PlayerAnimationManager : MonoBehaviour
 
     void ReloadFinishedAction()
     {
-        aimZoom.RigWeight(1f);
+        //aimZoom.RigWeight(1f);
         switch (currentWeaponType)
         {
             case WeaponType.Rifle :
