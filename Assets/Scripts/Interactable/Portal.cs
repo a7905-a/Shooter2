@@ -1,44 +1,48 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using ProjectTwo.InventoryManagement;
 
-public class Portal : MonoBehaviour
+namespace ProjectTwo.Interactable
 {
-    public string nextSceneName;
-    bool isPlayerInRange = false;
-
-    void Update()
+    public class Portal : MonoBehaviour
     {
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.T))
-        {        
-            TeleportToNextScene();
-        }
-    }
+        public string nextSceneName;
+        bool isPlayerInRange = false;
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        void Update()
         {
-            isPlayerInRange = true;
-            Debug.Log("포탈 근처 범위 진입");
+            if (isPlayerInRange && Input.GetKeyDown(KeyCode.T))
+            {        
+                TeleportToNextScene();
+            }
         }
-    }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        void OnTriggerEnter(Collider other)
         {
-            isPlayerInRange = false;
+            if (other.CompareTag("Player"))
+            {
+                isPlayerInRange = true;
+                Debug.Log("포탈 근처 범위 진입");
+            }
         }
-    }
 
-    void TeleportToNextScene()
-    {
-        Debug.Log("포탈 이동");
-        if (Inventory.Instance != null)
+        void OnTriggerExit(Collider other)
         {
-            Inventory.Instance.SaveInventory();
+            if (other.CompareTag("Player"))
+            {
+                isPlayerInRange = false;
+            }
         }
 
-        SceneManager.LoadScene(nextSceneName);
+        void TeleportToNextScene()
+        {
+            Debug.Log("포탈 이동");
+            if (Inventory.Instance != null)
+            {
+                Inventory.Instance.SaveInventory();
+            }
+
+            SceneManager.LoadScene(nextSceneName);
+        }
     }
 }

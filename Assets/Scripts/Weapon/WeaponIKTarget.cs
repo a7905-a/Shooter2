@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public class WeaponIKTarget : MonoBehaviour
+namespace ProjectTwo.Weapon
 {
-    public Transform rightHandTarget;
-    public Transform  leftHandTarget;
+    public class WeaponIKTarget : MonoBehaviour
+    {
+        public Transform rightHandTarget;
+        public Transform  leftHandTarget;
+    }
 }

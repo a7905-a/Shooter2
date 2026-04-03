@@ -1,40 +1,43 @@
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
-public class Rigging : MonoBehaviour
+namespace ProjectTwo.Weapon
 {
-    [SerializeField] TwoBoneIKConstraint rightHandIK;
-    [SerializeField] TwoBoneIKConstraint leftHandIK;
-    RigBuilder rigBuilder;
-
-    void Awake()
+    public class Rigging : MonoBehaviour
     {
-        rigBuilder = GetComponent<RigBuilder>();
-    }
-    public void SetWeaponIKTargets(WeaponIKTarget newtargets)
-    {
-        if (leftHandIK != null) leftHandIK.weight = 0f;
-        if (rightHandIK != null) rightHandIK.weight = 0f;
+        [SerializeField] TwoBoneIKConstraint rightHandIK;
+        [SerializeField] TwoBoneIKConstraint leftHandIK;
+        RigBuilder rigBuilder;
 
-        if(newtargets != null)
+        void Awake()
         {
-            if (leftHandIK != null && newtargets.leftHandTarget != null)
+            rigBuilder = GetComponent<RigBuilder>();
+        }
+        public void SetWeaponIKTargets(WeaponIKTarget newtargets)
+        {
+            if (leftHandIK != null) leftHandIK.weight = 0f;
+            if (rightHandIK != null) rightHandIK.weight = 0f;
+
+            if(newtargets != null)
             {
-                leftHandIK.data.target = newtargets.leftHandTarget;
-                leftHandIK.weight = 1f; 
+                if (leftHandIK != null && newtargets.leftHandTarget != null)
+                {
+                    leftHandIK.data.target = newtargets.leftHandTarget;
+                    leftHandIK.weight = 1f; 
+                }
+
+                if (rightHandIK != null && newtargets.rightHandTarget != null)
+                {
+                    rightHandIK.data.target = newtargets.rightHandTarget;
+                    rightHandIK.weight = 1f;
+                }
             }
 
-            if (rightHandIK != null && newtargets.rightHandTarget != null)
+            if (rigBuilder != null)
             {
-                rightHandIK.data.target = newtargets.rightHandTarget;
-                rightHandIK.weight = 1f;
+                rigBuilder.Build();
             }
         }
-       
-        if (rigBuilder != null)
-        {
-            rigBuilder.Build();
-        }
-    }
 
+    }
 }

@@ -1,13 +1,14 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+namespace ProjectTwo.Manager
 {
-    public void GoToScene(string sceneName)
+    public class MainMenu : MonoBehaviour
     {
-        SceneManager.LoadScene(sceneName);
+        public void GoToScene(string sceneName)
+        {
+            SceneManager.LoadScene(sceneName);
+        }
     }
 }
 

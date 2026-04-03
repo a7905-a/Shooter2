@@ -1,42 +1,45 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour
+namespace ProjectTwo.Player
 {
-    [SerializeField] int maxHealth = 5;
-    [SerializeField] Image[] healthBar;
-    int currentHealth;
-
-    void Awake()
+    public class PlayerHealth : MonoBehaviour
     {
-        currentHealth = maxHealth;
-        HealthBarUI();
-    }
+        [SerializeField] int maxHealth = 5;
+        [SerializeField] Image[] healthBar;
+        int currentHealth;
 
-    public void TakeDamage(int amount)
-    {
-        currentHealth -= amount;
-
-        HealthBarUI();
-        if (currentHealth <= 0)
+        void Awake()
         {
-            Destroy(this.gameObject);
+            currentHealth = maxHealth;
+            HealthBarUI();
         }
-    }
 
-    void HealthBarUI()
-    {
-        if (healthBar == null) return;
-
-        for (int i = 0; i < healthBar.Length; i++)
+        public void TakeDamage(int amount)
         {
-            if (i < currentHealth)
+            currentHealth -= amount;
+
+            HealthBarUI();
+            if (currentHealth <= 0)
             {
-                healthBar[i].gameObject.SetActive(true);
+                Destroy(this.gameObject);
             }
-            else
+        }
+
+        void HealthBarUI()
+        {
+            if (healthBar == null) return;
+
+            for (int i = 0; i < healthBar.Length; i++)
             {
-                healthBar[i].gameObject.SetActive(false);
+                if (i < currentHealth)
+                {
+                    healthBar[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    healthBar[i].gameObject.SetActive(false);
+                }
             }
         }
     }

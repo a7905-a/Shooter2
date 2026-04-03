@@ -1,15 +1,19 @@
 using UnityEngine;
 
-public class StartSwitch : MonoBehaviour
+namespace ProjectTwo.Enemy
 {
-    [SerializeField] GameObject stageDoor;
-    const string PLAYER_STRING = "Player";
-    void OnTriggerEnter(Collider other)
+    public class StartSwitch : MonoBehaviour
     {
-        if (other.CompareTag(PLAYER_STRING))
+        [SerializeField] GameObject stageDoor;
+        const string PLAYER_STRING = "Player";
+        void OnTriggerEnter(Collider other)
         {
-            stageDoor.SetActive(false);
-            Destroy(this.gameObject);
+            if (other.CompareTag(PLAYER_STRING))
+            {
+                stageDoor.SetActive(false);
+                Destroy(this.gameObject);
+            }
         }
     }
 }
+

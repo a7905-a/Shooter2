@@ -1,30 +1,33 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BossHealthUI : MonoBehaviour
+namespace ProjectTwo.Enemy
 {
-    [SerializeField] Slider hpBar;
-    [SerializeField] SecurityLeader stageFactoryBoss;
+    public class BossHealthUI : MonoBehaviour
+    {
+        [SerializeField] Slider hpBar;
+        [SerializeField] SecurityLeader stageFactoryBoss;
 
-    void OnEnable()
-    {
-        if (stageFactoryBoss != null)
+        void OnEnable()
         {
-            stageFactoryBoss.OnHealthChanged += UpdateHPBar;
-            
+            if (stageFactoryBoss != null)
+            {
+                stageFactoryBoss.OnHealthChanged += UpdateHPBar;
+                
+            }
         }
-    }
-    void OnDisable()
-    {
-        if (stageFactoryBoss != null)
+        void OnDisable()
         {
-            stageFactoryBoss.OnHealthChanged -= UpdateHPBar;
-            
+            if (stageFactoryBoss != null)
+            {
+                stageFactoryBoss.OnHealthChanged -= UpdateHPBar;
+                
+            }
         }
-    }
 
-    void UpdateHPBar(float currentHealth, float maxHealth)
-    {
-        hpBar.value = currentHealth / maxHealth;
+        void UpdateHPBar(float currentHealth, float maxHealth)
+        {
+            hpBar.value = currentHealth / maxHealth;
+        }
     }
 }

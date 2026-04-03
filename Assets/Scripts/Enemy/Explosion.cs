@@ -1,33 +1,38 @@
 using UnityEngine;
+using ProjectTwo.Player;
 
-public class Explosion : MonoBehaviour
+namespace ProjectTwo.Enemy
 {
-    [SerializeField] float radius = 1.5f;
-    [SerializeField] int damage = 3;
 
-    void Start()
+    public class Explosion : MonoBehaviour
     {
-        Explode();
-    }
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;     
-        Gizmos.DrawWireSphere(transform.position, radius);
-    }
+        [SerializeField] float radius = 1.5f;
+        [SerializeField] int damage = 3;
 
-    void Explode()
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
-
-        foreach (Collider hitCollider in hitColliders)
+        void Start()
         {
-            PlayerHealth playerHealth = hitCollider.GetComponent<PlayerHealth>();
+            Explode();
+        }
+        void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;     
+            Gizmos.DrawWireSphere(transform.position, radius);
+        }
 
-            if (!playerHealth) continue;
+        void Explode()
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
 
-            playerHealth.TakeDamage(damage);
+            foreach (Collider hitCollider in hitColliders)
+            {
+                PlayerHealth playerHealth = hitCollider.GetComponent<PlayerHealth>();
 
-            break;
+                if (!playerHealth) continue;
+
+                playerHealth.TakeDamage(damage);
+
+                break;
+            }
         }
     }
 }

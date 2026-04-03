@@ -1,22 +1,22 @@
 using System;
 using UnityEngine;
 
-public class BossBattleTrigger : MonoBehaviour
+namespace ProjectTwo.Enemy
 {
-    public static event Action OnBossBattleStart;
-    // [SerializeField] BossSpawn bossSpawn;
-    // [SerializeField] BossAttack bossAttack;
-    const string PLAYER_STRING = "Player";
-
-    void OnTriggerEnter(Collider other) 
+    public class BossBattleTrigger : MonoBehaviour
     {
-        if (other.CompareTag(PLAYER_STRING))
-        {
-            // bossSpawn.StartBossRise();
-            // bossAttack.StartFiring();
-            OnBossBattleStart?.Invoke();
-            Destroy(gameObject);
-        }
-    }
+        public static event Action OnBossBattleStart;
 
+        const string PLAYER_STRING = "Player";
+
+        void OnTriggerEnter(Collider other) 
+        {
+            if (other.CompareTag(PLAYER_STRING))
+            {
+                OnBossBattleStart?.Invoke();
+                Destroy(gameObject);
+            }
+        }
+
+    }
 }

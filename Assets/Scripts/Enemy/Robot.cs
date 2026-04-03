@@ -1,36 +1,40 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Robot : MonoBehaviour
+namespace ProjectTwo.Enemy
 {
-    const string PLAYER_STRING = "Player";
-    GameObject target;
-    NavMeshAgent agent;
-
-    void Awake()
+    public class Robot : MonoBehaviour
     {
-        agent = GetComponent<NavMeshAgent>();
+        const string PLAYER_STRING = "Player";
+        GameObject target;
+        NavMeshAgent agent;
 
-    }
-    void Start()
-    {
-        target = GameObject.FindGameObjectWithTag(PLAYER_STRING);
-    }
-
-    
-    void Update()
-    {
-        if (!target) return;
-        
-        agent.SetDestination(target.transform.position);
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag(PLAYER_STRING))
+        void Awake()
         {
-            EnemyHealth enemyHealth = GetComponent<EnemyHealth>();
-            enemyHealth.Destruct();
+            agent = GetComponent<NavMeshAgent>();
+
+        }
+        void Start()
+        {
+            target = GameObject.FindGameObjectWithTag(PLAYER_STRING);
+        }
+
+        
+        void Update()
+        {
+            if (!target) return;
+            
+            agent.SetDestination(target.transform.position);
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag(PLAYER_STRING))
+            {
+                EnemyHealth enemyHealth = GetComponent<EnemyHealth>();
+                enemyHealth.Destruct();
+            }
         }
     }
 }
+

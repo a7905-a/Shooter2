@@ -1,19 +1,23 @@
 using System;
 using UnityEngine;
 
-public class SpawnSwitch : MonoBehaviour
+namespace ProjectTwo.Enemy
 {
-    public static event Action OnRobotBattleStart;
-    
-    bool isTriggered = false;
-    const string PLAYER_TAG = "Player";
-
-    void OnTriggerEnter(Collider other)
+    public class SpawnSwitch : MonoBehaviour
     {
-        if ( !isTriggered && other.CompareTag(PLAYER_TAG))
+        public static event Action OnRobotBattleStart;
+        
+        bool isTriggered = false;
+        const string PLAYER_TAG = "Player";
+
+        void OnTriggerEnter(Collider other)
         {
-            isTriggered = true;
-            OnRobotBattleStart?.Invoke();
+            if ( !isTriggered && other.CompareTag(PLAYER_TAG))
+            {
+                isTriggered = true;
+                OnRobotBattleStart?.Invoke();
+            }
         }
     }
 }
+

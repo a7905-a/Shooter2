@@ -1,12 +1,14 @@
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace ProjectTwo.Manager
 {
-    
-    void Start()
+    public class GameManager : MonoBehaviour
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
+        void Start()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
 
+    }
 }

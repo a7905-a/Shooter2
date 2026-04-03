@@ -1,62 +1,62 @@
 using System.Collections;
 using UnityEngine;
 
-public class BossSpawn : MonoBehaviour
+namespace ProjectTwo.Enemy
 {
-    [SerializeField] GameObject bossSpawnEffect;
-    [SerializeField] Transform playerTarget;
-    [SerializeField] float riseHeight = 10f;
-    [SerializeField] float riseDuration = 3f;
-    Vector3 initialPosition;
-    bool isSpawned = false;
+    public class BossSpawn : MonoBehaviour
+    {
+        [SerializeField] GameObject bossSpawnEffect;
+        [SerializeField] Transform playerTarget;
+        [SerializeField] float riseHeight = 10f;
+        [SerializeField] float riseDuration = 3f;
+        Vector3 initialPosition;
+        bool isSpawned = false;
 
-    void OnEnable()
-    {
-        BossBattleTrigger.OnBossBattleStart += StartBossRise;
-    }
-    void OnDisable()
-    {
-        BossBattleTrigger.OnBossBattleStart -= StartBossRise;
-    }
-    void Awake()
-    {
-        initialPosition = transform.position;
-    }
-
-    void Update()
-    {
-        if (isSpawned)
+        void OnEnable()
         {
-            this.transform.LookAt(playerTarget);
+            BossBattleTrigger.OnBossBattleStart += StartBossRise;
+        }
+        void OnDisable()
+        {
+            BossBattleTrigger.OnBossBattleStart -= StartBossRise;
+        }
+        void Awake()
+        {
+            initialPosition = transform.position;
+        }
+
+        void Update()
+        {
+            if (isSpawned)
+            {
+                this.transform.LookAt(playerTarget);
+            }
+        }
+
+
+        void StartBossRise()
+        {
+            StartCoroutine(RiseBoss());
+        }
+
+        IEnumerator RiseBoss()
+        {
+            isSpawned = false;
+            transform.position = initialPosition;
+
+            Vector3 startPos = transform.position;
+            Vector3 targetPos = initialPosition + Vector3.up * riseHeight;
+
+            float elapsed = 0f;
+
+            while (elapsed < riseDuration)
+            {
+                transform.position = Vector3.Lerp(startPos, targetPos, elapsed / riseDuration);
+                bossSpawnEffect.SetActive(true);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            isSpawned = true;
         }
     }
-
-
-    void StartBossRise()
-    {
-        StartCoroutine(RiseBoss());
-    }
-
-    IEnumerator RiseBoss()
-    {
-        isSpawned = false;
-        transform.position = initialPosition;
-
-        Vector3 startPos = transform.position;
-        Vector3 targetPos = initialPosition + Vector3.up * riseHeight;
-
-        float elapsed = 0f;
-
-        while (elapsed < riseDuration)
-        {
-            transform.position = Vector3.Lerp(startPos, targetPos, elapsed / riseDuration);
-            bossSpawnEffect.SetActive(true);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        isSpawned = true;
-    }
-
-
-
 }

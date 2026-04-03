@@ -1,23 +1,27 @@
 using UnityEngine;
 
-public class LookUI : MonoBehaviour
+namespace ProjectTwo.Manager
 {
-    Camera uiCamera;
-    const string MAINCAMERA_STRING = "MainCamera";
-
-    void Start()
+    public class LookUI : MonoBehaviour
     {
-        if (uiCamera == null)
+        Camera uiCamera;
+        const string MAINCAMERA_STRING = "MainCamera";
+
+        void Start()
         {
-            uiCamera = GameObject.FindGameObjectWithTag(MAINCAMERA_STRING).GetComponent<Camera>();
+            if (uiCamera == null)
+            {
+                uiCamera = GameObject.FindGameObjectWithTag(MAINCAMERA_STRING).GetComponent<Camera>();
+            }
+        }
+
+        void Update()
+        {
+            if (uiCamera!= null)
+            {
+                transform.LookAt(transform.position + uiCamera.transform.rotation * Vector3.forward, uiCamera.transform.rotation * Vector3.up);
+            } 
         }
     }
-
-    void Update()
-    {
-        if (uiCamera!= null)
-        {
-            transform.LookAt(transform.position + uiCamera.transform.rotation * Vector3.forward, uiCamera.transform.rotation * Vector3.up);
-        } 
-    }
 }
+
