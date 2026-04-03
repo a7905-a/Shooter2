@@ -1,18 +1,22 @@
 using UnityEngine;
+using ProjectTwo.Manager;
 
-public class StageDoor : MonoBehaviour
+namespace ProjectTwo.Interactable
 {
-    void OnEnable()
+    public class StageDoor : MonoBehaviour
     {
-        BattleManager.OnStageCleared += DoorOpen;
-    }
+        void OnEnable()
+        {
+            BattleManager.OnStageCleared += DoorOpen;
+        }
 
-    void OnDisable()
-    {
-        BattleManager.OnStageCleared -= DoorOpen;
-    }
-    void DoorOpen()
-    {
-        Destroy(this.gameObject);
+        void OnDisable()
+        {
+            BattleManager.OnStageCleared -= DoorOpen;
+        }
+        void DoorOpen()
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

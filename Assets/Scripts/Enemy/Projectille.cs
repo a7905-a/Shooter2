@@ -1,33 +1,37 @@
 using UnityEngine;
+using ProjectTwo.Player;
 
-public class Projectille : MonoBehaviour
+namespace ProjectTwo.Enemy
 {
-    [SerializeField] float speed = 10f;
-    [SerializeField] GameObject projectileHitVFX;
-    int damage;
-    Rigidbody rb;
-    
-    void Awake()
+    public class Projectille : MonoBehaviour
     {
-        rb = GetComponent<Rigidbody>();
-    }
+        [SerializeField] float speed = 10f;
+        [SerializeField] GameObject projectileHitVFX;
+        int damage;
+        Rigidbody rb;
+        
+        void Awake()
+        {
+            rb = GetComponent<Rigidbody>();
+        }
 
-    void Start()
-    {
-        rb.linearVelocity = transform.forward * speed;
-    }
+        void Start()
+        {
+            rb.linearVelocity = transform.forward * speed;
+        }
 
-    public void Init(int damage)
-    {
-        this.damage = damage;
-    }
+        public void Init(int damage)
+        {
+            this.damage = damage;
+        }
 
-    void OnTriggerEnter(Collider other)
-    {
-        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-        playerHealth?.TakeDamage(damage);
+        void OnTriggerEnter(Collider other)
+        {
+            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+            playerHealth?.TakeDamage(damage);
 
-        Instantiate(projectileHitVFX, transform.position, Quaternion.identity);
-        Destroy(this.gameObject);
+            Instantiate(projectileHitVFX, transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
+        }
     }
 }

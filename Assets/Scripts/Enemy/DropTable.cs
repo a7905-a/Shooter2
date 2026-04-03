@@ -1,14 +1,18 @@
 using UnityEngine;
 
-public class DropTable : MonoBehaviour
+namespace ProjectTwo.Enemy
 {
-    [SerializeField] GameObject dropItem;
 
-    public void DropItem() 
+    public class DropTable : MonoBehaviour
     {
-        if (dropItem != null)
+        [SerializeField] GameObject dropItem;
+
+        public void DropItem() 
         {
-            Instantiate(dropItem, transform.position, transform.rotation);
+            if (dropItem != null)
+            {
+                Instantiate(dropItem, transform.position, transform.rotation);
+            }
         }
     }
 }

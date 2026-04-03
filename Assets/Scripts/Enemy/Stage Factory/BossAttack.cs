@@ -1,38 +1,41 @@
 using System.Collections;
 using UnityEngine;
 
-public class BossAttack : MonoBehaviour
+namespace ProjectTwo.Enemy
 {
-    [SerializeField] Transform projectileSpawnPoint;
-    [SerializeField] GameObject projectilePrefab;
-    [SerializeField] Transform bossTransform;
-    [SerializeField] Transform playerTarget;
-    [SerializeField] float fireRate = 2f;
-    [SerializeField] int damage = 3;
-
-    void OnEnable()
+    public class BossAttack : MonoBehaviour
     {
-        BossBattleTrigger.OnBossBattleStart += StartFiring;
-    }
+        [SerializeField] Transform projectileSpawnPoint;
+        [SerializeField] GameObject projectilePrefab;
+        [SerializeField] Transform bossTransform;
+        [SerializeField] Transform playerTarget;
+        [SerializeField] float fireRate = 2f;
+        [SerializeField] int damage = 3;
 
-    void OnDisable()
-    {
-        BossBattleTrigger.OnBossBattleStart -= StartFiring;
-    }
-
-    void StartFiring()
-    {
-        StartCoroutine(FireRoutine());
-    }
-
-    IEnumerator FireRoutine()
-    {
-        while (true)
+        void OnEnable()
         {
-            yield return new WaitForSeconds(fireRate);
-            Projectille newProjectille = Instantiate(projectilePrefab, projectileSpawnPoint.position, bossTransform.rotation).GetComponent<Projectille>();
-            newProjectille.transform.LookAt(playerTarget);
-            newProjectille.Init(damage);
+            BossBattleTrigger.OnBossBattleStart += StartFiring;
+        }
+
+        void OnDisable()
+        {
+            BossBattleTrigger.OnBossBattleStart -= StartFiring;
+        }
+
+        void StartFiring()
+        {
+            StartCoroutine(FireRoutine());
+        }
+
+        IEnumerator FireRoutine()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(fireRate);
+                Projectille newProjectille = Instantiate(projectilePrefab, projectileSpawnPoint.position, bossTransform.rotation).GetComponent<Projectille>();
+                newProjectille.transform.LookAt(playerTarget);
+                newProjectille.Init(damage);
+            }
         }
     }
 }

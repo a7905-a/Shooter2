@@ -1,51 +1,55 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using ProjectTwo.Enemy;
 
-public class BattleManager : MonoBehaviour
+namespace ProjectTwo.Manager
 {
-    public static event Action OnStageCleared;
-
-    List<GameObject> enemiesBasket = new List<GameObject>();
-    
-    bool isBattleActive = false;
-
-    void OnEnable()
+    public class BattleManager : MonoBehaviour
     {
-        SpawnSwitch.OnRobotBattleStart += StartBattle;
-        Spawn.OnEnemySpawn += ResisterEnemy;
-        EnemyHealth.OnEnemyDied += RemoveEnemy;
-    }
+        public static event Action OnStageCleared;
 
-    void OnDisable()
-    {
-        SpawnSwitch.OnRobotBattleStart -= StartBattle;
-        Spawn.OnEnemySpawn -= ResisterEnemy;
-        EnemyHealth.OnEnemyDied -= RemoveEnemy;
-    }
+        List<GameObject> enemiesBasket = new List<GameObject>();
+        
+        bool isBattleActive = false;
 
-    void StartBattle()
-    {
-        isBattleActive = true;
-    }
-
-    void ResisterEnemy(GameObject enemyRobot)
-    {
-        enemiesBasket.Add(enemyRobot);
-    }
-    public void RemoveEnemy(GameObject enemyRobot)
-    {
-        if (enemiesBasket.Contains(enemyRobot))
+        void OnEnable()
         {
-            enemiesBasket.Remove(enemyRobot);
-            
-            if (isBattleActive && enemiesBasket.Count == 0)
+            SpawnSwitch.OnRobotBattleStart += StartBattle;
+            Spawn.OnEnemySpawn += ResisterEnemy;
+            EnemyHealth.OnEnemyDied += RemoveEnemy;
+        }
+
+        void OnDisable()
+        {
+            SpawnSwitch.OnRobotBattleStart -= StartBattle;
+            Spawn.OnEnemySpawn -= ResisterEnemy;
+            EnemyHealth.OnEnemyDied -= RemoveEnemy;
+        }
+
+        void StartBattle()
+        {
+            isBattleActive = true;
+        }
+
+        void ResisterEnemy(GameObject enemyRobot)
+        {
+            enemiesBasket.Add(enemyRobot);
+        }
+        public void RemoveEnemy(GameObject enemyRobot)
+        {
+            if (enemiesBasket.Contains(enemyRobot))
             {
-                OnStageCleared?.Invoke();
-                isBattleActive = false;
+                enemiesBasket.Remove(enemyRobot);
+                
+                if (isBattleActive && enemiesBasket.Count == 0)
+                {
+                    OnStageCleared?.Invoke();
+                    isBattleActive = false;
+                }
+
             }
 
         }
-
     }
 }

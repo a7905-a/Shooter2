@@ -1,22 +1,27 @@
 using TMPro;
 using UnityEngine;
+using ProjectTwo.Weapon;
 
-public class WeaponDisplay : MonoBehaviour
+namespace ProjectTwo.UI
 {
-    [SerializeField] TMP_Text ammoText;
 
-    void OnEnable()
+    public class WeaponDisplay : MonoBehaviour
     {
-        ActiveWeapon.OnAmmoChanged += UpdateAmmoUI;
-    }
+        [SerializeField] TMP_Text ammoText;
 
-    void OnDisable()
-    {
-        ActiveWeapon.OnAmmoChanged -= UpdateAmmoUI;
-    }
+        void OnEnable()
+        {
+            ActiveWeapon.OnAmmoChanged += UpdateAmmoUI;
+        }
 
-    private void UpdateAmmoUI(int currentAmmo, int maxAmmo)
-    {
-        ammoText.text = currentAmmo.ToString("D2") + "/" + maxAmmo.ToString("D2");
+        void OnDisable()
+        {
+            ActiveWeapon.OnAmmoChanged -= UpdateAmmoUI;
+        }
+
+        private void UpdateAmmoUI(int currentAmmo, int maxAmmo)
+        {
+            ammoText.text = currentAmmo.ToString("D2") + "/" + maxAmmo.ToString("D2");
+        }
     }
 }

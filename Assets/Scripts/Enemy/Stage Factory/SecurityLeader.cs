@@ -2,42 +2,45 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SecurityLeader : MonoBehaviour
+namespace ProjectTwo.Enemy
 {
-    public event Action <float, float> OnHealthChanged;
-
-    [SerializeField] float startingHealth = 10f;
-    //[SerializeField] Slider HPbar;
-    float currentHealth;
-
-    void Awake()
+    public class SecurityLeader : MonoBehaviour
     {
-        currentHealth = startingHealth;
-    }
+        public event Action <float, float> OnHealthChanged;
 
-    void Start()
-    {
-        OnHealthChanged?.Invoke(currentHealth, startingHealth);
-    }   
+        [SerializeField] float startingHealth = 10f;
+        //[SerializeField] Slider HPbar;
+        float currentHealth;
 
-    void Update()
-    {
-        //HPbar.value = currentHealth / startingHealth;
-    }
-
-    public void TakeDamage(float amount)
-    {
-        currentHealth -= amount;
-        OnHealthChanged?.Invoke(currentHealth, startingHealth);
-
-        if (currentHealth <= 0)
+        void Awake()
         {
-            Destory();
+            currentHealth = startingHealth;
         }
-    }
 
-    void Destory()
-    {
-        Destroy(this.gameObject);
+        void Start()
+        {
+            OnHealthChanged?.Invoke(currentHealth, startingHealth);
+        }   
+
+        void Update()
+        {
+            //HPbar.value = currentHealth / startingHealth;
+        }
+
+        public void TakeDamage(float amount)
+        {
+            currentHealth -= amount;
+            OnHealthChanged?.Invoke(currentHealth, startingHealth);
+
+            if (currentHealth <= 0)
+            {
+                Destory();
+            }
+        }
+
+        void Destory()
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
