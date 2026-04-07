@@ -56,7 +56,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f1b0fea076fb0574d868f6e3d9523f52, type: 2}
+  - {fileID: 2100000, guid: 40089c56a35562e4a83dfdeea9878fd6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -81,7 +81,7 @@ TrailRenderer:
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.1
+    widthMultiplier: 0.03
     widthCurve:
       serializedVersion: 2
       m_Curve:
