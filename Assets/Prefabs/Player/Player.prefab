@@ -3000,9 +3000,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 726e9c3e8b3adce4c9fa676273e8d49e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  runSpeed: 10
-  rotateSpeed: 20
+  moveSpeed: 3
+  runSpeed: 6
+  rotateSpeed: 15
   jumpHeight: 0.5
   groundingForce: -1
   cameraFocus: {fileID: 8057078495759036279}

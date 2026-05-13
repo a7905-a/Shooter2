@@ -121,4 +121,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 877c131ba42cd1c4b98fcd4da03f6ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: Sample
+  nextSceneName: Home_Scene

@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 using Unity.VisualScripting;
 
-public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IItemSlot
 {
     public bool hovering;
 
@@ -19,6 +19,19 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         amountText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
     }
 
+    public bool CanAcceptItem(ItemData itemData)
+    {
+        return true;
+    }
+    public void AddItem(ItemSO item, int amount)
+    {
+        SetItem(item, amount);
+    }
+    public void RemoveItem()
+    {
+        ClearSlot();
+    }
+    
     public ItemSO GetItem()
     {
         return heldItem;
