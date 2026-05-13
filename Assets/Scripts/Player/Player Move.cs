@@ -12,6 +12,9 @@ namespace ProjectTwo.Player
         [SerializeField] float jumpHeight = 0.5f;
         [SerializeField] float groundingForce = -1f;
         [SerializeField] Transform cameraFocus;
+        [SerializeField] float acceleration = 1f;
+        float currentSpeed = 0;
+        float speedVelocity = 0;
 
         CharacterController characterController;
         Inputs input;
@@ -75,7 +78,11 @@ namespace ProjectTwo.Player
             {
                 playerSpeed = 0f;
             }
-            
+
+            currentSpeed = Mathf.SmoothDamp(currentSpeed, playerSpeed, ref speedVelocity, acceleration);
+
+            playerSpeed = currentSpeed; 
+
             //targetDir을 0,0,0으로 초기화
             Vector3 targetDir = Vector3.zero;
             

@@ -13,11 +13,6 @@ namespace ProjectTwo.InventoryManagement
         public static Inventory Instance;
         public PlayerInventoryDataSO inventoryData;
 
-        [SerializeField] Transform playerTransform;
-        //[SerializeField] LayerMask itemLayerMask;
-        [SerializeField] ItemSO woodItem;
-        [SerializeField] ItemSO axeItem;
-
         [SerializeField] GameObject hotbarObject;
         [SerializeField] GameObject inventorySlotParent;
         [SerializeField] GameObject container;
@@ -27,8 +22,8 @@ namespace ProjectTwo.InventoryManagement
         int equippedHotbarIndex = 0;
         [SerializeField] float equippedOpacity = 0.9f;
         [SerializeField] float normalOpacity = 0.58f;
-        public Transform hand;
-        GameObject currentHandItem;
+        //public Transform hand;
+        //GameObject currentHandItem;
         
         //아이템 설명 UI
         [SerializeField] GameObject itemDescriptionParent;
@@ -55,7 +50,8 @@ namespace ProjectTwo.InventoryManagement
             {
                 Destroy(gameObject);
             }
-
+            // 부모 객체 아래에 있는 모든 Slot 컴포넌트를 찾아 inventorySlots 리스트에 한 번에 넣기
+            // 플레이어가 아이템을 획득할 때마다 실행하면 비용이 높으니까 캐싱해서 사용
             inventorySlots.AddRange(inventorySlotParent.GetComponentsInChildren<Slot>(true));
             hotbarSlots.AddRange(hotbarObject.GetComponentsInChildren<Slot>(true));
 
@@ -70,28 +66,28 @@ namespace ProjectTwo.InventoryManagement
 
         void Update()
         {
-            
-            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 5f, Color.red);
 
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                container.SetActive(!container.activeInHierarchy);
-                Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
-                Cursor.visible = !Cursor.visible;
-                TPSCamera.Instance.updatingRotation = !TPSCamera.Instance.updatingRotation;
+                ToggleInventory();
             }
 
             StartDrag();
             UpdateDragItemPosition();
             EndDrag();
-
-            HandleHotbarSelection();
-            HandleDropEquippedItem();
+            // HandleHotbarSelection();
+            // HandleDropEquippedItem();
             UpdateHotbarOpacity();
-
             UpdateItemDescription();
         }
-        
+
+        void ToggleInventory()
+        {
+            container.SetActive(!container.activeInHierarchy);
+            Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = !Cursor.visible;
+            TPSCamera.Instance.updatingRotation = !TPSCamera.Instance.updatingRotation;
+        }
 
         //인벤토리 데이터를 저장하는 로직
         public void SaveInventory()
@@ -130,12 +126,14 @@ namespace ProjectTwo.InventoryManagement
                 AddItem(savedData.item, savedData.amount);
             }
         }
+
         public void AddItem(ItemSO itemToAdd, int amount)
         {
             int remaining = amount;
 
             foreach(Slot slot in allSlots)
             {
+                //이미 같은 아이템이 들어있는 슬롯이 있는지 확인
                 if (slot.HasItem() && slot.GetItem() == itemToAdd)
                 {
                     int currentAmount = slot.GetAmount();
@@ -153,7 +151,7 @@ namespace ProjectTwo.InventoryManagement
                         {
                             if (CraftingManager.Instance != null)
                             {
-                                CraftingManager.Instance.PopulateCraftingGrid();
+                                //CraftingManager.Instance.PopulateCraftingGrid();
                             }
                             return;
                         }
@@ -174,7 +172,7 @@ namespace ProjectTwo.InventoryManagement
                         {
                             if (CraftingManager.Instance != null)
                             {
-                                CraftingManager.Instance.PopulateCraftingGrid();
+                                //CraftingManager.Instance.PopulateCraftingGrid();
                             }
                             return;
                         }
@@ -187,7 +185,7 @@ namespace ProjectTwo.InventoryManagement
             }
             if (CraftingManager.Instance != null)
             {
-                CraftingManager.Instance.PopulateCraftingGrid();
+                //CraftingManager.Instance.PopulateCraftingGrid();
             }
         }
         public void RemoveItem(ItemSO itemToRemove, int amount)
@@ -324,65 +322,65 @@ namespace ProjectTwo.InventoryManagement
                 }
             }
         }
-        void HandleHotbarSelection()
-        {
-            for(int i = 0; i < 6; i++)
-            {
-                if(Input.GetKeyDown((i + 1).ToString()))
-                {
-                    equippedHotbarIndex = i;
-                    UpdateHotbarOpacity();
-                    EquipHandItem();
-                }
-            }
-        }
+        // void HandleHotbarSelection()
+        // {
+        //     for(int i = 0; i < 6; i++)
+        //     {
+        //         if(Input.GetKeyDown((i + 1).ToString()))
+        //         {
+        //             equippedHotbarIndex = i;
+        //             UpdateHotbarOpacity();
+        //             EquipHandItem();
+        //         }
+        //     }
+        // }
 
-        void HandleDropEquippedItem()
-        {
-            if (!Input.GetKeyDown(KeyCode.Q)) return;
+        // void HandleDropEquippedItem()
+        // {
+        //     if (!Input.GetKeyDown(KeyCode.Q)) return;
 
-            Slot equippedSlot = hotbarSlots[equippedHotbarIndex];
+        //     Slot equippedSlot = hotbarSlots[equippedHotbarIndex];
 
-            if (!equippedSlot.HasItem()) return;
+        //     if (!equippedSlot.HasItem()) return;
 
-            ItemSO itemSO = equippedSlot.GetItem();
-            GameObject prefab = itemSO.itemPrefab;
+        //     ItemSO itemSO = equippedSlot.GetItem();
+        //     GameObject prefab = itemSO.itemPrefab;
 
-            if (prefab == null) return;
+        //     if (prefab == null) return;
 
-            GameObject dropped = Instantiate(prefab, Camera.main.transform.position + Camera.main.transform.forward, Quaternion.identity);
+        //     GameObject dropped = Instantiate(prefab, Camera.main.transform.position + Camera.main.transform.forward, Quaternion.identity);
 
-            Item item = dropped.GetComponent<Item>();
-            item.item = itemSO;
-            item.amount = equippedSlot.GetAmount();
+        //     Item item = dropped.GetComponent<Item>();
+        //     item.item = itemSO;
+        //     item.amount = equippedSlot.GetAmount();
 
-            equippedSlot.ClearSlot();
+        //     equippedSlot.ClearSlot();
 
-            EquipHandItem();
-            if (CraftingManager.Instance != null)
-            {
-                CraftingManager.Instance.PopulateCraftingGrid();
-            }
-        }
+        //     EquipHandItem();
+        //     if (CraftingManager.Instance != null)
+        //     {
+        //         //CraftingManager.Instance.PopulateCraftingGrid();
+        //     }
+        // }
 
-        void EquipHandItem()
-        {
-            if (currentHandItem != null)
-            {
-                Destroy(currentHandItem);
-            }
+        // void EquipHandItem()
+        // {
+        //     if (currentHandItem != null)
+        //     {
+        //         Destroy(currentHandItem);
+        //     }
 
-            Slot equippedSlot = hotbarSlots[equippedHotbarIndex];
-            if (!equippedSlot.HasItem()) return;
+        //     Slot equippedSlot = hotbarSlots[equippedHotbarIndex];
+        //     if (!equippedSlot.HasItem()) return;
 
-            ItemSO item = equippedSlot.GetItem();  
-            if (item.handItemPrefab == null) return;
+        //     ItemSO item = equippedSlot.GetItem();  
+        //     if (item.handItemPrefab == null) return;
 
-            currentHandItem = Instantiate(item.handItemPrefab, hand);
-            currentHandItem.transform.localPosition = Vector3.zero;
-            currentHandItem.transform.localRotation = Quaternion.identity;
+        //     //currentHandItem = Instantiate(item.handItemPrefab, hand);
+        //     currentHandItem.transform.localPosition = Vector3.zero;
+        //     currentHandItem.transform.localRotation = Quaternion.identity;
 
-        }
+        // }
 
         void UpdateItemDescription()
         {

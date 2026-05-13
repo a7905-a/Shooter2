@@ -10,11 +10,11 @@ namespace ProjectTwo.Manager
     {
         public static CraftingManager Instance;
 
-        [SerializeField] List<Recipe> allRecipes = new List<Recipe>();
+        //[SerializeField] List<Recipe> allRecipes = new List<Recipe>();
 
-        [SerializeField] Transform craftingGrid;
-        [SerializeField] GameObject craftingBottonPrefab;
-        [SerializeField] GameObject itemNeededUIPrefab;
+        // [SerializeField] Transform craftingGrid;
+        // [SerializeField] GameObject craftingBottonPrefab;
+        // [SerializeField] GameObject itemNeededUIPrefab;
 
         void Awake()
         {
@@ -29,39 +29,39 @@ namespace ProjectTwo.Manager
         }
         void Start()
         {
-            PopulateCraftingGrid();
+            //PopulateCraftingGrid();
         }
 
-        public void PopulateCraftingGrid()
-        {
-            //기존 UI 지우기
-            for(int i = craftingGrid.childCount - 1; i >= 0; i--)
-            {
-                Destroy(craftingGrid.GetChild(i).gameObject);
-            }
+        // public void PopulateCraftingGrid()
+        // {
+        //     //기존 UI 지우기
+        //     for(int i = craftingGrid.childCount - 1; i >= 0; i--)
+        //     {
+        //         Destroy(craftingGrid.GetChild(i).gameObject);
+        //     }
 
-            //레시피 버튼 생성
-            foreach(Recipe recipe in allRecipes)
-            {
-                GameObject buttonObject = Instantiate(craftingBottonPrefab, craftingGrid);
+        //     //레시피 버튼 생성
+        //     foreach(Recipe recipe in allRecipes)
+        //     {
+        //         GameObject buttonObject = Instantiate(craftingBottonPrefab, craftingGrid);
                 
-                Image img = buttonObject.transform.GetChild(0).GetComponent<Image>();
-                img.sprite = recipe.result.itemIcon;
+        //         Image img = buttonObject.transform.GetChild(0).GetComponent<Image>();
+        //         img.sprite = recipe.result.itemIcon;
 
-                Button button = buttonObject.GetComponent<Button>();
-                button.interactable = CanCraft(recipe);
-                button.onClick.RemoveAllListeners();
-                button.onClick.AddListener(() => Craft(recipe));
+        //         Button button = buttonObject.GetComponent<Button>();
+        //         button.interactable = CanCraft(recipe);
+        //         button.onClick.RemoveAllListeners();
+        //         button.onClick.AddListener(() => Craft(recipe));
 
-                //필요 재료 UI 생성
-                foreach(Ingredient ingredient in recipe.ingredients)
-                {
-                    GameObject neededItem = Instantiate(itemNeededUIPrefab, buttonObject.transform.GetChild(1));
-                    neededItem.GetComponent<Image>().sprite = ingredient.item.itemIcon;
-                    neededItem.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "x" + ingredient.amount.ToString();
-                }
-            }
-        }
+        //         //필요 재료 UI 생성
+        //         foreach(Ingredient ingredient in recipe.ingredients)
+        //         {
+        //             GameObject neededItem = Instantiate(itemNeededUIPrefab, buttonObject.transform.GetChild(1));
+        //             neededItem.GetComponent<Image>().sprite = ingredient.item.itemIcon;
+        //             neededItem.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "x" + ingredient.amount.ToString();
+        //         }
+        //     }
+        // }
 
         public void Craft(Recipe recipe)
         {
@@ -73,7 +73,7 @@ namespace ProjectTwo.Manager
             Inventory.Instance.AddItem(recipe.result, recipe.resultAmount);
 
             //UI 갱신
-            PopulateCraftingGrid();
+            //PopulateCraftingGrid();
         }
         public void ConsumeIngredients(Recipe recipe)
         {

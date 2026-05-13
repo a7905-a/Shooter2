@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f1f689995f16e6479645a9b98988fda, type: 3}
-  m_Name: Iron
+  m_Name: Item
   m_EditorClassIdentifier: 
-  itemName: Iron
-  itemIcon: {fileID: 21300000, guid: e67c39c7a01fd0c4c9bc232bdef45b65, type: 3}
-  maxStackSize: 10
-  itemPrefab: {fileID: 8822301964093279762, guid: 64416d8748962154399ed9137d87f285, type: 3}
+  itemName: AR
+  itemIcon: {fileID: 21300000, guid: 243bb9c73d7a20e40926ef09deceea91, type: 3}
+  maxStackSize: 1
+  itemPrefab: {fileID: 5510566018639568020, guid: 2708d83c905d320459568749f19f6d22, type: 3}
   handItemPrefab: {fileID: 0}
-  description: 
+  description: ar
