@@ -8,7 +8,7 @@ public enum WeaponType
 }
 
 [CreateAssetMenu(fileName = "WeaponSO", menuName = "Scriptable Object/WeaponSO")]
-public class WeaponSO : ScriptableObject
+public class WeaponSO : ItemSO
 {
     public WeaponType WeaponType;
     public GameObject WeaponPrefab;

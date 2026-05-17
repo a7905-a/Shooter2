@@ -72,9 +72,9 @@ namespace ProjectTwo.InventoryManagement
                 ToggleInventory();
             }
 
-            StartDrag();
-            UpdateDragItemPosition();
-            EndDrag();
+            // StartDrag();
+            // UpdateDragItemPosition();
+            // EndDrag();
             // HandleHotbarSelection();
             // HandleDropEquippedItem();
             UpdateHotbarOpacity();
@@ -251,11 +251,11 @@ namespace ProjectTwo.InventoryManagement
 
         Slot GetHoveredSlot()
         {
-            foreach (Slot s in allSlots)
-            {
-                if (s.hovering)
-                    return s;
-            }
+            // foreach (Slot s in allSlots)
+            // {
+            //     if (s.hovering)
+            //         return s;
+            // }
 
             return null;
         }
