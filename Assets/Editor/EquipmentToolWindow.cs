@@ -12,7 +12,7 @@ public class EquipmentToolWindow : EditorWindow
         GetWindow<EquipmentToolWindow>("Equipment Manager");
     }
 
-    void OnGUI()
+    private void OnGUI()
     {
         GUILayout.Label("장비 데이터 생성기", EditorStyles.boldLabel);
 
@@ -38,7 +38,7 @@ public class EquipmentToolWindow : EditorWindow
         }
     }
 
-    void CreateWeaponSO()
+    private void CreateWeaponSO()
     {
         WeaponSO newWeapon = ScriptableObject.CreateInstance<WeaponSO>();
         newWeapon.WeaponName = newWeaponName;

@@ -13,33 +13,33 @@ namespace ProjectTwo.InventoryManagement
         public static Inventory Instance;
         public PlayerInventoryDataSO inventoryData;
 
-        [SerializeField] GameObject hotbarObject;
-        [SerializeField] GameObject inventorySlotParent;
-        [SerializeField] GameObject container;
+        [SerializeField] private GameObject hotbarObject;
+        [SerializeField] private GameObject inventorySlotParent;
+        [SerializeField] private GameObject container;
 
-        [SerializeField] Image dragIcon;
+        [SerializeField] private Image dragIcon;
 
-        int equippedHotbarIndex = 0;
-        [SerializeField] float equippedOpacity = 0.9f;
-        [SerializeField] float normalOpacity = 0.58f;
+        private int equippedHotbarIndex = 0;
+        [SerializeField] private float equippedOpacity = 0.9f;
+        [SerializeField] private float normalOpacity = 0.58f;
         //public Transform hand;
         //GameObject currentHandItem;
         
         //아이템 설명 UI
-        [SerializeField] GameObject itemDescriptionParent;
-        [SerializeField] Image itemDescriptionImage;
-        [SerializeField] TextMeshProUGUI descriptionItemNameText;
-        [SerializeField] TextMeshProUGUI itemDescriptionText;
+        [SerializeField] private GameObject itemDescriptionParent;
+        [SerializeField] private Image itemDescriptionImage;
+        [SerializeField] private TextMeshProUGUI descriptionItemNameText;
+        [SerializeField] private TextMeshProUGUI itemDescriptionText;
 
         //인벤토리 슬롯 리스트
-        List<Slot> inventorySlots = new List<Slot>();
-        List<Slot> hotbarSlots = new List<Slot>();
-        List<Slot> allSlots = new List<Slot>();
+        private List<Slot> inventorySlots = new List<Slot>();
+        private List<Slot> hotbarSlots = new List<Slot>();
+        private List<Slot> allSlots = new List<Slot>();
 
-        Slot draggedSlot = null;
-        bool isDragging = false; 
+        private Slot draggedSlot = null;
+        private bool isDragging = false; 
 
-        void Awake()
+        private void Awake()
         {   
             //싱글톤 패턴
             if (Instance == null)
@@ -59,12 +59,12 @@ namespace ProjectTwo.InventoryManagement
             allSlots.AddRange(hotbarSlots);
         }
 
-        void Start()
+        private void Start()
         {
             LoadInventory();
         }
 
-        void Update()
+        private void Update()
         {
 
             if (Input.GetKeyDown(KeyCode.Tab))
@@ -72,16 +72,11 @@ namespace ProjectTwo.InventoryManagement
                 ToggleInventory();
             }
 
-            // StartDrag();
-            // UpdateDragItemPosition();
-            // EndDrag();
-            // HandleHotbarSelection();
-            // HandleDropEquippedItem();
             UpdateHotbarOpacity();
             UpdateItemDescription();
         }
 
-        void ToggleInventory()
+        private void ToggleInventory()
         {
             container.SetActive(!container.activeInHierarchy);
             Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
@@ -213,7 +208,7 @@ namespace ProjectTwo.InventoryManagement
             }
         }
 
-        void StartDrag()
+        private void StartDrag()
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -232,7 +227,7 @@ namespace ProjectTwo.InventoryManagement
             }
         }
 
-        void EndDrag()
+        private void EndDrag()
         {
             if(Input.GetMouseButtonUp(0) && isDragging)
             {
@@ -249,7 +244,7 @@ namespace ProjectTwo.InventoryManagement
             }
         }
 
-        Slot GetHoveredSlot()
+        private Slot GetHoveredSlot()
         {
             // foreach (Slot s in allSlots)
             // {
@@ -261,7 +256,7 @@ namespace ProjectTwo.InventoryManagement
         }
 
         
-        void HandleDrop(Slot from, Slot to)
+        private void HandleDrop(Slot from, Slot to)
         {
             if (from == to) return;
 
@@ -302,7 +297,7 @@ namespace ProjectTwo.InventoryManagement
             from.ClearSlot();
         }
 
-        void UpdateDragItemPosition()
+        private void UpdateDragItemPosition()
         {
             if (isDragging)
             {
@@ -311,7 +306,7 @@ namespace ProjectTwo.InventoryManagement
         }
 
 
-        void UpdateHotbarOpacity()
+        private void UpdateHotbarOpacity()
         {
             for (int i = 0; i < hotbarSlots.Count; i++)
             {
@@ -322,67 +317,8 @@ namespace ProjectTwo.InventoryManagement
                 }
             }
         }
-        // void HandleHotbarSelection()
-        // {
-        //     for(int i = 0; i < 6; i++)
-        //     {
-        //         if(Input.GetKeyDown((i + 1).ToString()))
-        //         {
-        //             equippedHotbarIndex = i;
-        //             UpdateHotbarOpacity();
-        //             EquipHandItem();
-        //         }
-        //     }
-        // }
 
-        // void HandleDropEquippedItem()
-        // {
-        //     if (!Input.GetKeyDown(KeyCode.Q)) return;
-
-        //     Slot equippedSlot = hotbarSlots[equippedHotbarIndex];
-
-        //     if (!equippedSlot.HasItem()) return;
-
-        //     ItemSO itemSO = equippedSlot.GetItem();
-        //     GameObject prefab = itemSO.itemPrefab;
-
-        //     if (prefab == null) return;
-
-        //     GameObject dropped = Instantiate(prefab, Camera.main.transform.position + Camera.main.transform.forward, Quaternion.identity);
-
-        //     Item item = dropped.GetComponent<Item>();
-        //     item.item = itemSO;
-        //     item.amount = equippedSlot.GetAmount();
-
-        //     equippedSlot.ClearSlot();
-
-        //     EquipHandItem();
-        //     if (CraftingManager.Instance != null)
-        //     {
-        //         //CraftingManager.Instance.PopulateCraftingGrid();
-        //     }
-        // }
-
-        // void EquipHandItem()
-        // {
-        //     if (currentHandItem != null)
-        //     {
-        //         Destroy(currentHandItem);
-        //     }
-
-        //     Slot equippedSlot = hotbarSlots[equippedHotbarIndex];
-        //     if (!equippedSlot.HasItem()) return;
-
-        //     ItemSO item = equippedSlot.GetItem();  
-        //     if (item.handItemPrefab == null) return;
-
-        //     //currentHandItem = Instantiate(item.handItemPrefab, hand);
-        //     currentHandItem.transform.localPosition = Vector3.zero;
-        //     currentHandItem.transform.localRotation = Quaternion.identity;
-
-        // }
-
-        void UpdateItemDescription()
+        private void UpdateItemDescription()
         {
             Slot hoveredSlot = GetHoveredSlot();
 

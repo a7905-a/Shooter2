@@ -5,7 +5,7 @@ namespace ProjectTwo.Enemy
 
     public class DropTable : MonoBehaviour
     {
-        [SerializeField] GameObject dropItem;
+        [SerializeField] private GameObject dropItem;
 
         public void DropItem() 
         {

@@ -7,10 +7,10 @@ namespace ProjectTwo.Weapon
 {
     public class Weapon : MonoBehaviour
     {
-        [SerializeField] ParticleSystem gunFlashEffect;
-        [SerializeField] LayerMask interactionLayer;
-        [SerializeField] Transform bulletSpawnPoint;
-        [SerializeField] TrailRenderer bulletTrail;
+        [SerializeField] private ParticleSystem gunFlashEffect;
+        [SerializeField] private LayerMask interactionLayer;
+        [SerializeField] private Transform bulletSpawnPoint;
+        [SerializeField] private TrailRenderer bulletTrail;
         
         
         public void Shoot(WeaponSO weaponSO)

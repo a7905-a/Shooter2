@@ -5,11 +5,11 @@ namespace ProjectTwo.Player
 {
     public class PlayerHealth : MonoBehaviour
     {
-        [SerializeField] int maxHealth = 5;
-        [SerializeField] Image[] healthBar;
-        int currentHealth;
+        [SerializeField] private int maxHealth = 5;
+        [SerializeField] private Image[] healthBar;
+        private int currentHealth;
 
-        void Awake()
+        private void Awake()
         {
             currentHealth = maxHealth;
             HealthBarUI();
@@ -26,7 +26,7 @@ namespace ProjectTwo.Player
             }
         }
 
-        void HealthBarUI()
+        private void HealthBarUI()
         {
             if (healthBar == null) return;
 

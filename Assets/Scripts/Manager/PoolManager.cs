@@ -6,22 +6,22 @@ namespace ProjectTwo.Manager
     public class PoolManager : MonoBehaviour
     {
         public static PoolManager instance;
-        [SerializeField] GameObject[] prefabs;
-        List<GameObject>[] pooledObjects;
-        [SerializeField] int poolSize = 1;
+        [SerializeField] private GameObject[] prefabs;
+        private List<GameObject>[] pooledObjects;
+        [SerializeField] private int poolSize = 1;
 
 
 
-        void Awake()
+        private void Awake()
         {
             instance = this;
         }
-        void Start()
+        private void Start()
         {
             InitObjectPool();
         }
 
-        void InitObjectPool()
+        private void InitObjectPool()
         {
             pooledObjects = new List<GameObject>[prefabs.Length];
             GameObject obj = null;

@@ -4,9 +4,9 @@ namespace ProjectTwo.Enemy
 {
     public class StartSwitch : MonoBehaviour
     {
-        [SerializeField] GameObject stageDoor;
+        [SerializeField] private GameObject stageDoor;
         const string PLAYER_STRING = "Player";
-        void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(PLAYER_STRING))
             {

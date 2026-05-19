@@ -5,16 +5,16 @@ namespace ProjectTwo.Interactable
 {
     public class StageDoor : MonoBehaviour
     {
-        void OnEnable()
+        private void OnEnable()
         {
             BattleManager.OnStageCleared += DoorOpen;
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             BattleManager.OnStageCleared -= DoorOpen;
         }
-        void DoorOpen()
+        private void DoorOpen()
         {
             Destroy(this.gameObject);
         }

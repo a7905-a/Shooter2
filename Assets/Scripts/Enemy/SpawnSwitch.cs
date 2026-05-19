@@ -7,10 +7,10 @@ namespace ProjectTwo.Enemy
     {
         public static event Action OnRobotBattleStart;
         
-        bool isTriggered = false;
+        private bool isTriggered = false;
         const string PLAYER_TAG = "Player";
 
-        void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if ( !isTriggered && other.CompareTag(PLAYER_TAG))
             {

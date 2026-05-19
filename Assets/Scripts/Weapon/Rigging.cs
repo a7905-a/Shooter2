@@ -5,11 +5,11 @@ namespace ProjectTwo.Weapon
 {
     public class Rigging : MonoBehaviour
     {
-        [SerializeField] TwoBoneIKConstraint rightHandIK;
-        [SerializeField] TwoBoneIKConstraint leftHandIK;
-        RigBuilder rigBuilder;
+        [SerializeField] private TwoBoneIKConstraint rightHandIK;
+        [SerializeField] private TwoBoneIKConstraint leftHandIK;
+        private RigBuilder rigBuilder;
 
-        void Awake()
+        private void Awake()
         {
             rigBuilder = GetComponent<RigBuilder>();
         }

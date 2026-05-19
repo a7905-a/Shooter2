@@ -4,10 +4,10 @@ namespace ProjectTwo.Manager
 {
     public class LookUI : MonoBehaviour
     {
-        Camera uiCamera;
+        private Camera uiCamera;
         const string MAINCAMERA_STRING = "MainCamera";
 
-        void Start()
+        private void Start()
         {
             if (uiCamera == null)
             {
@@ -15,7 +15,7 @@ namespace ProjectTwo.Manager
             }
         }
 
-        void Update()
+        private void Update()
         {
             if (uiCamera!= null)
             {

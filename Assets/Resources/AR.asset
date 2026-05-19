@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e1cfabcc28818046a879c92d53c9f05, type: 3}
   m_Name: AR
   m_EditorClassIdentifier: 
+  itemName: AR
+  itemIcon: {fileID: 21300000, guid: 243bb9c73d7a20e40926ef09deceea91, type: 3}
+  maxStackSize: 1
+  itemPrefab: {fileID: 5613026588999910632, guid: ddae625af9746814bad43e9e60ab150c, type: 3}
+  handItemPrefab: {fileID: 0}
+  description: 11
   WeaponType: 1
   WeaponPrefab: {fileID: 5613026588999910632, guid: ddae625af9746814bad43e9e60ab150c, type: 3}
   WeaponName: Base Rifle

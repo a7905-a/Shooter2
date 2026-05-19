@@ -5,17 +5,17 @@ namespace ProjectTwo.InventoryManagement
 {
     public class ItemPickup : MonoBehaviour
     {
-        [SerializeField] LayerMask itemLayerMask;
-        [SerializeField] float pickupRange = 30f;
-        [SerializeField] Material highlightMaterial;
-        Renderer closestRenderer = null;
-        Material originalMaterial;
+        [SerializeField] private LayerMask itemLayerMask;
+        [SerializeField] private float pickupRange = 30f;
+        [SerializeField] private Material highlightMaterial;
+        private Renderer closestRenderer = null;
+        private Material originalMaterial;
 
-        void Update()
+        private void Update()
         {
             HandleItemInteraction();
         }
-        void HandleItemInteraction()
+        private void HandleItemInteraction()
         {
             // UI 위치가 아닌 플레이어 위치를 중심으로 아이템 구체 레이더를 돌림
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, pickupRange, itemLayerMask);

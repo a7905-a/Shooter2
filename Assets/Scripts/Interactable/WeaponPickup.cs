@@ -5,7 +5,7 @@ namespace ProjectTwo.Interactable
 {
     public class WeaponPickup : Interaction
     {
-        [SerializeField] WeaponSO weaponSO;
+        [SerializeField] private WeaponSO weaponSO;
 
         protected override void OnInteract()
         {

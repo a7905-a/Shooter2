@@ -7,28 +7,28 @@ namespace ProjectTwo.Manager
     public class PlayerAnimationManager : MonoBehaviour
     {
         
-        Animator animator;
-        AimZoom aimZoom;
-        Rigging rigging;
+        private Animator animator;
+        private AimZoom aimZoom;
+        private Rigging rigging;
         
-        int rifleBaseLayer = 0;
-        int rifleActionLayer = 1;
-        int baseLayer = 2;
-        int pistolBaseLayer = 3;
-        int pistolActionLayer = 4;
-        readonly int hashReload = Animator.StringToHash("Reload");
-        readonly int hashShooting = Animator.StringToHash("Shooting");
+        private int rifleBaseLayer = 0;
+        private int rifleActionLayer = 1;
+        private int baseLayer = 2;
+        private int pistolBaseLayer = 3;
+        private int pistolActionLayer = 4;
+        private readonly int hashReload = Animator.StringToHash("Reload");
+        private readonly int hashShooting = Animator.StringToHash("Shooting");
 
-        WeaponType currentWeaponType;
+        private WeaponType currentWeaponType;
 
-        void Awake()
+        private void Awake()
         {
             animator = GetComponent<Animator>();
             aimZoom = GetComponentInChildren<AimZoom>();
             rigging = GetComponent<Rigging>();
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             ActiveWeapon.OnWeaponSwitched += HandleWeaponSwitched;
             ActiveWeapon.OnWeaponReload += ReloadStartAction;
@@ -37,7 +37,7 @@ namespace ProjectTwo.Manager
             AimZoom.OnWeaponZoom += ZoomAction;
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             ActiveWeapon.OnWeaponSwitched -= HandleWeaponSwitched;
             ActiveWeapon.OnWeaponReload -= ReloadStartAction;
@@ -45,7 +45,7 @@ namespace ProjectTwo.Manager
             ActiveWeapon.OnWeaponShoot -= ShootAction;
             AimZoom.OnWeaponZoom -= ZoomAction;
         }
-        void HandleWeaponSwitched(WeaponSO weaponSO, WeaponIKTarget targetData)
+        private void HandleWeaponSwitched(WeaponSO weaponSO, WeaponIKTarget targetData)
         {
             currentWeaponType = weaponSO.WeaponType;
             //리깅 세팅
@@ -74,7 +74,7 @@ namespace ProjectTwo.Manager
 
         }
 
-        void ReloadStartAction()
+        private void ReloadStartAction()
         {
             aimZoom.RigWeight(0f);
             aimZoom.AimCondition(false);
@@ -96,7 +96,7 @@ namespace ProjectTwo.Manager
             }
         }
 
-        void ReloadFinishedAction()
+        private void ReloadFinishedAction()
         {
             //aimZoom.RigWeight(1f);
             switch (currentWeaponType)
@@ -115,12 +115,12 @@ namespace ProjectTwo.Manager
             }
         }
 
-        void ShootAction()
+        private void ShootAction()
         {
             animator.SetTrigger(hashShooting);
         }
 
-        void ZoomAction(bool isZooming)
+        private void ZoomAction(bool isZooming)
         {
             float weight = isZooming ? 1f : 0;
 
@@ -140,7 +140,7 @@ namespace ProjectTwo.Manager
             }
         }
 
-        void ResetAllWeaponLayers()
+        private void ResetAllWeaponLayers()
         {
             animator.SetLayerWeight(baseLayer, 0f);
             animator.SetLayerWeight(rifleBaseLayer, 0f);

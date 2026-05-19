@@ -6,20 +6,20 @@ namespace ProjectTwo.Enemy
 
     public class Explosion : MonoBehaviour
     {
-        [SerializeField] float radius = 1.5f;
-        [SerializeField] int damage = 3;
+        [SerializeField] private float radius = 1.5f;
+        [SerializeField] private int damage = 3;
 
-        void Start()
+        private void Start()
         {
             Explode();
         }
-        void OnDrawGizmos()
+        private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;     
             Gizmos.DrawWireSphere(transform.position, radius);
         }
 
-        void Explode()
+        private void Explode()
         {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
 

@@ -5,24 +5,24 @@ namespace ProjectTwo.Enemy
 {
     public class BossAttack : MonoBehaviour
     {
-        [SerializeField] Transform projectileSpawnPoint;
-        [SerializeField] GameObject projectilePrefab;
-        [SerializeField] Transform bossTransform;
-        [SerializeField] Transform playerTarget;
-        [SerializeField] float fireRate = 2f;
-        [SerializeField] int damage = 3;
+        [SerializeField] private Transform projectileSpawnPoint;
+        [SerializeField] private GameObject projectilePrefab;
+        [SerializeField] private Transform bossTransform;
+        [SerializeField] private Transform playerTarget;
+        [SerializeField] private float fireRate = 2f;
+        [SerializeField] private int damage = 3;
 
-        void OnEnable()
+        private void OnEnable()
         {
             BossBattleTrigger.OnBossBattleStart += StartFiring;
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             BossBattleTrigger.OnBossBattleStart -= StartFiring;
         }
 
-        void StartFiring()
+        private void StartFiring()
         {
             StartCoroutine(FireRoutine());
         }

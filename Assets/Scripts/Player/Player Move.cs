@@ -6,22 +6,22 @@ namespace ProjectTwo.Player
     public class PlayerMove : MonoBehaviour
     {
         
-        [SerializeField] float moveSpeed = 10f;
-        [SerializeField] float runSpeed = 20f;
-        [SerializeField] float rotateSpeed = 20f;
-        [SerializeField] float jumpHeight = 0.5f;
-        [SerializeField] float groundingForce = -1f;
-        [SerializeField] Transform cameraFocus;
-        [SerializeField] float acceleration = 1f;
-        float currentSpeed = 0;
-        float speedVelocity = 0;
+        [SerializeField] private float moveSpeed = 10f;
+        [SerializeField] private float runSpeed = 20f;
+        [SerializeField] private float rotateSpeed = 20f;
+        [SerializeField] private float jumpHeight = 0.5f;
+        [SerializeField] private float groundingForce = -1f;
+        [SerializeField] private Transform cameraFocus;
+        [SerializeField] private float acceleration = 1f;
+        private float currentSpeed = 0;
+        private float speedVelocity = 0;
 
-        CharacterController characterController;
-        Inputs input;
-        Animator anim;
-        float playerSpeed;
-        float gravity = -15f;
-        float gravityForce;
+        private CharacterController characterController;
+        private Inputs input;
+        private Animator anim;
+        private float playerSpeed;
+        private float gravity = -15f;
+        private float gravityForce;
         //조준 상태에서의 이동 상태
         public bool isAimingMove = false;
 
@@ -30,20 +30,20 @@ namespace ProjectTwo.Player
         readonly int hashMoveSpeed = Animator.StringToHash("MoveSpeed");
         
         //내부 초기화를 Awke에서 수행해서 참조 오류 방지
-        void Awake()
+        private void Awake()
         {
             characterController = GetComponent<CharacterController>();
             input = GetComponent<Inputs>();
             anim = GetComponent<Animator>(); 
         }
 
-        void Update()
+        private void Update()
         {
             Move();
             GravityAndJump();
         }
 
-        void GravityAndJump()
+        private void GravityAndJump()
         {
             if (characterController.isGrounded == false)
             {
@@ -63,7 +63,7 @@ namespace ProjectTwo.Player
             }
         }
 
-        void Move()
+        private void Move()
         {
             Vector3 direction = new Vector3(input.movement.x, 0, input.movement.y);
 

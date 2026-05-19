@@ -5,10 +5,10 @@ namespace ProjectTwo.Enemy
 {
     public class BossHealthUI : MonoBehaviour
     {
-        [SerializeField] Slider hpBar;
-        [SerializeField] SecurityLeader stageFactoryBoss;
+        [SerializeField] private Slider hpBar;
+        [SerializeField] private SecurityLeader stageFactoryBoss;
 
-        void OnEnable()
+        private void OnEnable()
         {
             if (stageFactoryBoss != null)
             {
@@ -16,7 +16,7 @@ namespace ProjectTwo.Enemy
                 
             }
         }
-        void OnDisable()
+        private void OnDisable()
         {
             if (stageFactoryBoss != null)
             {
@@ -25,7 +25,7 @@ namespace ProjectTwo.Enemy
             }
         }
 
-        void UpdateHPBar(float currentHealth, float maxHealth)
+        private void UpdateHPBar(float currentHealth, float maxHealth)
         {
             hpBar.value = currentHealth / maxHealth;
         }
