@@ -5,17 +5,17 @@ namespace ProjectTwo.Enemy
 {
     public class Projectille : MonoBehaviour
     {
-        [SerializeField] float speed = 10f;
-        [SerializeField] GameObject projectileHitVFX;
-        int damage;
-        Rigidbody rb;
+        [SerializeField] private float speed = 10f;
+        [SerializeField] private GameObject projectileHitVFX;
+        private int damage;
+        private Rigidbody rb;
         
-        void Awake()
+        private void Awake()
         {
             rb = GetComponent<Rigidbody>();
         }
 
-        void Start()
+        private void Start()
         {
             rb.linearVelocity = transform.forward * speed;
         }
@@ -25,7 +25,7 @@ namespace ProjectTwo.Enemy
             this.damage = damage;
         }
 
-        void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
             playerHealth?.TakeDamage(damage);

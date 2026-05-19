@@ -9,17 +9,17 @@ namespace ProjectTwo.Enemy
     {
         public static event Action<GameObject> OnEnemyDied;
 
-        [SerializeField] float startingHealth = 3;
-        [SerializeField] Slider HPbar;
-        [SerializeField] GameObject destroyVFX;
-        SpawnSwitch spawnSwitch;
-        float currentHealth;
+        [SerializeField] private float startingHealth = 3;
+        [SerializeField] private Slider HPbar;
+        [SerializeField] private GameObject destroyVFX;
+        private SpawnSwitch spawnSwitch;
+        private float currentHealth;
 
-        void Awake()
+        private void Awake()
         {
             currentHealth = startingHealth;
         }
-        void Update()
+        private void Update()
         {
             HPbar.value = currentHealth / startingHealth;
         }

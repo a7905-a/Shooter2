@@ -18,10 +18,30 @@ public class EquipmentSlot : Slot
         // base.SetItem은 부모(Slot)의 원래 기능(아이콘 띄우기, 수량 저장 등)을 
         // 똑같이 실행해 달라는 명령어입니다.
         base.SetItem(item, amount);
-
+        if (item == null)
+        {
+            Debug.Log("실패 원인: item이 null(비어있음)로 들어왔습니다.");
+        }
+        else
+        {
+            Debug.Log($"✅ item은 들어왔습니다. 이름: {item.itemName}");
+            Debug.Log($"🔍 item의 실제 클래스 타입: {item.GetType()}");
+        
+            if (item is WeaponSO)
+            {
+                Debug.Log("⭕ 이 아이템은 WeaponSO가 맞습니다!");
+            }
+            else
+            {
+                Debug.Log("❌ 실패 원인: 이 아이템은 WeaponSO가 아닙니다!");
+                Debug.Log($"🔍 item의 실제 클래스 타입: {item.GetType()}");
+            }
+        }
         // --- 부모 기능이 끝난 후, 나만의 추가 기능(무기 장착) 실행 ---
         if (item != null && item is WeaponSO weaponData)
         {
+            Debug.Log("2");
+            
             // 플레이어의 ActiveWeapon을 찾아 장착!
             // (FindObjectOfType은 테스트용이며, 나중에 GameManager.Instance.Player로 바꾸면 완벽합니다)
             

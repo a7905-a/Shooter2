@@ -5,27 +5,27 @@ namespace ProjectTwo.Enemy
 {
     public class BossSpawn : MonoBehaviour
     {
-        [SerializeField] GameObject bossSpawnEffect;
-        [SerializeField] Transform playerTarget;
-        [SerializeField] float riseHeight = 10f;
-        [SerializeField] float riseDuration = 3f;
-        Vector3 initialPosition;
-        bool isSpawned = false;
+        [SerializeField] private GameObject bossSpawnEffect;
+        [SerializeField] private Transform playerTarget;
+        [SerializeField] private float riseHeight = 10f;
+        [SerializeField] private float riseDuration = 3f;
+        private Vector3 initialPosition;
+        private bool isSpawned = false;
 
-        void OnEnable()
+        private void OnEnable()
         {
             BossBattleTrigger.OnBossBattleStart += StartBossRise;
         }
-        void OnDisable()
+        private void OnDisable()
         {
             BossBattleTrigger.OnBossBattleStart -= StartBossRise;
         }
-        void Awake()
+        private void Awake()
         {
             initialPosition = transform.position;
         }
 
-        void Update()
+        private void Update()
         {
             if (isSpawned)
             {
@@ -34,7 +34,7 @@ namespace ProjectTwo.Enemy
         }
 
 
-        void StartBossRise()
+        private void StartBossRise()
         {
             StartCoroutine(RiseBoss());
         }

@@ -8,25 +8,25 @@ namespace ProjectTwo.Player
         public static TPSCamera Instance;
         public bool updatingRotation;
 
-        [SerializeField] Transform cameraFocus;
-        [SerializeField, Range(0, 100f)] float yawSpeed = 50f;
-        [SerializeField, Range(0, 100f)] float pitchSpeed = 50f;
-        [SerializeField] Inputs input;
-        float yaw = 0;
-        float pitch = 0;
-        float maxPitch = 35f;
+        [SerializeField] private Transform cameraFocus;
+        [SerializeField, Range(0, 100f)] private float yawSpeed = 50f;
+        [SerializeField, Range(0, 100f)] private float pitchSpeed = 50f;
+        [SerializeField] private Inputs input;
+        private float yaw = 0;
+        private float pitch = 0;
+        private float maxPitch = 35f;
         
-        void Awake()
+        private void Awake()
         {
             Instance = this;
         }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             LookAround();
         }
 
-        void LookAround()
+        private void LookAround()
         {
             if (updatingRotation) return;
 

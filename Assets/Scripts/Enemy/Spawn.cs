@@ -8,31 +8,31 @@ namespace ProjectTwo.Enemy
     {
         public static event Action<GameObject> OnEnemySpawn;
 
-        [SerializeField] GameObject robotPrefab;
+        [SerializeField] private GameObject robotPrefab;
 
         //노드 하나당 스폰할 적의 수
-        [SerializeField] int spawnCount = 5;    
+        [SerializeField] private int spawnCount = 5;    
 
-        SpawnBase[] myAreaNodes;
+        private SpawnBase[] myAreaNodes;
 
-        void Awake()
+        private void Awake()
         {
             myAreaNodes = GetComponentsInChildren<SpawnBase>();
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             SpawnSwitch.OnRobotBattleStart += StartSpawnRobot;
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             SpawnSwitch.OnRobotBattleStart -= StartSpawnRobot;
         }
 
 
 
-        void StartSpawnRobot()
+        private void StartSpawnRobot()
         {
             if (myAreaNodes.Length == 0)
             {

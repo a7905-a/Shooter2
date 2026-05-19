@@ -9,30 +9,30 @@ namespace ProjectTwo.Manager
     {
         public static event Action OnStageCleared;
 
-        List<GameObject> enemiesBasket = new List<GameObject>();
+        private List<GameObject> enemiesBasket = new List<GameObject>();
         
-        bool isBattleActive = false;
+        private bool isBattleActive = false;
 
-        void OnEnable()
+        private void OnEnable()
         {
             SpawnSwitch.OnRobotBattleStart += StartBattle;
             Spawn.OnEnemySpawn += ResisterEnemy;
             EnemyHealth.OnEnemyDied += RemoveEnemy;
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             SpawnSwitch.OnRobotBattleStart -= StartBattle;
             Spawn.OnEnemySpawn -= ResisterEnemy;
             EnemyHealth.OnEnemyDied -= RemoveEnemy;
         }
 
-        void StartBattle()
+        private void StartBattle()
         {
             isBattleActive = true;
         }
 
-        void ResisterEnemy(GameObject enemyRobot)
+        private void ResisterEnemy(GameObject enemyRobot)
         {
             enemiesBasket.Add(enemyRobot);
         }

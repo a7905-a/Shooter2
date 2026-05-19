@@ -7,9 +7,9 @@ namespace ProjectTwo.Interactable
     public class Portal : MonoBehaviour
     {
         public string nextSceneName;
-        bool isPlayerInRange = false;
+        private bool isPlayerInRange = false;
 
-        void Update()
+        private void Update()
         {
             if (isPlayerInRange && Input.GetKeyDown(KeyCode.T))
             {        
@@ -17,7 +17,7 @@ namespace ProjectTwo.Interactable
             }
         }
 
-        void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {
@@ -26,7 +26,7 @@ namespace ProjectTwo.Interactable
             }
         }
 
-        void OnTriggerExit(Collider other)
+        private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Player"))
             {
@@ -34,7 +34,7 @@ namespace ProjectTwo.Interactable
             }
         }
 
-        void TeleportToNextScene()
+        private void TeleportToNextScene()
         {
             Debug.Log("포탈 이동");
             if (Inventory.Instance != null)

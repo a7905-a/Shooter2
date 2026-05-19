@@ -7,7 +7,7 @@ public class SpawnNodeEditor : Editor
     SerializedProperty nodeTypeProp;
     SerializedProperty spawnRadiusProp;
 
-    void OnEnable()
+    private void OnEnable()
     {
         nodeTypeProp = serializedObject.FindProperty("nodeType");
         spawnRadiusProp = serializedObject.FindProperty("spawnRadius");

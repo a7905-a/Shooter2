@@ -13,50 +13,50 @@ namespace ProjectTwo.Weapon
         public static event Action<bool> OnWeaponZoom;
 
         [Header("Inspector-Driven DI")]
-        [SerializeField] Transform playerBody;
+        [SerializeField] private Transform playerBody;
         //[SerializeField] WeaponSO weaponSO;
-        Inputs input;
-        PlayerMove playerMove;
-        ActiveWeapon activeWeapon;
+        private Inputs input;
+        private PlayerMove playerMove;
+        private ActiveWeapon activeWeapon;
 
         [Header("Object")]
-        [SerializeField] CinemachineCamera aimCam;
+        [SerializeField] private CinemachineCamera aimCam;
 
-        [SerializeField] GameObject aimCorsshair;
-        [SerializeField] GameObject aimObj;
-        [SerializeField]LayerMask layerMask;
+        [SerializeField] private GameObject aimCorsshair;
+        [SerializeField] private GameObject aimObj;
+        [SerializeField] private LayerMask layerMask;
 
         [Header("Rig")]
-        [SerializeField] Rig handRig;
-        [SerializeField] Rig aimRig;
+        [SerializeField] private Rig handRig;
+        [SerializeField] private Rig aimRig;
 
 
         [Header("Value")]
-        [SerializeField] float aimObjDis = 25f;
+        [SerializeField] private float aimObjDis = 25f;
         
 
-        Transform camTrans;
-        RaycastHit rayhit;
+        private Transform camTrans;
+        private RaycastHit rayhit;
 
 
-        void Awake()
+        private void Awake()
         {
             input = GetComponentInParent<Inputs>();
             playerMove = GetComponentInParent<PlayerMove>();
             activeWeapon = GetComponentInParent<ActiveWeapon>();
         }
 
-        void Start()
+        private void Start()
         {
             camTrans = Camera.main.transform;
         }
 
-        void Update()
+        private void Update()
         {        
             AimCheck(); 
         }
 
-        void AimCheck()
+        private void AimCheck()
         {
             Vector3 targetPoint = Vector3.zero;
             

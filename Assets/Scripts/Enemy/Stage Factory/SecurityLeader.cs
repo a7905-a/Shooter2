@@ -8,21 +8,21 @@ namespace ProjectTwo.Enemy
     {
         public event Action <float, float> OnHealthChanged;
 
-        [SerializeField] float startingHealth = 10f;
+        [SerializeField] private float startingHealth = 10f;
         //[SerializeField] Slider HPbar;
-        float currentHealth;
+        private float currentHealth;
 
-        void Awake()
+        private void Awake()
         {
             currentHealth = startingHealth;
         }
 
-        void Start()
+        private void Start()
         {
             OnHealthChanged?.Invoke(currentHealth, startingHealth);
         }   
 
-        void Update()
+        private void Update()
         {
             //HPbar.value = currentHealth / startingHealth;
         }
@@ -38,7 +38,7 @@ namespace ProjectTwo.Enemy
             }
         }
 
-        void Destory()
+        private void Destory()
         {
             Destroy(this.gameObject);
         }

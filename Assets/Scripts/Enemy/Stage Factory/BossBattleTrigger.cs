@@ -9,7 +9,7 @@ namespace ProjectTwo.Enemy
 
         const string PLAYER_STRING = "Player";
 
-        void OnTriggerEnter(Collider other) 
+        private void OnTriggerEnter(Collider other) 
         {
             if (other.CompareTag(PLAYER_STRING))
             {

@@ -13,18 +13,18 @@ namespace ProjectTwo.Weapon
         public static event Action OnWeaponReloadFinished;
         public bool weaponReloading = false;
 
-        WeaponSO weaponSO;
+        private WeaponSO weaponSO;
 
-        [SerializeField] Transform weaponHoldPoint;
+        [SerializeField] private Transform weaponHoldPoint;
         
-        Inputs input;
-        Weapon currentWeapon;
+        private Inputs input;
+        private Weapon currentWeapon;
         
-        int currentAmmo;
-        float timeSinceLastShot = 0f;
+        private int currentAmmo;
+        private float timeSinceLastShot = 0f;
         
 
-        void Awake()
+        private void Awake()
         {
             input = GetComponent<Inputs>();
 
@@ -36,14 +36,14 @@ namespace ProjectTwo.Weapon
             }
         }
 
-        void Start()
+        private void Start()
         {
             if (weaponSO == null) return;
             OnAmmoChanged?.Invoke(currentAmmo, weaponSO.MaxAmmo);
         }
 
 
-        void Update()
+        private void Update()
         {   
             Debug.Log(weaponSO);
             
@@ -55,13 +55,13 @@ namespace ProjectTwo.Weapon
         }
 
 
-        void LastShootTimer()
+        private void LastShootTimer()
         {
             timeSinceLastShot += Time.deltaTime;
         }
 
 
-        void ReloadInput()
+        private void ReloadInput()
         {
             if (input.reload)
             {
@@ -76,7 +76,7 @@ namespace ProjectTwo.Weapon
         }
 
         
-        void HandleShoot()
+        private void HandleShoot()
         {
             if (input.zoom && input.shoot)
             {
@@ -90,7 +90,7 @@ namespace ProjectTwo.Weapon
             }
         }
 
-        void HandleSemiAuto()
+        private void HandleSemiAuto()
         {
             if (!weaponSO.IsAutomatic)
             {
@@ -98,7 +98,7 @@ namespace ProjectTwo.Weapon
             }
         }
 
-        void ProcessShoot()
+        private void ProcessShoot()
         {
             currentWeapon.Shoot(weaponSO);
             timeSinceLastShot = 0f;
@@ -115,7 +115,7 @@ namespace ProjectTwo.Weapon
         }
         
         
-        void ReloadingAction()
+        private void ReloadingAction()
         {
             weaponReloading = true;
             OnWeaponReload?.Invoke();
@@ -142,7 +142,7 @@ namespace ProjectTwo.Weapon
 
         
 
-        void DestroyCurrentWeapon()
+        private void DestroyCurrentWeapon()
         {
             if (currentWeapon != null)
             {
@@ -151,13 +151,13 @@ namespace ProjectTwo.Weapon
                 Destroy(currentWeapon.gameObject);
             }
         }
-        void EquipNewWeapon(WeaponSO newWeaponSO)
+        private void EquipNewWeapon(WeaponSO newWeaponSO)
         {
             weaponSO = newWeaponSO;
             //So 이름에 맞는 무기를 프리펩에서 찾아서 생성
             currentWeapon = Instantiate(weaponSO.WeaponPrefab, weaponHoldPoint).GetComponent<Weapon>();
         }
-        void SetupWeaponIKAndAnimation()
+        private void SetupWeaponIKAndAnimation()
         {
             WeaponIKTarget targetData = currentWeapon.GetComponent<WeaponIKTarget>();
             OnWeaponSwitched?.Invoke(weaponSO, targetData);
