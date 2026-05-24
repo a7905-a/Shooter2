@@ -12,21 +12,27 @@ namespace ProjectTwo.Player
         private void Awake()
         {
             currentHealth = maxHealth;
-            HealthBarUI();
+            UpdateHealthUI();
         }
 
         public void TakeDamage(int amount)
         {
             currentHealth -= amount;
 
-            HealthBarUI();
+            UpdateHealthUI();
+
             if (currentHealth <= 0)
             {
-                Destroy(this.gameObject);
+                Retire();
             }
         }
 
-        private void HealthBarUI()
+        private void Retire()
+        {
+            Destroy(this.gameObject);
+        }
+
+        private void UpdateHealthUI()
         {
             if (healthBar == null) return;
 

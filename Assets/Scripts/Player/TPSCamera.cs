@@ -34,9 +34,9 @@ namespace ProjectTwo.Player
             pitch += input.look.y * pitchSpeed *  Time.deltaTime;
             
             //위, 아래의 각도를 제한해서 뒤로 넘어가지 않도록 설정
-            float clampPitch = Mathf.Clamp(pitch, -maxPitch, maxPitch);
+            pitch = Mathf.Clamp(pitch, -maxPitch, maxPitch);
 
-            cameraFocus.transform.rotation = Quaternion.Euler(clampPitch, yaw, 0f);
+            cameraFocus.transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
         }
     }
 }
