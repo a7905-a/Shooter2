@@ -39,8 +39,9 @@ namespace ProjectTwo.Player
 
         private void Update()
         {
-            Move();
             GravityAndJump();
+
+            Move();
         }
 
         private void GravityAndJump()
@@ -67,25 +68,15 @@ namespace ProjectTwo.Player
         {
             Vector3 direction = new Vector3(input.movement.x, 0, input.movement.y);
 
-            playerSpeed = input.run ? runSpeed : moveSpeed;
-
-            if (isAimingMove)
-            {
-                playerSpeed = moveSpeed;
-            }
-
-            if (direction == Vector3.zero)
-            {
-                playerSpeed = 0f;
-            }
+            playerSpeed = CalculateTargetSpeed(direction);
 
             currentSpeed = Mathf.SmoothDamp(currentSpeed, playerSpeed, ref speedVelocity, acceleration);
 
-            playerSpeed = currentSpeed; 
+            playerSpeed = currentSpeed;
 
             //targetDir을 0,0,0으로 초기화
             Vector3 targetDir = Vector3.zero;
-            
+
             //입력값이 있을 때만 처리하기 위한 조건문
             if (direction != Vector3.zero)
             {
@@ -110,9 +101,28 @@ namespace ProjectTwo.Player
             Vector3 velocity = targetDir * playerSpeed + Vector3.up * gravityForce;
 
             characterController.Move(velocity * Time.deltaTime);
-            
-            anim.SetFloat(hashMoveSpeed, playerSpeed);
+            UpdateAnimation();
 
+        }
+
+        private void UpdateAnimation()
+        {
+            anim.SetFloat(hashMoveSpeed, playerSpeed);
+        }
+
+        private float CalculateTargetSpeed(Vector3 direction)
+        {
+            if (direction == Vector3.zero)
+            {
+                return 0f;
+            }
+
+            if (isAimingMove)
+            {
+                return moveSpeed;
+            }
+
+            return input.run ? runSpeed : moveSpeed;
         }
     }
 }
