@@ -6,7 +6,25 @@ namespace ProjectTwo.InventoryManagement
 {
     public class DragSlot : MonoBehaviour
     {
-        public static DragSlot Instance;
+        private static DragSlot _instance;
+        public static DragSlot Instance
+        {
+            get
+            {
+                // 만약 인스턴스가 비어있거나, 이전 씬에서 파괴되었다면?
+                if (_instance == null)
+                {
+                    //  씬 전체를 뒤져서 꺼져있는(Inactive) DragSlot까지 찾아내기
+                    _instance = FindFirstObjectByType<DragSlot>(FindObjectsInactive.Include);
+                    
+                    if (_instance == null)
+                    {
+                        Debug.LogError("씬에 DragSlot이 아예 존재하지 않는다");
+                    }
+                }
+                return _instance;
+            }
+        }
 
         [SerializeField] private Image iconImage;
         [SerializeField] private TextMeshProUGUI amountText;
@@ -16,13 +34,22 @@ namespace ProjectTwo.InventoryManagement
 
         private void Awake()
         {
-            Instance = this;
-            HideSlot();
+            _instance = this;
+            
+        }
 
+        private void Start()
+        {
+            HideSlot();
         }
 
         public void ShowSlot(ItemSO item, int amount)
         {
+            if (this == null || gameObject == null)
+        {
+            Debug.LogError("지금 파괴된 DragSlot을 참조하려고 한다");
+            return;
+        }
             iconImage.sprite = item.itemIcon;
             amountText.text = amount > 1 ? amount.ToString() : "";
             iconImage.enabled = true;
