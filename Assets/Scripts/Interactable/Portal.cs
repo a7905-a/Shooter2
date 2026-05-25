@@ -4,34 +4,14 @@ using ProjectTwo.InventoryManagement;
 
 namespace ProjectTwo.Interactable
 {
-    public class Portal : MonoBehaviour
+    public class Portal : Interaction
     {
+        [Header("포탈 설정")]
         public string nextSceneName;
-        private bool isPlayerInRange = false;
 
-        private void Update()
+        protected override void OnInteract()
         {
-            if (isPlayerInRange && Input.GetKeyDown(KeyCode.T))
-            {        
-                TeleportToNextScene();
-            }
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("Player"))
-            {
-                isPlayerInRange = true;
-                Debug.Log("포탈 근처 범위 진입");
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.CompareTag("Player"))
-            {
-                isPlayerInRange = false;
-            }
+            TeleportToNextScene();
         }
 
         private void TeleportToNextScene()
