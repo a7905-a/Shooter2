@@ -6,16 +6,27 @@ namespace ProjectTwo.Manager
 {
     public class PlayerAnimationManager : MonoBehaviour
     {
-        
+        // ==========================================
+        // 컴포넌트 참조
+        // ==========================================     
         private Animator animator;
         private AimZoom aimZoom;
         private Rigging rigging;
-        
+
+
+        // ==========================================
+        // 애니메이터 레이어 인덱스
+        // ==========================================
         private int rifleBaseLayer = 0;
         private int rifleActionLayer = 1;
         private int baseLayer = 2;
         private int pistolBaseLayer = 3;
         private int pistolActionLayer = 4;
+
+
+        // ==========================================
+        // 애니메이터 파라미터 해시
+        // ==========================================
         private readonly int hashReload = Animator.StringToHash("Reload");
         private readonly int hashShooting = Animator.StringToHash("Shooting");
 
@@ -98,7 +109,6 @@ namespace ProjectTwo.Manager
 
         private void ReloadFinishedAction()
         {
-            //aimZoom.RigWeight(1f);
             switch (currentWeaponType)
             {
                 case WeaponType.Rifle :

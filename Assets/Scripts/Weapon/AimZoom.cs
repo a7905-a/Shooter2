@@ -10,32 +10,37 @@ namespace ProjectTwo.Weapon
 
     public class AimZoom : MonoBehaviour
     {
+        // ==========================================
+        // 이벤트 선언
+        // ==========================================
         public static event Action<bool> OnWeaponZoom;
 
-        [Header("Inspector-Driven DI")]
+
+        [Header("플레이어")]
         [SerializeField] private Transform playerBody;
-        //[SerializeField] WeaponSO weaponSO;
-        private Inputs input;
-        private PlayerMove playerMove;
-        private ActiveWeapon activeWeapon;
 
-        [Header("Object")]
+
+        [Header("조준 오브젝트")]
         [SerializeField] private CinemachineCamera aimCam;
-
-        [SerializeField] private GameObject aimCorsshair;
-        [SerializeField] private GameObject aimObj;
+        //aimCrosshair는 HUD 오브젝트의 AimImage를 가져옴
+        [SerializeField] private GameObject aimCrosshair;
+        [SerializeField] private GameObject aimTarget;
         [SerializeField] private LayerMask layerMask;
+        [SerializeField] private float defaultAimDis = 25f;
 
-        [Header("Rig")]
+
+        [Header("애니메이션 리깅")]
         [SerializeField] private Rig handRig;
         [SerializeField] private Rig aimRig;
 
 
-        [Header("Value")]
-        [SerializeField] private float aimObjDis = 25f;
-        
-
-        private Transform camTrans;
+        // ==========================================
+        // 내부 참조
+        // ==========================================
+        private Inputs input;
+        private PlayerMove playerMove;
+        private ActiveWeapon activeWeapon;
+        private Transform camPos;
         private RaycastHit rayhit;
 
 
@@ -48,7 +53,7 @@ namespace ProjectTwo.Weapon
 
         private void Start()
         {
-            camTrans = Camera.main.transform;
+            camPos = Camera.main.transform;
         }
 
         private void Update()
@@ -71,23 +76,12 @@ namespace ProjectTwo.Weapon
                 AimCondition(true);
                 OnWeaponZoom?.Invoke(true);
 
-                if (Physics.Raycast(camTrans.position, camTrans.forward, out rayhit, Mathf.Infinity, layerMask))
-                {
-                    targetPoint = rayhit.point;
-                    aimObj.transform.position = rayhit.point;
+                targetPoint = CalculateAimPoint();
+                aimTarget.transform.position = targetPoint;
 
-                }
-                else
-                {
-                    targetPoint = camTrans.position + camTrans.forward * aimObjDis;
-                    aimObj.transform.position = camTrans.position + camTrans.forward * aimObjDis;
-                }
+                //플레이어가 조준점 방향을 바라보도록 회전
+                UpdateAimRotation(targetPoint);
 
-                Vector3 targetAim = targetPoint;
-                targetAim.y = playerBody.position.y;
-                Vector3 aimDirection = (targetAim - playerBody.position).normalized;
-
-                playerBody.forward = Vector3.Lerp(playerBody.forward, aimDirection, Time.deltaTime * 30f);
                 RigWeight(1f);
 
             }
@@ -98,13 +92,20 @@ namespace ProjectTwo.Weapon
                 RigWeight(0f);
             }
         }
-        
 
-        
+        private void UpdateAimRotation(Vector3 targetPoint)
+        {
+            Vector3 targetAim = targetPoint;
+            targetAim.y = playerBody.position.y;
+            Vector3 aimDirection = (targetAim - playerBody.position).normalized;
+            playerBody.forward = Vector3.Lerp(playerBody.forward, aimDirection, Time.deltaTime * 30f);
+        }
+
+
         public void AimCondition(bool check)
         {
             aimCam.gameObject.SetActive(check);
-            aimCorsshair.gameObject.SetActive(check);
+            aimCrosshair.gameObject.SetActive(check);
             playerMove.isAimingMove = check;
         }
 
@@ -114,8 +115,16 @@ namespace ProjectTwo.Weapon
             aimRig.weight = weight;
 
         }
-        
 
+        private Vector3 CalculateAimPoint()
+        {
+            if (Physics.Raycast(camPos.position, camPos.forward, out rayhit, Mathf.Infinity, layerMask))
+            {
+                return rayhit.point;
+            }
+
+            return camPos.position + camPos.forward * defaultAimDis;
+        }
         
     }
 }

@@ -14,7 +14,7 @@ public class WeaponSO : ItemSO
     public GameObject WeaponPrefab;
     public string WeaponName;
     public bool IsAutomatic;
-    public float Damege = 1.0f;
+    public float Damage = 1.0f;
     public float FireRate = 0.5f;
     public int MaxAmmo = 30;
 }
