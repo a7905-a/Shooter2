@@ -6,15 +6,32 @@ namespace ProjectTwo.Player
     public class TPSCamera : MonoBehaviour
     {
         public static TPSCamera Instance;
-        public bool updatingRotation;
 
+
+        [Header("카메라 참조")]
         [SerializeField] private Transform cameraFocus;
+
+
+        [Header("스크립트 참조")]
+        [SerializeField] private Inputs input;
+
+
+        [Header("카메라 회전 속도")]
         [SerializeField, Range(0, 100f)] private float yawSpeed = 50f;
         [SerializeField, Range(0, 100f)] private float pitchSpeed = 50f;
-        [SerializeField] private Inputs input;
+
+
+        [Header("카메라 상태")]
+        public bool updatingRotation;
+
+
+        // ==========================================
+        // 카메라 회전 변수
+        // ==========================================
         private float yaw = 0;
         private float pitch = 0;
         private float maxPitch = 35f;
+        
         
         private void Awake()
         {

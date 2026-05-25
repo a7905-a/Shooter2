@@ -1,11 +1,12 @@
 using UnityEngine;
 using ProjectTwo.InventoryManagement; // (네임스페이스 확인 후 맞게 수정하세요)
 using ProjectTwo.Weapon; // (네임스페이스 확인 후 맞게 수정하세요)
+using ProjectTwo.Manager; // GameManager를 사용하기 위한 네임스페이스
 
 // 1. MonoBehaviour 대신 Slot을 상속받습니다! (나는 슬롯의 일종이다)
 public class EquipmentSlot : Slot 
 {
-    [SerializeField] private ActiveWeapon playerWeapon;
+    //[SerializeField] private ActiveWeapon playerWeapon;
     // 2. [오버라이딩] 이 슬롯은 '무기' 타입만 받을 수 있도록 입구 컷을 설정합니다.
     public override bool CanAcceptItem(ItemData itemData)
     {
@@ -44,7 +45,7 @@ public class EquipmentSlot : Slot
             
             // 플레이어의 ActiveWeapon을 찾아 장착!
             // (FindObjectOfType은 테스트용이며, 나중에 GameManager.Instance.Player로 바꾸면 완벽합니다)
-            
+            ActiveWeapon playerWeapon = GameManager.Instance.player.GetComponent<ActiveWeapon>();
             if (playerWeapon != null)
             {
                 playerWeapon.SwitchWeapon(weaponData);
@@ -59,7 +60,7 @@ public class EquipmentSlot : Slot
         base.ClearSlot();
 
         // 무기를 다른 곳으로 뺐으니, 플레이어 손에서도 무기를 해제해야 합니다.
-        ActiveWeapon playerWeapon = FindObjectOfType<ActiveWeapon>();
+        ActiveWeapon playerWeapon = GameManager.Instance.player.GetComponent<ActiveWeapon>();
         if (playerWeapon != null)
         {
             // playerWeapon.UnEquipWeapon(); // (ActiveWeapon 쪽에 무기 해제 함수가 있다면 호출)

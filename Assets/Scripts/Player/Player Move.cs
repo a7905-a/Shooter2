@@ -5,27 +5,47 @@ namespace ProjectTwo.Player
 {
     public class PlayerMove : MonoBehaviour
     {
-        
+        [Header("움직임 변수")]
         [SerializeField] private float moveSpeed = 10f;
         [SerializeField] private float runSpeed = 20f;
         [SerializeField] private float rotateSpeed = 20f;
         [SerializeField] private float jumpHeight = 0.5f;
-        [SerializeField] private float groundingForce = -1f;
-        [SerializeField] private Transform cameraFocus;
         [SerializeField] private float acceleration = 1f;
-        private float currentSpeed = 0;
-        private float speedVelocity = 0;
 
+
+        [Header("중력 변수")]
+        [SerializeField] private float groundingForce = -1f;
+
+
+        [Header("카메라 참조")]
+        [SerializeField] private Transform cameraFocus;
+
+
+        [Header("조준 이동 여부")]
+        public bool isAimingMove = false;
+        
+
+        // ==========================================
+        // 컴포넌트 참조
+        // ==========================================
         private CharacterController characterController;
         private Inputs input;
         private Animator anim;
+        
+
+        // ==========================================
+        // 이동 및 물리 연산
+        // ==========================================
+        private float currentSpeed = 0;
+        private float speedVelocity = 0;
         private float playerSpeed;
         private float gravity = -15f;
         private float gravityForce;
-        //조준 상태에서의 이동 상태
-        public bool isAimingMove = false;
-
-        //문자열을 해싱
+        
+        
+        // ==========================================
+        // 문자열 해싱
+        // ==========================================
         readonly int hashJump = Animator.StringToHash("Jump");
         readonly int hashMoveSpeed = Animator.StringToHash("MoveSpeed");
         

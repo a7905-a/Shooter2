@@ -5,6 +5,7 @@ namespace ProjectTwo.Player
 {
     public class PlayerHealth : MonoBehaviour
     {
+        [Header("체력 변수")]
         [SerializeField] private int maxHealth = 5;
         [SerializeField] private Image[] healthBar;
         private int currentHealth;

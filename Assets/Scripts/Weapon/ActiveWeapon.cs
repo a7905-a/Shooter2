@@ -6,20 +6,32 @@ namespace ProjectTwo.Weapon
 {
     public class ActiveWeapon : MonoBehaviour
     {
+        // ==========================================
+        // 이벤트 선언
+        // ==========================================
         public static event Action<int, int> OnAmmoChanged;
         public static event Action<WeaponSO, WeaponIKTarget> OnWeaponSwitched;
         public static event Action OnWeaponShoot;
         public static event Action OnWeaponReload;
         public static event Action OnWeaponReloadFinished;
-        public bool weaponReloading = false;
 
+
+        // ==========================================
+        // 참조
+        // ==========================================
         private WeaponSO weaponSO;
-
-        [SerializeField] private Transform weaponHoldPoint;
-        
         private Inputs input;
         private Weapon currentWeapon;
-        
+
+
+        [Header("무기 현재 상태")]
+        public bool weaponReloading = false;
+
+
+        [Header("무기 보유 위치")]
+        [SerializeField] private Transform weaponHoldPoint;
+
+
         private int currentAmmo;
         private float timeSinceLastShot = 0f;
         
