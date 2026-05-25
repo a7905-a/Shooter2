@@ -38,7 +38,7 @@ namespace ProjectTwo.InventoryManagement
             Item closestItem = null;
             float minDistance = float.MaxValue;
 
-            // 반경 안에 들어온 아이템 중 가장 가까운 녀석을 찾기
+            // 반경 안에 들어온 아이템 중 가장 가까운 오브젝트를 찾기
             foreach (Collider col in hitColliders)
             {
                 Item item = col.GetComponentInParent<Item>(); 
@@ -71,7 +71,7 @@ namespace ProjectTwo.InventoryManagement
 
             if (closestItem != null)
             {
-                 if (input.interactItem)
+                if (input.interactItem)
                 {
                     Inventory.Instance.AddItem(closestItem.item, closestItem.amount);
                     

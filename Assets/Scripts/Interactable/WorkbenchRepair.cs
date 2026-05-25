@@ -62,7 +62,7 @@ namespace ProjectTwo.Interactable
             
             if (requirementText != null)
             {
-                // 글씨 갱신: "Wood 0 / 5"
+                // 글씨 갱신: "0 / 5"
                 requirementText.text = $"{reqItem.item.itemName} {currentAmount} / {reqItem.amount}";
                 
                 // 재료가 충분하면 초록색, 부족하면 빨간색

@@ -1433,11 +1433,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2dcf5287634cd945878f7d879bea469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updatingRotation: 0
   cameraFocus: {fileID: 8057078495759036279}
+  input: {fileID: 7050450535520096080}
   yawSpeed: 20
   pitchSpeed: 8
-  input: {fileID: 7050450535520096080}
+  updatingRotation: 0
 --- !u!114 &4387715884796629221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1452,14 +1452,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBody: {fileID: 7240338018844782499}
   aimCam: {fileID: 2815576847586881386}
-  aimCorsshair: {fileID: 0}
-  aimObj: {fileID: 0}
+  aimCrosshair: {fileID: 0}
+  aimTarget: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 0
+  defaultAimDis: 25
   handRig: {fileID: 4369637903666112732}
   aimRig: {fileID: 3765574825656612163}
-  aimObjDis: 10
 --- !u!1 &1435166827769359430
 GameObject:
   m_ObjectHideFlags: 0
@@ -3004,6 +3004,7 @@ MonoBehaviour:
   runSpeed: 6
   rotateSpeed: 15
   jumpHeight: 0.5
+  acceleration: 0.15
   groundingForce: -1
   cameraFocus: {fileID: 8057078495759036279}
   isAimingMove: 0
@@ -3170,6 +3171,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 54336251-894a-42f2-af9b-0ed968ae564a
     m_ActionName: 'Player/Jump[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7050450535520096080}
+        m_TargetAssemblyTypeName: ProjectTwo.Manager.Inputs, Assembly-CSharp
+        m_MethodName: OnToggleInventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6929eb2d-4e02-4e5d-8b6b-aafc79b5917e
+    m_ActionName: 'Player/ToggleInventory[/Keyboard/tab]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7050450535520096080}
+        m_TargetAssemblyTypeName: ProjectTwo.Manager.Inputs, Assembly-CSharp
+        m_MethodName: OnInteractItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f44c7b68-9e73-4b99-bee7-986bacd3a368
+    m_ActionName: 'Player/InteractItem[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7050450535520096080}
+        m_TargetAssemblyTypeName: ProjectTwo.Manager.Inputs, Assembly-CSharp
+        m_MethodName: OnInteractAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a3b3780a-b973-448d-b7fa-dd71ae152a1d
+    m_ActionName: 'Player/InteractAction[/Keyboard/t]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -3227,9 +3276,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemLayerMask:
     serializedVersion: 2
-    m_Bits: 512
-  pickupRange: 30
-  highlightMaterial: {fileID: 2100000, guid: 38523ba34614a60419234da501d05e20, type: 2}
+    m_Bits: 1536
+  pickupRange: 1
 --- !u!143 &3087411826190978002
 CharacterController:
   m_ObjectHideFlags: 0

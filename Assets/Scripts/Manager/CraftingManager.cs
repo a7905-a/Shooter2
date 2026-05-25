@@ -26,7 +26,7 @@ namespace ProjectTwo.Manager
         {
             if(!CanCraft(recipe))
             {
-                Debug.Log("재료가 부족");
+                Debug.Log("재료 부족");
                 return;
             }
                 
