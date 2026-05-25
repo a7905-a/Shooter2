@@ -1,21 +1,26 @@
 using UnityEngine.UI;
 using UnityEngine;
+using ProjectTwo.Manager;
 
 namespace ProjectTwo.Interactable
 {
     public abstract class Interaction : MonoBehaviour
     {
+        [Header("상호작용 UI")]
         [SerializeField] protected Image interactionIcon;
         const string PLAYER_STRING = "Player";
         protected bool isPlayerInRange = false;
         protected GameObject playerObject;
+
+        protected Inputs input;
         protected abstract void OnInteract();
 
         protected virtual void Update()
         {
-            if (isPlayerInRange && Input.GetKeyDown(KeyCode.T))
+            if (isPlayerInRange && input.interactAction)
             {
                 OnInteract();
+                input.ResetInteractAction();
             }
         }
 
@@ -26,6 +31,7 @@ namespace ProjectTwo.Interactable
                 isPlayerInRange = true;
                 //진입 시 플레이어 정보 저장
                 playerObject = other.gameObject;
+                input = FindFirstObjectByType<Inputs>();
 
                 if (interactionIcon != null)
                 {

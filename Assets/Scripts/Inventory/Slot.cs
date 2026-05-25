@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using Unity.VisualScripting;
+using ProjectTwo.InventoryManagement;
 
 public class Slot : MonoBehaviour, IItemSlot, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
@@ -37,36 +38,58 @@ public class Slot : MonoBehaviour, IItemSlot, IBeginDragHandler, IDragHandler, I
     {
         if (heldItem == null) return;
 
+        DragSlot.Instance.draggedSlot = this;
+        DragSlot.Instance.ShowSlot(heldItem, itemAmount);
+
+        Color color = iconImage.color;
+        color.a = 0.5f;
+        iconImage.color = color;
+
         // 아이콘이 원래 있던 곳 기억
-        originalParent = iconImage.transform.parent;
+        // originalParent = iconImage.transform.parent;
 
-        // 아이콘이 다른 UI 요소보다 위에 있도록 설정
-        // root 사용이유
-        // 유니티 UI 랜더링은 하이어러키의 아래쪽에 있을수록 먼저 그려지므로, 아이콘이 다른 UI 요소보다 위에 있도록 하기 위해 root로 이동
-        iconImage.transform.SetParent(transform.root);
-        iconImage.transform.SetAsLastSibling();
+        // // 아이콘이 다른 UI 요소보다 위에 있도록 설정
+        // // root 사용이유
+        // // 유니티 UI 랜더링은 하이어러키의 아래쪽에 있을수록 먼저 그려지므로, 아이콘이 다른 UI 요소보다 위에 있도록 하기 위해 root로 이동
+        // iconImage.transform.SetParent(transform.root);
+        // iconImage.transform.SetAsLastSibling();
 
-        // 아이콘이 도착 슬롯을 가리지 않도록 RaycastTarget 비활성화
-        iconImage.raycastTarget = false;
+        // // 아이콘이 도착 슬롯을 가리지 않도록 RaycastTarget 비활성화
+        // iconImage.raycastTarget = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (heldItem == null) return;
+        // if (heldItem == null) return;
 
-        // 매 프레임 마다 마우스 좌표를 아이콘 위치에 적용
-        iconImage.transform.position = eventData.position;
+        // // 매 프레임 마다 마우스 좌표를 아이콘 위치에 적용
+        // iconImage.transform.position = eventData.position;
+        DragSlot.Instance.UpdatePosition(eventData.position);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (heldItem == null) return;
+        DragSlot.Instance.HideSlot();
 
-        iconImage.transform.SetParent(originalParent);
-        iconImage.transform.localPosition = Vector3.zero;
+        Color color = iconImage.color;
+        color.a = 1f;
+        iconImage.color = color;
+        // if (heldItem == null) return;
 
-        // 다음 클릭을 정상적으로 인식하기 위해 RaycastTarget 다시 활성화
-        iconImage.raycastTarget = true;
+        // iconImage.transform.SetParent(originalParent, false);
+        // iconImage.transform.SetAsFirstSibling();
+
+        // RectTransform iconRect = iconImage.GetComponent<RectTransform>();
+
+        // iconRect.anchoredPosition = Vector2.zero; 
+        // iconRect.localPosition = Vector3.zero;
+
+        // iconRect.sizeDelta = Vector2.zero; // Width, Height 초기화
+        // iconRect.offsetMin = Vector2.zero; // Left, Bottom 초기화
+        // iconRect.offsetMax = Vector2.zero;
+
+        // // 다음 클릭을 정상적으로 인식하기 위해 RaycastTarget 다시 활성화
+        // iconImage.raycastTarget = true;
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -77,7 +100,8 @@ public class Slot : MonoBehaviour, IItemSlot, IBeginDragHandler, IDragHandler, I
         if (draggedObj != null)
         {
             // 드래그한 슬롯에서 Slot 컴포넌트를 가져온다
-            Slot fromSlot = draggedObj.GetComponent<Slot>();
+            //Slot fromSlot = draggedObj.GetComponent<Slot>();
+            Slot fromSlot = DragSlot.Instance.draggedSlot;
             // 드래그한 슬롯이 존재하고, 현재 슬롯과 다를 때만 아이템 교환을 수행
             if (fromSlot != null && fromSlot != this && fromSlot.HasItem())
             {

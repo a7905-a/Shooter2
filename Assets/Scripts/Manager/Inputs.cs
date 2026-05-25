@@ -17,6 +17,9 @@ namespace ProjectTwo.Manager
         public bool shoot { get; private set; }
         public bool reload { get; private set; }
         public bool jump { get; private set; }
+        public bool toggleInventory {get; private set;}
+        public bool interactItem {get; private set;}
+        public bool interactAction {get; private set;}
 
         //Invoke Unity Events 방식에서 요구하는 메서드
         public void OnMove(InputAction.CallbackContext value)
@@ -60,6 +63,30 @@ namespace ProjectTwo.Manager
             }
         }
 
+        public void OnToggleInventory(InputAction.CallbackContext value)
+        {
+            if (value.started)
+            {
+                toggleInventory = true;
+            }
+        }
+
+        public void OnInteractItem(InputAction.CallbackContext value)
+        {
+            if (value.started)
+            {
+                interactItem = true;
+            }
+        }
+
+        public void OnInteractAction(InputAction.CallbackContext value)
+        {
+            if (value.started)
+            {
+                interactAction = true;
+            }
+        }
+
     //단발성 이벤트의 처리를 위한 리셋 메서드
         public void ResetJump()
         {
@@ -72,6 +99,20 @@ namespace ProjectTwo.Manager
         public void ResetReload()
         {
             reload = false;
+        }
+        public void ResetToggleInventory()
+        {
+            toggleInventory = false;
+        }
+
+        public void ResetInteractItem()
+        {
+            interactItem = false;
+        }
+
+        public void ResetInteractAction()
+        {
+            interactAction = false;
         }
 
     }

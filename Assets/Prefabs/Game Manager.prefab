@@ -50,6 +50,7 @@ MonoBehaviour:
   prefabs:
   - {fileID: 613433886817584986, guid: 9c4e3e4e10f615043a773c6a90d8b6cc, type: 3}
   - {fileID: 7541472773642616804, guid: 17a93815f8f8ecb48a01c3039ca7c97c, type: 3}
+  - {fileID: 1231897386792774418, guid: 24815cc2506c78d4b8c1643400889498, type: 3}
   poolSize: 5
 --- !u!114 &173291097267515292
 MonoBehaviour:
@@ -63,6 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03ca267802f9dfd4aaa961cf67c52e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!114 &62690031471420337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,7 +89,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e0a7581fe8ce6248a53cdb90ea5e9f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allRecipes: []
-  craftingGrid: {fileID: 0}
-  craftingBottonPrefab: {fileID: 2700606237032560810, guid: c7562c1316a0d77439fec0996660cb8f, type: 3}
-  itemNeededUIPrefab: {fileID: 5135356648581711070, guid: 0c1ddd07e22556540926b5333dc3f296, type: 3}

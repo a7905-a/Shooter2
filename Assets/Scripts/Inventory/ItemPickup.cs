@@ -1,20 +1,35 @@
+using ProjectTwo.Manager;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace ProjectTwo.InventoryManagement
 {
     public class ItemPickup : MonoBehaviour
     {
+        [Header("아이템 획득 설정")]
         [SerializeField] private LayerMask itemLayerMask;
-        [SerializeField] private float pickupRange = 30f;
-        [SerializeField] private Material highlightMaterial;
-        private Renderer closestRenderer = null;
-        private Material originalMaterial;
+        [SerializeField] private float pickupRange = 1f;
+
+        private Inputs input;
+        private Item activeItem = null;
+
+        private void Start()
+        {
+            input = FindFirstObjectByType<Inputs>();
+        }
 
         private void Update()
         {
             HandleItemInteraction();
+
+            // 허공에서 줍기 키를 입력했을 때 입력이 남아있는 것 방지
+            if (input != null && input.interactItem)
+            {
+                input.ResetInteractItem();
+            }
         }
+
         private void HandleItemInteraction()
         {
             // UI 위치가 아닌 플레이어 위치를 중심으로 아이템 구체 레이더를 돌림
@@ -39,39 +54,34 @@ namespace ProjectTwo.InventoryManagement
             }
 
             // 주울 수 있는 아이템이 근처에 있다면?
-            if (closestItem != null)
+            if (closestItem != activeItem)
             {
-                // 하이라이트 효과 적용 (자식 오브젝트의 렌더러까지 찾음)
-                Renderer rend = closestItem.GetComponentInChildren<Renderer>();
-                if (rend != null && rend != closestRenderer)
+                if (activeItem != null)
                 {
-                    if (closestRenderer != null) closestRenderer.material = originalMaterial;
-                    originalMaterial = rend.material;
-                    rend.material = highlightMaterial;
-                    closestRenderer = rend;
+                    activeItem.ToggleInteractUI(false);
                 }
 
-                // E키를 누르면 가장 가까운 아이템 줍기!
-                if (Input.GetKeyDown(KeyCode.E))
+                activeItem = closestItem;
+
+                if (activeItem != null)
+                {
+                    activeItem.ToggleInteractUI(true);
+                }
+            }
+
+            if (closestItem != null)
+            {
+                 if (input.interactItem)
                 {
                     Inventory.Instance.AddItem(closestItem.item, closestItem.amount);
-                    Destroy(closestItem.gameObject);
                     
-                    // 파괴 후 초기화
-                    closestRenderer = null;
-                    originalMaterial = null;
+                    activeItem  = null;
+                    Destroy(closestItem.gameObject);
+
+                    input.ResetInteractItem();
                 }
             }
-            else // 주변에 아이템이 아무것도 없다면?
-            {
-                // 멀어졌으니 원래 색으로 복구
-                if (closestRenderer != null)
-                {
-                    closestRenderer.material = originalMaterial;
-                    closestRenderer = null;
-                    originalMaterial = null;
-                }
-            }
+
         }
     }
 }
