@@ -11,34 +11,38 @@ namespace ProjectTwo.InventoryManagement
     public class Inventory : MonoBehaviour
     {
         public static Inventory Instance;
+
+        [Header("데이터")]
         public PlayerInventoryDataSO inventoryData;
 
-        [SerializeField] private GameObject hotbarObject;
-        [SerializeField] private GameObject inventorySlotParent;
-        [SerializeField] private GameObject container;
+        [Header("UI 패널")]
+        [SerializeField] private GameObject container; // 인벤토리 전체 창
+        [SerializeField] private GameObject inventorySlotParent; // 인벤토리 슬롯들이 있는 부모
 
-        [SerializeField] private Image dragIcon;
-
-        private int equippedHotbarIndex = 0;
-        [SerializeField] private float equippedOpacity = 0.9f;
-        [SerializeField] private float normalOpacity = 0.58f;
-        //public Transform hand;
-        //GameObject currentHandItem;
-        
-        //아이템 설명 UI
+        [Header("아이템 설명")]
         [SerializeField] private GameObject itemDescriptionParent;
         [SerializeField] private Image itemDescriptionImage;
         [SerializeField] private TextMeshProUGUI descriptionItemNameText;
         [SerializeField] private TextMeshProUGUI itemDescriptionText;
 
-        //인벤토리 슬롯 리스트
+    
+        [Header("슬롯 캐싱 리스트")]
         private List<Slot> inventorySlots = new List<Slot>();
-        private List<Slot> hotbarSlots = new List<Slot>();
         private List<Slot> allSlots = new List<Slot>();
 
-        private Slot draggedSlot = null;
-        private bool isDragging = false; 
+        private Inputs input;
 
+        // hotbar는 추후 사용할 떄 사용
+
+        // [SerializeField] private GameObject hotbarObject; 
+
+        // [Header("핫바 설정")]
+        // private int equippedHotbarIndex = 0;
+        // [SerializeField] private float equippedOpacity = 0.9f;
+        // [SerializeField] private float normalOpacity = 0.58f;
+
+        // [Header("핫바 슬롯 캐싱")]
+        // private List<Slot> hotbarSlots = new List<Slot>();
         private void Awake()
         {   
             //싱글톤 패턴
@@ -50,30 +54,35 @@ namespace ProjectTwo.InventoryManagement
             {
                 Destroy(gameObject);
             }
+
             // 부모 객체 아래에 있는 모든 Slot 컴포넌트를 찾아 inventorySlots 리스트에 한 번에 넣기
             // 플레이어가 아이템을 획득할 때마다 실행하면 비용이 높으니까 캐싱해서 사용
             inventorySlots.AddRange(inventorySlotParent.GetComponentsInChildren<Slot>(true));
-            hotbarSlots.AddRange(hotbarObject.GetComponentsInChildren<Slot>(true));
+
+            // 핫 바는 사용 계획있을 때 사용
+            // hotbarSlots.AddRange(hotbarObject.GetComponentsInChildren<Slot>(true));
+            // allSlots.AddRange(hotbarSlots);
 
             allSlots.AddRange(inventorySlots);
-            allSlots.AddRange(hotbarSlots);
         }
 
         private void Start()
         {
             LoadInventory();
+            input = FindFirstObjectByType<Inputs>();
         }
 
         private void Update()
         {
-
-            if (Input.GetKeyDown(KeyCode.Tab))
+            if (input.toggleInventory)
             {
                 ToggleInventory();
+                input.ResetToggleInventory();
             }
 
-            UpdateHotbarOpacity();
-            UpdateItemDescription();
+            // 아이템 설명과 핫 바 구현은 추후 계획있을 때 사용
+            // UpdateItemDescription();
+            // UpdateHotbarOpacity();
         }
 
         private void ToggleInventory()
@@ -144,10 +153,6 @@ namespace ProjectTwo.InventoryManagement
 
                         if (remaining <= 0)
                         {
-                            if (CraftingManager.Instance != null)
-                            {
-                                //CraftingManager.Instance.PopulateCraftingGrid();
-                            }
                             return;
                         }
                         
@@ -164,24 +169,18 @@ namespace ProjectTwo.InventoryManagement
                     remaining -= amountToPlace;
 
                     if (remaining <= 0)
-                        {
-                            if (CraftingManager.Instance != null)
-                            {
-                                //CraftingManager.Instance.PopulateCraftingGrid();
-                            }
-                            return;
-                        }
+                    {
+                        return;
+                    }
                 }
             }
 
             if (remaining > 0)
             {
-                Debug.Log("Not enough space to add all items. " + remaining + " items were not added " + itemToAdd.itemName);
+                Debug.Log("가방이 부족해서 " + itemToAdd.itemName + " " + remaining + "개 획득하지 못했습니다");
+                // 가방이 꽉 차면 넘치는 아이템은 바닥에 드랍되게 하기
             }
-            if (CraftingManager.Instance != null)
-            {
-                //CraftingManager.Instance.PopulateCraftingGrid();
-            }
+
         }
         public void RemoveItem(ItemSO itemToRemove, int amount)
         {
@@ -207,137 +206,6 @@ namespace ProjectTwo.InventoryManagement
                 }
             }
         }
-
-        private void StartDrag()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Slot hovered = GetHoveredSlot();
-
-                if (hovered != null && hovered.HasItem())
-                {
-                    draggedSlot = hovered;
-                    isDragging = true;
-
-                    //드래그한 아이템 이미지 보이게하기
-                    dragIcon.sprite = hovered.GetItem().itemIcon;
-                    dragIcon.color = new Color(1, 1, 1, 0.5f);
-                    dragIcon.enabled = true;
-                }
-            }
-        }
-
-        private void EndDrag()
-        {
-            if(Input.GetMouseButtonUp(0) && isDragging)
-            {
-                Slot hovered = GetHoveredSlot();
-
-                if (hovered != null)
-                {
-                    HandleDrop(draggedSlot, hovered);
-
-                    dragIcon.enabled = false;
-                    draggedSlot = null;
-                    isDragging = false;
-                }
-            }
-        }
-
-        private Slot GetHoveredSlot()
-        {
-            // foreach (Slot s in allSlots)
-            // {
-            //     if (s.hovering)
-            //         return s;
-            // }
-
-            return null;
-        }
-
-        
-        private void HandleDrop(Slot from, Slot to)
-        {
-            if (from == to) return;
-
-            //아이템 이동 처리 중 같은 아이템일 경우
-            if (to.HasItem() && to.GetItem() == from.GetItem())
-            {
-                int max = to.GetItem().maxStackSize;
-                int space = max - to.GetAmount();
-
-                if (space > 0)
-                {
-                    int move = Mathf.Min(space, from.GetAmount());
-                    
-                    to.SetItem(to.GetItem(), to.GetAmount() + move);
-                    from.SetItem(from.GetItem(), from.GetAmount() - move);
-
-                    if (from.GetAmount() <= 0)
-                    {
-                        from.ClearSlot();
-                    }
-                    return;
-                }
-            }
-
-            //아이템 이동 처리 중 다른 아이템일 경우
-            if (to.HasItem())
-            {
-                ItemSO tempItem = to.GetItem();
-                int tempAmount = to.GetAmount();
-
-                to.SetItem(from.GetItem(), from.GetAmount());
-                from.SetItem(tempItem, tempAmount);
-                return;
-            }
-
-            //아이템 이동 처리 중 빈 슬롯일 경우
-            to.SetItem(from.GetItem(), from.GetAmount());
-            from.ClearSlot();
-        }
-
-        private void UpdateDragItemPosition()
-        {
-            if (isDragging)
-            {
-                dragIcon.transform.position = Input.mousePosition;
-            }
-        }
-
-
-        private void UpdateHotbarOpacity()
-        {
-            for (int i = 0; i < hotbarSlots.Count; i++)
-            {
-                Image icon = hotbarSlots[i].GetComponent<Image>();
-                if (icon != null)
-                {
-                    icon.color = (i == equippedHotbarIndex) ? new Color(1, 1, 1, equippedOpacity) : new Color(1, 1, 1, normalOpacity);
-                }
-            }
-        }
-
-        private void UpdateItemDescription()
-        {
-            Slot hoveredSlot = GetHoveredSlot();
-
-            if (hoveredSlot != null)
-            {
-                ItemSO hoveredItem = hoveredSlot.GetItem();
-
-                if(hoveredItem != null)
-                {
-                    itemDescriptionParent.SetActive(true);
-                    itemDescriptionImage.sprite = hoveredItem.itemIcon;
-                    itemDescriptionText.text = hoveredItem.description;
-                    descriptionItemNameText.text = hoveredItem.itemName;
-                    return; 
-                }
-            }
-            itemDescriptionParent.SetActive(false);
-        }
-
         
         public int GetTotalItemCount(ItemSO targetItem)
         {
@@ -359,3 +227,80 @@ namespace ProjectTwo.InventoryManagement
         }
     }
 }
+
+
+
+// private void HandleDrop(Slot from, Slot to)
+        // {
+        //     if (from == to) return;
+
+        //     //아이템 이동 처리 중 같은 아이템일 경우
+        //     if (to.HasItem() && to.GetItem() == from.GetItem())
+        //     {
+        //         int max = to.GetItem().maxStackSize;
+        //         int space = max - to.GetAmount();
+
+        //         if (space > 0)
+        //         {
+        //             int move = Mathf.Min(space, from.GetAmount());
+                    
+        //             to.SetItem(to.GetItem(), to.GetAmount() + move);
+        //             from.SetItem(from.GetItem(), from.GetAmount() - move);
+
+        //             if (from.GetAmount() <= 0)
+        //             {
+        //                 from.ClearSlot();
+        //             }
+        //             return;
+        //         }
+        //     }
+
+        //     //아이템 이동 처리 중 다른 아이템일 경우
+        //     if (to.HasItem())
+        //     {
+        //         ItemSO tempItem = to.GetItem();
+        //         int tempAmount = to.GetAmount();
+
+        //         to.SetItem(from.GetItem(), from.GetAmount());
+        //         from.SetItem(tempItem, tempAmount);
+        //         return;
+        //     }
+
+        //     //아이템 이동 처리 중 빈 슬롯일 경우
+        //     to.SetItem(from.GetItem(), from.GetAmount());
+        //     from.ClearSlot();
+        // }
+
+
+        // private void UpdateHotbarOpacity()
+        // {
+        //     for (int i = 0; i < hotbarSlots.Count; i++)
+        //     {
+        //         Image icon = hotbarSlots[i].GetComponent<Image>();
+        //         if (icon != null)
+        //         {
+        //             icon.color = (i == equippedHotbarIndex) ? new Color(1, 1, 1, equippedOpacity) : new Color(1, 1, 1, normalOpacity);
+        //         }
+        //     }
+        // }
+
+        // private void UpdateItemDescription()
+        // {
+        //     Slot hoveredSlot = GetHoveredSlot();
+
+        //     if (hoveredSlot != null)
+        //     {
+        //         ItemSO hoveredItem = hoveredSlot.GetItem();
+
+        //         if(hoveredItem != null)
+        //         {
+        //             itemDescriptionParent.SetActive(true);
+        //             itemDescriptionImage.sprite = hoveredItem.itemIcon;
+        //             itemDescriptionText.text = hoveredItem.description;
+        //             descriptionItemNameText.text = hoveredItem.itemName;
+        //             return; 
+        //         }
+        //     }
+        //     itemDescriptionParent.SetActive(false);
+        // }
+

@@ -21,15 +21,15 @@ namespace ProjectTwo.Manager
                 Destroy(gameObject);
             } 
         }
-        private void Start()
-        {
-            
-        }
 
         public void Craft(Recipe recipe)
         {
-            if(!CanCraft(recipe)) return;
-
+            if(!CanCraft(recipe))
+            {
+                Debug.Log("재료가 부족");
+                return;
+            }
+                
             //재료 소모
             ConsumeIngredients(recipe);
             //완성품 인벤토리에 추가
