@@ -13,12 +13,11 @@ public struct SavedSlot
     [CreateAssetMenu(fileName = "NewInventoryData", menuName = "Inventory/InventoryData")]
 
     public class PlayerInventoryDataSO : ScriptableObject
-{
-    public List<SavedSlot> savedSlots = new List<SavedSlot>();
-
-    public void ClearData()
     {
-        savedSlots.Clear();
+        public List<SavedSlot> savedSlots = new List<SavedSlot>();
+        public void ClearData()
+        {
+            savedSlots.Clear();
+        }
     }
-}
 

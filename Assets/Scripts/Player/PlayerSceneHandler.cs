@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using ProjectTwo.Interactable;
 
 namespace ProjectTwo.Player
 {
     public class PlayerSceneHandler : MonoBehaviour
     {
+        [Header("씬 이동 데이터 연결")]
+        public PlayerMovementDataSO playerMovementData;
+
         private void Enable()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -17,17 +21,27 @@ namespace ProjectTwo.Player
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            GameObject spawnPoint = GameObject.FindGameObjectWithTag("Respawn");
-
-            if (spawnPoint != null)
+            if (playerMovementData == null || playerMovementData.targetPortalID == PortalID.None)
             {
-                CharacterController cc = GetComponent<CharacterController>();
-                if (cc != null) cc.enabled = false;
+                return;
+            }
 
-                transform.position = spawnPoint.transform.position;
-                transform.rotation = spawnPoint.transform.rotation;
+            PlayerScenePoint[] scenePoints = FindObjectsByType<PlayerScenePoint>(FindObjectsSortMode.None);
 
-                if (cc != null) cc.enabled = true;
+            foreach (PlayerScenePoint point in scenePoints)
+            {
+                if (point.myPortalID == playerMovementData.targetPortalID)
+                {
+                    CharacterController cc = GetComponent<CharacterController>();
+                    if (cc != null) cc.enabled = false;
+
+                    transform.position = point.transform.position;
+                    transform.rotation = point.transform.rotation;
+
+                    if (cc != null) cc.enabled = true;
+                    playerMovementData.targetPortalID = PortalID.None;
+                    break;
+                }
             }
         }
     }

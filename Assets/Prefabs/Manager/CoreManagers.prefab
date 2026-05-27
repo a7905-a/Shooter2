@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2674055906806478867}
-  - component: {fileID: 3140533276445189239}
   m_Layer: 0
   m_Name: CoreManagers
   m_TagString: Untagged
@@ -34,18 +33,6 @@ Transform:
   - {fileID: 2267462802656127882}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3140533276445189239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8796792966817624436}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b441e7f9b3f0924784bf66b93f553e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &4357326882552495863
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -120,6 +107,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Inventory Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2796103847349534098, guid: 915101cc1bcc251429f13d8d3956a633, type: 3}
+      propertyPath: weaponSlotParent
+      value: 
+      objectReference: {fileID: 483823268330188424}
     - target: {fileID: 6531119679967321079, guid: 915101cc1bcc251429f13d8d3956a633, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -205,6 +196,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 915101cc1bcc251429f13d8d3956a633, type: 3}
+--- !u!1 &483823268330188424 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4855572454595796725, guid: 915101cc1bcc251429f13d8d3956a633, type: 3}
+  m_PrefabInstance: {fileID: 5031813642274287741}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2267462802656127882 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6531119679967321079, guid: 915101cc1bcc251429f13d8d3956a633, type: 3}
