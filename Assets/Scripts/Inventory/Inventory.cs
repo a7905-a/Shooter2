@@ -19,6 +19,8 @@ namespace ProjectTwo.InventoryManagement
         [SerializeField] private GameObject container; // 인벤토리 전체 창
         [SerializeField] private GameObject inventorySlotParent; // 인벤토리 슬롯들이 있는 부모
 
+        [SerializeField] private GameObject weaponSlotParent; // 무기 슬롯들이 있는 부모
+
         [Header("아이템 설명")]
         [SerializeField] private GameObject itemDescriptionParent;
         [SerializeField] private Image itemDescriptionImage;
@@ -43,6 +45,9 @@ namespace ProjectTwo.InventoryManagement
 
         // [Header("핫바 슬롯 캐싱")]
         // private List<Slot> hotbarSlots = new List<Slot>();
+
+        
+
         private void Awake()
         {   
             //싱글톤 패턴
@@ -58,6 +63,8 @@ namespace ProjectTwo.InventoryManagement
             // 부모 객체 아래에 있는 모든 Slot 컴포넌트를 찾아 inventorySlots 리스트에 한 번에 넣기
             // 플레이어가 아이템을 획득할 때마다 실행하면 비용이 높으니까 캐싱해서 사용
             inventorySlots.AddRange(inventorySlotParent.GetComponentsInChildren<Slot>(true));
+            inventorySlots.AddRange(weaponSlotParent.GetComponentsInChildren<Slot>(true));
+            
 
             // 핫 바는 사용 계획있을 때 사용
             // hotbarSlots.AddRange(hotbarObject.GetComponentsInChildren<Slot>(true));
@@ -101,7 +108,6 @@ namespace ProjectTwo.InventoryManagement
 
             //낡은 데이터 싹 지우기
             inventoryData.ClearData();
-
             //내 인벤토리의 모든 슬롯을 하나씩 확인
             foreach(Slot slot in allSlots)
             {
@@ -111,7 +117,9 @@ namespace ProjectTwo.InventoryManagement
                     SavedSlot newSavedSlot = new SavedSlot();
                     newSavedSlot.item = slot.GetItem();
                     newSavedSlot.amount = slot.GetAmount();
+
                     inventoryData.savedSlots.Add(newSavedSlot);
+                    
                 }
             }
         }

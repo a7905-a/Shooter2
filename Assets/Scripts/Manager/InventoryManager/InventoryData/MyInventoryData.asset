@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa95309ed776014f9dcf6ee231dc863, type: 3}
   m_Name: MyInventoryData
   m_EditorClassIdentifier: 
-  savedSlots: []
+  savedSlots:
+  - item: {fileID: 11400000, guid: e335d205488b1594ea17556d7e3585e0, type: 2}
+    amount: 4
+  - item: {fileID: 11400000, guid: 61f5f22599788e040837fdca5edac3c6, type: 2}
+    amount: 1

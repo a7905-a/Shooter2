@@ -73,6 +73,7 @@ namespace ProjectTwo.InventoryManagement
             {
                 if (input.interactItem)
                 {
+                    
                     Inventory.Instance.AddItem(closestItem.item, closestItem.amount);
                     
                     activeItem  = null;

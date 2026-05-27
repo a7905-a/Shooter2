@@ -17,11 +17,11 @@ MonoBehaviour:
   maxStackSize: 1
   itemPrefab: {fileID: 5613026588999910632, guid: ddae625af9746814bad43e9e60ab150c, type: 3}
   handItemPrefab: {fileID: 0}
-  description: 11
+  description: Rifle
   WeaponType: 1
   WeaponPrefab: {fileID: 5613026588999910632, guid: ddae625af9746814bad43e9e60ab150c, type: 3}
   WeaponName: Base Rifle
   IsAutomatic: 1
-  Damege: 1
+  Damage: 1
   FireRate: 0.15
   MaxAmmo: 30
