@@ -11,6 +11,7 @@ namespace ProjectTwo.Player
         [SerializeField] private float rotateSpeed = 20f;
         [SerializeField] private float jumpHeight = 0.5f;
         [SerializeField] private float acceleration = 1f;
+        private Vector3 direction;
 
 
         [Header("중력 변수")]
@@ -48,7 +49,21 @@ namespace ProjectTwo.Player
         // ==========================================
         readonly int hashJump = Animator.StringToHash("Jump");
         readonly int hashMoveSpeed = Animator.StringToHash("MoveSpeed");
+
+
+        MovementBaseState currentState;
+        public IdleState Idle = new IdleState();
+        public WalkState Walk = new WalkState();
+        public RunState Run = new RunState();
         
+        public Vector3 Direction => direction;
+        public bool IsRunning => input.run;
+        public Animator Anim => anim;
+        public int HashMoveSpeed => hashMoveSpeed;
+        public float PlayerSpeed => playerSpeed;
+
+
+
         //내부 초기화를 Awke에서 수행해서 참조 오류 방지
         private void Awake()
         {
@@ -57,11 +72,24 @@ namespace ProjectTwo.Player
             anim = GetComponent<Animator>(); 
         }
 
+        private void Start()
+        {
+            SwitchState(Idle);
+        }
+
         private void Update()
         {
             GravityAndJump();
 
             Move();
+
+            currentState.UpdateState(this);
+        }
+
+        public void SwitchState(MovementBaseState state)
+        {
+            currentState = state;
+            currentState.EnterState(this);
         }
 
         private void GravityAndJump()
@@ -86,7 +114,7 @@ namespace ProjectTwo.Player
 
         private void Move()
         {
-            Vector3 direction = new Vector3(input.movement.x, 0, input.movement.y);
+            direction = new Vector3(input.movement.x, 0, input.movement.y);
 
             playerSpeed = CalculateTargetSpeed(direction);
 
@@ -121,13 +149,8 @@ namespace ProjectTwo.Player
             Vector3 velocity = targetDir * playerSpeed + Vector3.up * gravityForce;
 
             characterController.Move(velocity * Time.deltaTime);
-            UpdateAnimation();
 
-        }
 
-        private void UpdateAnimation()
-        {
-            anim.SetFloat(hashMoveSpeed, playerSpeed);
         }
 
         private float CalculateTargetSpeed(Vector3 direction)
@@ -144,5 +167,6 @@ namespace ProjectTwo.Player
 
             return input.run ? runSpeed : moveSpeed;
         }
+
     }
 }
