@@ -16,8 +16,11 @@ namespace ProjectTwo.Player
                 movement.SwitchState(movement.Idle);
                 return;
             }
-            
+
             movement.Anim.SetFloat(movement.HashMoveSpeed, movement.PlayerSpeed);
+                
+            
+            
 
             if (movement.IsRunning)
             {
