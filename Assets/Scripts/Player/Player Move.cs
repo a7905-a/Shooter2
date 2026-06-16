@@ -84,6 +84,7 @@ namespace ProjectTwo.Player
             Move();
 
             currentState.UpdateState(this);
+
         }
 
         public void SwitchState(MovementBaseState state)
